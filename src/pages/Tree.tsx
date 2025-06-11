@@ -254,11 +254,11 @@ const Tree = () => {
                       </div>
                     </div>
                     <Button
-                      className="w-full bg-green-600 hover:bg-green-700 mt-4"
+                      className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                       onClick={() => handleEditMember(selectedMember)}
                     >
-                      <Icon name="User" size={16} className="mr-2" />
-                      Подробнее
+                      <Icon name="UserCircle" size={18} className="mr-2" />
+                      Профиль
                     </Button>
                   </div>
                 ) : (
