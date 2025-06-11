@@ -1,13 +1,10 @@
 import Icon from "@/components/ui/icon";
-import Logo from "@/components/Logo";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
     <section className="bg-gradient-to-b from-green-50 to-white py-20 px-4">
       <div className="max-w-6xl mx-auto text-center">
-        <Logo />
-
         <h1 className="text-5xl md:text-6xl font-bold text-green-800 mb-6 font-serif">
           Семейное Древо
         </h1>
