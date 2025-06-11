@@ -24,9 +24,11 @@ const Hero = () => {
             </button>
           </Link>
 
-          <button className="border-2 border-green-700 text-green-700 hover:bg-green-700 hover:text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300">
-            Посмотреть примеры
-          </button>
+          <Link to="/profile">
+            <button className="border-2 border-green-700 text-green-700 hover:bg-green-700 hover:text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300">
+              Мой профиль
+            </button>
+          </Link>
         </div>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
