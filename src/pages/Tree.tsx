@@ -15,7 +15,9 @@ interface FamilyMember {
 }
 
 const Tree = () => {
-  const [selectedMember, setSelectedMember] = useState<FamilyMember | null>(null);
+  const [selectedMember, setSelectedMember] = useState<FamilyMember | null>(
+    null,
+  );
   const [editingMember, setEditingMember] = useState<FamilyMember | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -38,7 +40,7 @@ const Tree = () => {
     },
     { id: "5", name: "Я", relation: "Сын/Дочь", generation: 2 },
     { id: "6", name: "Брат Михаил", relation: "Брат", generation: 2 },
-  ];
+  ]);
 
   const handleEditMember = (member: FamilyMember) => {
     setEditingMember(member);
@@ -46,21 +48,10 @@ const Tree = () => {
   };
 
   const handleSaveMember = (updatedMember: FamilyMember) => {
-    setFamilyData(prev => 
-      prev.map(member => 
-        member.id === updatedMember.id ? updatedMember : member
-      )
-    );
-    if (selectedMember?.id === updatedMember.id) {
-      setSelectedMember(updatedMember);
-    }
-  };
-
-  const getGenerationMembers = (generation: number) => {
-    return familyData.filter((member) => member.generation === generation);
-  }; 
-        member.id === updatedMember.id ? updatedMember : member
-      )
+    setFamilyData((prev) =>
+      prev.map((member) =>
+        member.id === updatedMember.id ? updatedMember : member,
+      ),
     );
     if (selectedMember?.id === updatedMember.id) {
       setSelectedMember(updatedMember);
@@ -247,7 +238,9 @@ const Tree = () => {
                   <Button
                     variant="outline"
                     className="w-full border-green-300 text-green-700"
-                    onClick={() => selectedMember && handleEditMember(selectedMember)}
+                    onClick={() =>
+                      selectedMember && handleEditMember(selectedMember)
+                    }
                     disabled={!selectedMember}
                   >
                     <Icon name="Edit" size={16} className="mr-2" />
