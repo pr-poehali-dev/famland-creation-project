@@ -2,6 +2,7 @@ import { useState } from "react";
 import Icon from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import EditMemberModal from "@/components/EditMemberModal";
 
 interface FamilyMember {
@@ -100,11 +101,14 @@ const Tree = () => {
                           className="h-16 w-32 border-green-300 hover:bg-green-50 flex flex-col"
                           onClick={() => setSelectedMember(member)}
                         >
-                          <Icon
-                            name="Users"
-                            size={16}
-                            className="text-green-600"
-                          />
+                          <Avatar className="h-6 w-6">
+                            <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                              {member.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
+                          </Avatar>
                           <span className="text-xs mt-1">{member.name}</span>
                         </Button>
                       ))}
