@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
 import Icon from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -99,8 +100,9 @@ const Tree = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white py-8">
-      <div className="max-w-6xl mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+      <Header />
+      <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Визуализация древа */}
           <div className="lg:col-span-3">

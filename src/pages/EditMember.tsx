@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -97,8 +98,9 @@ const EditMember = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white py-8">
-      <div className="max-w-2xl mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+      <Header />
+      <div className="max-w-2xl mx-auto px-4 py-8">
         <Card className="border-green-200">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-green-800">
