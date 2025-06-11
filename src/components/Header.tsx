@@ -20,6 +20,12 @@ const Header = () => {
           {/* Навигация */}
           <nav className="flex items-center gap-4">
             <Link
+              to="/tree"
+              className="px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
+            >
+              Древо
+            </Link>
+            <Link
               to="/auth"
               className="px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
             >
