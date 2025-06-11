@@ -22,7 +22,6 @@ const Tree = () => {
   const [selectedMember, setSelectedMember] = useState<FamilyMember | null>(
     null,
   );
-  const [viewMode, setViewMode] = useState<"cards" | "timeline">("cards");
 
   const [familyData, setFamilyData] = useState<FamilyMember[]>([
     {
@@ -97,193 +96,117 @@ const Tree = () => {
     navigate("/edit-member");
   };
 
-  const getGenerationColor = (generation: number) => {
-    const colors = [
-      "bg-purple-100 text-purple-700 border-purple-200",
-      "bg-blue-100 text-blue-700 border-blue-200",
-      "bg-green-100 text-green-700 border-green-200",
-    ];
-    return colors[generation] || "bg-gray-100 text-gray-700 border-gray-200";
+  const groupByGeneration = (members: FamilyMember[]) => {
+    return members.reduce(
+      (acc, member) => {
+        if (!acc[member.generation]) {
+          acc[member.generation] = [];
+        }
+        acc[member.generation].push(member);
+        return acc;
+      },
+      {} as Record<number, FamilyMember[]>,
+    );
   };
 
-  const getGenerationLabel = (generation: number) => {
-    const labels = ["Старшее поколение", "Родители", "Наше поколение"];
-    return labels[generation] || `Поколение ${generation + 1}`;
-  };
-
-  const sortedFamilyData = [...familyData].sort(
-    (a, b) => a.generation - b.generation,
-  );
+  const generationGroups = groupByGeneration(familyData);
+  const generations = Object.keys(generationGroups).map(Number).sort();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-8">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 py-8">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Заголовок */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-slate-800 mb-4">
-            Семейное Древо
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold text-emerald-800 mb-4">
+            🌳 Семейное Древо
           </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Откройте историю своей семьи и узнайте больше о родственных связях
+          <p className="text-lg text-emerald-600 max-w-2xl mx-auto">
+            История нашей семьи в виде живого древа поколений
           </p>
-        </div>
-
-        {/* Панель управления */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-          <div className="flex gap-2">
-            <Button
-              variant={viewMode === "cards" ? "default" : "outline"}
-              onClick={() => setViewMode("cards")}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              <Icon name="Grid3X3" size={16} className="mr-2" />
-              Карточки
-            </Button>
-            <Button
-              variant={viewMode === "timeline" ? "default" : "outline"}
-              onClick={() => setViewMode("timeline")}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              <Icon name="Timeline" size={16} className="mr-2" />
-              Временная линия
-            </Button>
-          </div>
-
           <Button
             onClick={handleAddMember}
-            className="bg-emerald-600 hover:bg-emerald-700"
+            className="mt-6 bg-emerald-600 hover:bg-emerald-700"
           >
             <Icon name="UserPlus" size={16} className="mr-2" />
             Добавить члена семьи
           </Button>
         </div>
 
-        {viewMode === "cards" ? (
-          /* Режим карточек */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {sortedFamilyData.map((member) => (
-              <Card
-                key={member.id}
-                className={`cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${getGenerationColor(member.generation)} border-2`}
-                onClick={() => setSelectedMember(member)}
-              >
-                <CardHeader className="text-center pb-4">
-                  <Avatar className="h-20 w-20 mx-auto mb-4 ring-4 ring-white shadow-lg">
-                    <AvatarImage src={member.photo} alt={member.name} />
-                    <AvatarFallback className="text-lg font-semibold">
-                      {member.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <CardTitle className="text-xl">{member.name}</CardTitle>
-                  <Badge variant="secondary" className="mx-auto">
-                    {member.relation}
-                  </Badge>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {member.birthDate && (
-                    <div className="flex items-center gap-2 text-sm">
-                      <Icon name="Calendar" size={14} />
-                      <span>Родился: {member.birthDate}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center gap-2 text-sm">
-                    <Icon name="Users" size={14} />
-                    <span>{getGenerationLabel(member.generation)}</span>
-                  </div>
-                  {member.description && (
-                    <p className="text-sm text-slate-600 italic">
-                      "{member.description}"
-                    </p>
-                  )}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full mt-4"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleEditMember(member);
-                    }}
-                  >
-                    <Icon name="Edit" size={14} className="mr-2" />
-                    Редактировать
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          /* Режим временной линии */
-          <div className="space-y-12">
-            {[0, 1, 2].map((generation) => {
-              const generationMembers = familyData.filter(
-                (m) => m.generation === generation,
-              );
-              if (generationMembers.length === 0) return null;
+        {/* Древо поколений */}
+        <div className="relative">
+          {generations.map((generation, index) => (
+            <div key={generation} className="mb-16 relative">
+              {/* Линия поколения */}
+              {index < generations.length - 1 && (
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-px h-16 bg-emerald-300 top-full z-0"></div>
+              )}
 
-              return (
-                <div key={generation} className="relative">
-                  <div className="flex items-center mb-6">
-                    <div
-                      className={`h-4 w-4 rounded-full ${getGenerationColor(generation).split(" ")[0]} mr-4`}
-                    ></div>
-                    <h2 className="text-2xl font-bold text-slate-700">
-                      {getGenerationLabel(generation)}
-                    </h2>
-                  </div>
+              {/* Члены поколения */}
+              <div className="flex justify-center items-center flex-wrap gap-8 relative z-10">
+                {generationGroups[generation].map((member, memberIndex) => (
+                  <div key={member.id} className="relative">
+                    {/* Соединительные линии */}
+                    {memberIndex > 0 && generation > 0 && (
+                      <div className="absolute top-1/2 -left-4 w-8 h-px bg-emerald-300"></div>
+                    )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ml-8">
-                    {generationMembers.map((member) => (
-                      <Card
-                        key={member.id}
-                        className="cursor-pointer hover:shadow-lg transition-all duration-200"
-                        onClick={() => setSelectedMember(member)}
-                      >
-                        <CardContent className="p-4">
-                          <div className="flex items-center gap-4">
-                            <Avatar className="h-16 w-16">
-                              <AvatarImage
-                                src={member.photo}
-                                alt={member.name}
-                              />
-                              <AvatarFallback>
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-lg">
-                                {member.name}
-                              </h3>
-                              <p className="text-slate-600 text-sm">
-                                {member.relation}
-                              </p>
-                              {member.birthDate && (
-                                <p className="text-slate-500 text-xs">
-                                  Род. {member.birthDate}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                    {/* Карточка члена семьи */}
+                    <Card
+                      className="w-48 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 bg-white/80 backdrop-blur-sm border-2 border-emerald-200 hover:border-emerald-400"
+                      onClick={() => setSelectedMember(member)}
+                    >
+                      <CardHeader className="text-center pb-2">
+                        <Avatar className="h-16 w-16 mx-auto mb-3 ring-4 ring-emerald-200 shadow-lg">
+                          <AvatarImage src={member.photo} alt={member.name} />
+                          <AvatarFallback className="text-lg font-semibold bg-emerald-100 text-emerald-700">
+                            {member.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <CardTitle className="text-lg text-emerald-800">
+                          {member.name}
+                        </CardTitle>
+                        <Badge
+                          variant="secondary"
+                          className="mx-auto bg-emerald-100 text-emerald-700"
+                        >
+                          {member.relation}
+                        </Badge>
+                      </CardHeader>
+                      <CardContent className="pt-0 text-center">
+                        {member.birthDate && (
+                          <p className="text-sm text-emerald-600 mb-2">
+                            {member.birthDate}
+                          </p>
+                        )}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full text-emerald-700 border-emerald-300 hover:bg-emerald-50"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditMember(member);
+                          }}
+                        >
+                          <Icon name="Edit" size={14} className="mr-2" />
+                          Изменить
+                        </Button>
+                      </CardContent>
+                    </Card>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
 
-        {/* Информационная панель */}
+        {/* Модальное окно с информацией */}
         {selectedMember && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-            <Card className="max-w-md w-full max-h-[80vh] overflow-y-auto">
-              <CardHeader className="text-center">
+            <Card className="max-w-md w-full max-h-[80vh] overflow-y-auto bg-white">
+              <CardHeader className="text-center relative">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -292,24 +215,22 @@ const Tree = () => {
                 >
                   <Icon name="X" size={16} />
                 </Button>
-                <Avatar className="h-24 w-24 mx-auto mb-4">
+                <Avatar className="h-24 w-24 mx-auto mb-4 ring-4 ring-emerald-200">
                   <AvatarImage
                     src={selectedMember.photo}
                     alt={selectedMember.name}
                   />
-                  <AvatarFallback className="text-2xl">
+                  <AvatarFallback className="text-2xl bg-emerald-100 text-emerald-700">
                     {selectedMember.name
                       .split(" ")
                       .map((n) => n[0])
                       .join("")}
                   </AvatarFallback>
                 </Avatar>
-                <CardTitle className="text-2xl">
+                <CardTitle className="text-2xl text-emerald-800">
                   {selectedMember.name}
                 </CardTitle>
-                <Badge
-                  className={getGenerationColor(selectedMember.generation)}
-                >
+                <Badge className="mx-auto bg-emerald-100 text-emerald-700">
                   {selectedMember.relation}
                 </Badge>
               </CardHeader>
@@ -319,26 +240,24 @@ const Tree = () => {
                     <Icon
                       name="Calendar"
                       size={16}
-                      className="text-slate-500"
+                      className="text-emerald-600"
                     />
                     <span>Год рождения: {selectedMember.birthDate}</span>
                   </div>
                 )}
-                <div className="flex items-center gap-3">
-                  <Icon name="Users" size={16} className="text-slate-500" />
-                  <span>{getGenerationLabel(selectedMember.generation)}</span>
-                </div>
                 {selectedMember.description && (
-                  <div className="bg-slate-50 p-4 rounded-lg">
-                    <h4 className="font-medium mb-2">О человеке:</h4>
-                    <p className="text-slate-600 italic">
+                  <div className="bg-emerald-50 p-4 rounded-lg">
+                    <h4 className="font-medium mb-2 text-emerald-800">
+                      О человеке:
+                    </h4>
+                    <p className="text-emerald-700 italic">
                       "{selectedMember.description}"
                     </p>
                   </div>
                 )}
                 <div className="flex gap-2 pt-4">
                   <Button
-                    className="flex-1"
+                    className="flex-1 bg-emerald-600 hover:bg-emerald-700"
                     onClick={() => handleEditMember(selectedMember)}
                   >
                     <Icon name="Edit" size={16} className="mr-2" />
@@ -346,6 +265,7 @@ const Tree = () => {
                   </Button>
                   <Button
                     variant="outline"
+                    className="border-emerald-300 text-emerald-700 hover:bg-emerald-50"
                     onClick={() => setSelectedMember(null)}
                   >
                     Закрыть
