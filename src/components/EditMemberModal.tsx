@@ -26,6 +26,7 @@ interface FamilyMember {
   birthDate?: string;
   description?: string;
   children?: string[];
+  photo?: string;
 }
 
 interface EditMemberModalProps {
@@ -48,6 +49,7 @@ const EditMemberModal = ({
     generation: 0,
     birthDate: "",
     description: "",
+    photo: "",
   });
 
   useEffect(() => {
@@ -56,6 +58,7 @@ const EditMemberModal = ({
         ...member,
         birthDate: member.birthDate || "",
         description: member.description || "",
+        photo: member.photo || "",
       });
     }
   }, [member]);
@@ -73,9 +76,21 @@ const EditMemberModal = ({
         ...member,
         birthDate: member.birthDate || "",
         description: member.description || "",
+        photo: member.photo || "",
       });
     }
     onClose();
+  };
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFormData({ ...formData, photo: event.target?.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const relations = [
@@ -104,6 +119,47 @@ const EditMemberModal = ({
         </DialogHeader>
 
         <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="photo">Фотография</Label>
+            <div className="flex flex-col items-center gap-3">
+              {formData.photo && (
+                <div className="relative">
+                  <img
+                    src={formData.photo}
+                    alt="Предпросмотр"
+                    className="w-20 h-20 object-cover rounded-full border-2 border-green-200"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 border-red-300 text-red-600 hover:bg-red-50"
+                    onClick={() => setFormData({ ...formData, photo: "" })}
+                  >
+                    <Icon name="X" size={12} />
+                  </Button>
+                </div>
+              )}
+              <div className="flex gap-2 w-full">
+                <Input
+                  id="photo"
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                  className="border-green-200 focus:border-green-400"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="border-green-300 text-green-700 hover:bg-green-50 px-3"
+                >
+                  <Icon name="Upload" size={16} />
+                </Button>
+              </div>
+            </div>
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="name">Имя</Label>
             <Input
@@ -162,6 +218,26 @@ const EditMemberModal = ({
               placeholder="Добавьте заметки о члене семьи..."
               className="border-green-200 focus:border-green-400 min-h-[80px]"
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="photo">Фото</Label>
+            <Input
+              id="photo"
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoUpload}
+              className="border-green-200 focus:border-green-400"
+            />
+            {formData.photo && (
+              <div className="mt-2">
+                <img
+                  src={formData.photo}
+                  alt="Preview"
+                  className="w-20 h-20 object-cover rounded-md border border-green-200"
+                />
+              </div>
+            )}
           </div>
         </div>
 

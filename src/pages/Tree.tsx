@@ -2,7 +2,7 @@ import { useState } from "react";
 import Icon from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import EditMemberModal from "@/components/EditMemberModal";
 
 interface FamilyMember {
@@ -13,6 +13,7 @@ interface FamilyMember {
   birthDate?: string;
   description?: string;
   children?: string[];
+  photo?: string;
 }
 
 const Tree = () => {
@@ -23,14 +24,30 @@ const Tree = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const [familyData, setFamilyData] = useState<FamilyMember[]>([
-    { id: "1", name: "Дедушка Иван", relation: "Дедушка", generation: 0 },
-    { id: "2", name: "Бабушка Мария", relation: "Бабушка", generation: 0 },
+    {
+      id: "1",
+      name: "Дедушка Иван",
+      relation: "Дедушка",
+      generation: 0,
+      photo:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    },
+    {
+      id: "2",
+      name: "Бабушка Мария",
+      relation: "Бабушка",
+      generation: 0,
+      photo:
+        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+    },
     {
       id: "3",
       name: "Папа Алексей",
       relation: "Отец",
       generation: 1,
       children: ["5", "6"],
+      photo:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
     },
     {
       id: "4",
@@ -38,9 +55,25 @@ const Tree = () => {
       relation: "Мать",
       generation: 1,
       children: ["5", "6"],
+      photo:
+        "https://images.unsplash.com/photo-1494790108755-2616b332c5d6?w=150&h=150&fit=crop&crop=face",
     },
-    { id: "5", name: "Я", relation: "Сын/Дочь", generation: 2 },
-    { id: "6", name: "Брат Михаил", relation: "Брат", generation: 2 },
+    {
+      id: "5",
+      name: "Я",
+      relation: "Сын/Дочь",
+      generation: 2,
+      photo:
+        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face",
+    },
+    {
+      id: "6",
+      name: "Брат Михаил",
+      relation: "Брат",
+      generation: 2,
+      photo:
+        "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=150&h=150&fit=crop&crop=face",
+    },
   ]);
 
   const handleEditMember = (member: FamilyMember) => {
@@ -102,12 +135,20 @@ const Tree = () => {
                           onClick={() => setSelectedMember(member)}
                         >
                           <Avatar className="h-6 w-6">
-                            <AvatarFallback className="text-xs bg-green-100 text-green-700">
-                              {member.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
+                            {member.photo ? (
+                              <img
+                                src={member.photo}
+                                alt={member.name}
+                                className="w-full h-full object-cover rounded-full"
+                              />
+                            ) : (
+                              <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                                {member.name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            )}
                           </Avatar>
                           <span className="text-xs mt-1">{member.name}</span>
                         </Button>
@@ -133,11 +174,22 @@ const Tree = () => {
                           className="h-16 w-32 border-green-300 hover:bg-green-50 flex flex-col"
                           onClick={() => setSelectedMember(member)}
                         >
-                          <Icon
-                            name="Heart"
-                            size={16}
-                            className="text-green-600"
-                          />
+                          <Avatar className="h-6 w-6">
+                            {member.photo ? (
+                              <img
+                                src={member.photo}
+                                alt={member.name}
+                                className="w-full h-full object-cover rounded-full"
+                              />
+                            ) : (
+                              <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                                {member.name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            )}
+                          </Avatar>
                           <span className="text-xs mt-1">{member.name}</span>
                         </Button>
                       ))}
@@ -162,11 +214,22 @@ const Tree = () => {
                           className="h-16 w-32 border-green-300 hover:bg-green-50 flex flex-col"
                           onClick={() => setSelectedMember(member)}
                         >
-                          <Icon
-                            name="User"
-                            size={16}
-                            className="text-green-600"
-                          />
+                          <Avatar className="h-6 w-6">
+                            {member.photo ? (
+                              <img
+                                src={member.photo}
+                                alt={member.name}
+                                className="w-full h-full object-cover rounded-full"
+                              />
+                            ) : (
+                              <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                                {member.name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            )}
+                          </Avatar>
                           <span className="text-xs mt-1">{member.name}</span>
                         </Button>
                       ))}
@@ -187,11 +250,22 @@ const Tree = () => {
                 {selectedMember ? (
                   <div className="space-y-4">
                     <div className="text-center">
-                      <Icon
-                        name="User"
-                        size={48}
-                        className="text-green-600 mx-auto mb-2"
-                      />
+                      <Avatar className="h-16 w-16 mx-auto mb-2">
+                        {selectedMember.photo ? (
+                          <img
+                            src={selectedMember.photo}
+                            alt={selectedMember.name}
+                            className="w-full h-full object-cover rounded-full"
+                          />
+                        ) : (
+                          <AvatarFallback className="bg-green-100 text-green-700">
+                            {selectedMember.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
+                          </AvatarFallback>
+                        )}
+                      </Avatar>
                       <h3 className="font-semibold text-green-800">
                         {selectedMember.name}
                       </h3>
