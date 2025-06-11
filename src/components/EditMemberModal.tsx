@@ -221,23 +221,16 @@ const EditMemberModal = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="photo">Фото</Label>
+            <Label htmlFor="photo-url">URL фото (опционально)</Label>
             <Input
-              id="photo"
-              type="file"
-              accept="image/*"
-              onChange={handlePhotoUpload}
+              id="photo-url"
+              value={formData.photo || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, photo: e.target.value })
+              }
+              placeholder="https://example.com/photo.jpg"
               className="border-green-200 focus:border-green-400"
             />
-            {formData.photo && (
-              <div className="mt-2">
-                <img
-                  src={formData.photo}
-                  alt="Preview"
-                  className="w-20 h-20 object-cover rounded-md border border-green-200"
-                />
-              </div>
-            )}
           </div>
         </div>
 

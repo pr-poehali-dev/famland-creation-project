@@ -135,20 +135,13 @@ const Tree = () => {
                           onClick={() => setSelectedMember(member)}
                         >
                           <Avatar className="h-6 w-6">
-                            {member.photo ? (
-                              <img
-                                src={member.photo}
-                                alt={member.name}
-                                className="w-full h-full object-cover rounded-full"
-                              />
-                            ) : (
-                              <AvatarFallback className="text-xs bg-green-100 text-green-700">
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            )}
+                            <AvatarImage src={member.photo} alt={member.name} />
+                            <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                              {member.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
                           </Avatar>
                           <span className="text-xs mt-1">{member.name}</span>
                         </Button>
@@ -175,20 +168,13 @@ const Tree = () => {
                           onClick={() => setSelectedMember(member)}
                         >
                           <Avatar className="h-6 w-6">
-                            {member.photo ? (
-                              <img
-                                src={member.photo}
-                                alt={member.name}
-                                className="w-full h-full object-cover rounded-full"
-                              />
-                            ) : (
-                              <AvatarFallback className="text-xs bg-green-100 text-green-700">
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            )}
+                            <AvatarImage src={member.photo} alt={member.name} />
+                            <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                              {member.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
                           </Avatar>
                           <span className="text-xs mt-1">{member.name}</span>
                         </Button>
@@ -215,20 +201,13 @@ const Tree = () => {
                           onClick={() => setSelectedMember(member)}
                         >
                           <Avatar className="h-6 w-6">
-                            {member.photo ? (
-                              <img
-                                src={member.photo}
-                                alt={member.name}
-                                className="w-full h-full object-cover rounded-full"
-                              />
-                            ) : (
-                              <AvatarFallback className="text-xs bg-green-100 text-green-700">
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            )}
+                            <AvatarImage src={member.photo} alt={member.name} />
+                            <AvatarFallback className="text-xs bg-green-100 text-green-700">
+                              {member.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
                           </Avatar>
                           <span className="text-xs mt-1">{member.name}</span>
                         </Button>
@@ -251,20 +230,16 @@ const Tree = () => {
                   <div className="space-y-4">
                     <div className="text-center">
                       <Avatar className="h-16 w-16 mx-auto mb-2">
-                        {selectedMember.photo ? (
-                          <img
-                            src={selectedMember.photo}
-                            alt={selectedMember.name}
-                            className="w-full h-full object-cover rounded-full"
-                          />
-                        ) : (
-                          <AvatarFallback className="bg-green-100 text-green-700">
-                            {selectedMember.name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        )}
+                        <AvatarImage
+                          src={selectedMember.photo}
+                          alt={selectedMember.name}
+                        />
+                        <AvatarFallback className="bg-green-100 text-green-700">
+                          {selectedMember.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
+                        </AvatarFallback>
                       </Avatar>
                       <h3 className="font-semibold text-green-800">
                         {selectedMember.name}
