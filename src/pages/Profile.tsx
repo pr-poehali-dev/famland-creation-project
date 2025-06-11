@@ -255,6 +255,13 @@ const Profile = () => {
                 <CardTitle className="text-lg">Аккаунт</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
+                <Button
+                  variant="destructive"
+                  className="w-full justify-start bg-red-50 text-red-700 border-red-200 hover:bg-red-100"
+                >
+                  <Icon name="LogOut" className="mr-2 h-4 w-4" />
+                  Выйти
+                </Button>
                 <Button variant="outline" className="w-full justify-start">
                   <Icon name="Key" size={16} className="mr-2" />
                   Сменить пароль
