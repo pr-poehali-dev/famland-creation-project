@@ -21,44 +21,58 @@ const BreadcrumbNavigation = () => {
   // Маппинг путей к хлебным крошкам
   const getBreadcrumbs = (): BreadcrumbItem[] => {
     const pathSegments = location.pathname.split("/").filter(Boolean);
-
     const breadcrumbs: BreadcrumbItem[] = [
       { label: "Главная", path: "/", icon: "Home" },
     ];
 
-    // Определяем хлебные крошки на основе текущего пути
-    switch (location.pathname) {
-      case "/":
-        return [{ label: "Главная", path: "/", icon: "Home" }];
-
-      case "/tree":
-        return [
-          ...breadcrumbs,
-          { label: "Семейное древо", path: "/tree", icon: "TreePine" },
-        ];
-
-      case "/edit-member":
-        return [
-          ...breadcrumbs,
-          { label: "Семейное древо", path: "/tree", icon: "TreePine" },
-          { label: "Редактирование", path: "/edit-member", icon: "Edit" },
-        ];
-
-      case "/profile":
-        return [
-          ...breadcrumbs,
-          { label: "Профиль", path: "/profile", icon: "User" },
-        ];
-
-      case "/auth":
-        return [
-          ...breadcrumbs,
-          { label: "Авторизация", path: "/auth", icon: "LogIn" },
-        ];
-
-      default:
-        return breadcrumbs;
+    // Если на главной странице, возвращаем только её
+    if (pathSegments.length === 0) {
+      return breadcrumbs;
     }
+
+    // Обрабатываем каждый сегмент пути
+    let currentPath = "";
+    pathSegments.forEach((segment) => {
+      currentPath += `/${segment}`;
+
+      // Определяем label и icon для каждого сегмента
+      let label = segment;
+      let icon = "";
+
+      switch (segment) {
+        case "tree":
+          label = "Семейное древо";
+          icon = "TreePine";
+          break;
+        case "edit-member":
+          label = "Редактирование";
+          icon = "Edit";
+          break;
+        case "profile":
+          label = "Профиль";
+          icon = "User";
+          break;
+        case "auth":
+          label = "Авторизация";
+          icon = "LogIn";
+          break;
+        case "member":
+          label = "Участник";
+          icon = "Users";
+          break;
+        default:
+          // Для динамических параметров (например, ID)
+          if (/^\d+$/.test(segment)) {
+            label = `#${segment}`;
+            icon = "Hash";
+          }
+          break;
+      }
+
+      breadcrumbs.push({ label, path: currentPath, icon });
+    });
+
+    return breadcrumbs;
   };
 
   const breadcrumbs = getBreadcrumbs();
