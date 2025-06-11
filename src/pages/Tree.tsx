@@ -118,7 +118,6 @@ const Tree = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-green-800">
                   <Icon name="TreePine" size={24} />
-                  Семейное Древо
                 </CardTitle>
               </CardHeader>
               <CardContent>
