@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import EditMemberModal from "@/components/EditMemberModal";
 
 interface FamilyMember {
   id: string;
@@ -17,11 +17,10 @@ interface FamilyMember {
 }
 
 const Tree = () => {
+  const navigate = useNavigate();
   const [selectedMember, setSelectedMember] = useState<FamilyMember | null>(
     null,
   );
-  const [editingMember, setEditingMember] = useState<FamilyMember | null>(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const [familyData, setFamilyData] = useState<FamilyMember[]>([
     {
@@ -77,8 +76,11 @@ const Tree = () => {
   ]);
 
   const handleEditMember = (member: FamilyMember) => {
-    setEditingMember(member);
-    setIsEditModalOpen(true);
+    navigate(`/edit-member?id=${member.id}`);
+  };
+
+  const handleAddMember = () => {
+    navigate("/edit-member");
   };
 
   const handleSaveMember = (updatedMember: FamilyMember) => {
@@ -284,7 +286,10 @@ const Tree = () => {
             <Card className="border-green-200 mt-4">
               <CardContent className="pt-6">
                 <div className="space-y-3">
-                  <Button className="w-full bg-green-700 hover:bg-green-800">
+                  <Button
+                    className="w-full bg-green-700 hover:bg-green-800"
+                    onClick={handleAddMember}
+                  >
                     <Icon name="Plus" size={16} className="mr-2" />
                     Добавить члена
                   </Button>
@@ -311,13 +316,6 @@ const Tree = () => {
             </Card>
           </div>
         </div>
-
-        <EditMemberModal
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          member={editingMember}
-          onSave={handleSaveMember}
-        />
       </div>
     </div>
   );
