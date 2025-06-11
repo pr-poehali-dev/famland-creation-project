@@ -253,6 +253,13 @@ const Tree = () => {
                         <span className="ml-2">{selectedMember.relation}</span>
                       </div>
                     </div>
+                    <Button
+                      className="w-full bg-green-600 hover:bg-green-700 mt-4"
+                      onClick={() => handleEditMember(selectedMember)}
+                    >
+                      <Icon name="User" size={16} className="mr-2" />
+                      Подробнее
+                    </Button>
                   </div>
                 ) : (
                   <div className="text-center text-green-600">
