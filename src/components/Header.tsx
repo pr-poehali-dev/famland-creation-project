@@ -31,6 +31,12 @@ const Header = () => {
             >
               Войти
             </Link>
+            <Link
+              to="/profile"
+              className="px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
+            >
+              Профиль
+            </Link>
           </nav>
         </div>
       </div>
