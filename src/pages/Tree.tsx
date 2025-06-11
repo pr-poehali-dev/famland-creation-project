@@ -101,14 +101,6 @@ const Tree = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white py-8">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Заголовок страницы */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-green-800 mb-4">
-            Семейное древо
-          </h1>
-          <p className="text-green-600">Изучите историю вашей семьи</p>
-        </div>
-
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Визуализация древа */}
           <div className="lg:col-span-3">
