@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Icon from "@/components/ui/icon";
+import PhotoGallery from "@/components/PhotoGallery";
 
 interface FamilyMember {
   id: string;
@@ -267,6 +268,21 @@ const MemberProfile = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
+
+        {/* Галерея фотографий */}
+        <div className="mt-8">
+          <PhotoGallery
+            allowEdit={true}
+            onAddPhoto={() => {
+              // Здесь будет логика добавления фото
+              console.log("Добавить фото для", member.name);
+            }}
+            onDeletePhoto={(photoId) => {
+              // Здесь будет логика удаления фото
+              console.log("Удалить фото", photoId);
+            }}
+          />
         </div>
       </div>
     </div>
