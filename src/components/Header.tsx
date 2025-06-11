@@ -33,7 +33,7 @@ const Header = () => {
             </Link>
             <Link
               to="/profile"
-              className="px-4 py-2 bg-green-700 text-white hover:bg-green-800 rounded-lg transition-colors"
+              className="px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
             >
               Профиль
             </Link>
