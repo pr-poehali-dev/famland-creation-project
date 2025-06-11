@@ -21,20 +21,23 @@ const Header = () => {
           <nav className="flex items-center gap-4">
             <Link
               to="/tree"
-              className="px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
             >
+              <Icon name="GitBranch" size={18} />
               Древо
             </Link>
             <Link
               to="/auth"
-              className="px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
             >
+              <Icon name="LogIn" size={18} />
               Войти
             </Link>
             <Link
               to="/profile"
-              className="px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
             >
+              <Icon name="User" size={18} />
               Профиль
             </Link>
           </nav>
