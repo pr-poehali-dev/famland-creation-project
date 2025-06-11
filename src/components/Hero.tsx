@@ -1,16 +1,11 @@
 import Icon from "@/components/ui/icon";
+import Logo from "@/components/Logo";
 
 const Hero = () => {
   return (
     <section className="bg-gradient-to-b from-green-50 to-white py-20 px-4">
       <div className="max-w-6xl mx-auto text-center">
-        <div className="mb-8">
-          <Icon
-            name="TreePine"
-            size={64}
-            className="text-green-700 mx-auto mb-4"
-          />
-        </div>
+        <Logo />
 
         <h1 className="text-5xl md:text-6xl font-bold text-green-800 mb-6 font-serif">
           Семейное Древо
