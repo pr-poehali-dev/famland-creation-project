@@ -116,9 +116,7 @@ const Tree = () => {
           <div className="lg:col-span-3">
             <Card className="border-green-200">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-800">
-                  <Icon name="TreePine" size={24} />
-                </CardTitle>
+                <CardTitle className="flex items-center gap-2 text-green-800"></CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-8">
