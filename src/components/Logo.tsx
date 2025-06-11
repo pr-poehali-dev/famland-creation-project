@@ -11,7 +11,7 @@ const Logo = () => {
         <Icon name="TreePine" size={40} className="text-green-700" />
       </div>
       <div className="text-2xl font-bold text-green-800 font-serif">
-        Семейное Древо
+        Famland
       </div>
     </Link>
   );

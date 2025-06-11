@@ -13,7 +13,7 @@ const Header = () => {
           >
             <Icon name="TreePine" size={32} className="text-green-700" />
             <span className="text-xl font-bold text-green-800 font-serif">
-              Семейное Древо
+              Famland
             </span>
           </Link>
 

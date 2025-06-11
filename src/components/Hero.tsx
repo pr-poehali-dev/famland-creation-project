@@ -5,7 +5,7 @@ const Hero = () => {
     <section className="bg-gradient-to-b from-green-50 to-white py-20 px-4">
       <div className="max-w-6xl mx-auto text-center">
         <h1 className="text-5xl md:text-6xl font-bold text-green-800 mb-6 font-serif">
-          Семейное Древо
+          Famland
         </h1>
 
         <p className="text-xl md:text-2xl text-green-600 mb-8 max-w-3xl mx-auto leading-relaxed">
