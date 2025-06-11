@@ -75,6 +75,10 @@ const Tree = () => {
     },
   ]);
 
+  const handleViewMember = (member: FamilyMember) => {
+    navigate(`/member/${member.id}`);
+  };
+
   const handleEditMember = (member: FamilyMember) => {
     navigate(`/edit-member?id=${member.id}`);
   };
@@ -255,7 +259,7 @@ const Tree = () => {
                     </div>
                     <Button
                       className="w-full bg-green-600 hover:bg-green-700 mt-4"
-                      onClick={() => handleEditMember(selectedMember)}
+                      onClick={() => handleViewMember(selectedMember)}
                     >
                       <Icon name="User" size={16} className="mr-2" />
                       Подробнее
