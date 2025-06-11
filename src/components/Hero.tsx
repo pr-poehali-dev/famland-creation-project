@@ -1,5 +1,4 @@
 import Icon from "@/components/ui/icon";
-import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -15,17 +14,9 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link to="/auth">
-            <button className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
-              Начать создание древа
-            </button>
-          </Link>
-
-          <Link to="/profile">
-            <button className="border-2 border-green-700 text-green-700 hover:bg-green-700 hover:text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300">
-              Мой профиль
-            </button>
-          </Link>
+          <button className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
+            Начать создание древа
+          </button>
         </div>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
