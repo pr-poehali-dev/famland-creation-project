@@ -103,9 +103,6 @@ const Tree = () => {
       <div className="max-w-6xl mx-auto px-4">
         {/* Заголовок страницы */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-green-800 mb-4 font-serif">
-            Семейное Древо
-          </h1>
           <p className="text-lg text-green-600 max-w-2xl mx-auto">
             Изучите связи между членами семьи и узнайте больше о своих корнях
           </p>
