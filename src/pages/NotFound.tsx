@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 
@@ -16,7 +15,6 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-      <Header />
       <div className="flex items-center justify-center flex-1 py-16">
         <div className="text-center">
           <Icon
