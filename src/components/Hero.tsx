@@ -1,5 +1,6 @@
 import Icon from "@/components/ui/icon";
 import Logo from "@/components/Logo";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
