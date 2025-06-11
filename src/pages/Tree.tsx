@@ -2,21 +2,24 @@ import { useState } from "react";
 import Icon from "@/components/ui/icon";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import EditMemberModal from "@/components/EditMemberModal";
 
 interface FamilyMember {
   id: string;
   name: string;
   relation: string;
   generation: number;
+  birthDate?: string;
+  description?: string;
   children?: string[];
 }
 
 const Tree = () => {
-  const [selectedMember, setSelectedMember] = useState<FamilyMember | null>(
-    null,
-  );
+  const [selectedMember, setSelectedMember] = useState<FamilyMember | null>(null);
+  const [editingMember, setEditingMember] = useState<FamilyMember | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const familyData: FamilyMember[] = [
+  const [familyData, setFamilyData] = useState<FamilyMember[]>([
     { id: "1", name: "Дедушка Иван", relation: "Дедушка", generation: 0 },
     { id: "2", name: "Бабушка Мария", relation: "Бабушка", generation: 0 },
     {
@@ -36,6 +39,33 @@ const Tree = () => {
     { id: "5", name: "Я", relation: "Сын/Дочь", generation: 2 },
     { id: "6", name: "Брат Михаил", relation: "Брат", generation: 2 },
   ];
+
+  const handleEditMember = (member: FamilyMember) => {
+    setEditingMember(member);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveMember = (updatedMember: FamilyMember) => {
+    setFamilyData(prev => 
+      prev.map(member => 
+        member.id === updatedMember.id ? updatedMember : member
+      )
+    );
+    if (selectedMember?.id === updatedMember.id) {
+      setSelectedMember(updatedMember);
+    }
+  };
+
+  const getGenerationMembers = (generation: number) => {
+    return familyData.filter((member) => member.generation === generation);
+  }; 
+        member.id === updatedMember.id ? updatedMember : member
+      )
+    );
+    if (selectedMember?.id === updatedMember.id) {
+      setSelectedMember(updatedMember);
+    }
+  };
 
   const getGenerationMembers = (generation: number) => {
     return familyData.filter((member) => member.generation === generation);
@@ -217,6 +247,8 @@ const Tree = () => {
                   <Button
                     variant="outline"
                     className="w-full border-green-300 text-green-700"
+                    onClick={() => selectedMember && handleEditMember(selectedMember)}
+                    disabled={!selectedMember}
                   >
                     <Icon name="Edit" size={16} className="mr-2" />
                     Редактировать
@@ -233,6 +265,13 @@ const Tree = () => {
             </Card>
           </div>
         </div>
+
+        <EditMemberModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          member={editingMember}
+          onSave={handleSaveMember}
+        />
       </div>
     </div>
   );
