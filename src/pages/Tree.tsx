@@ -102,11 +102,7 @@ const Tree = () => {
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white py-8">
       <div className="max-w-6xl mx-auto px-4">
         {/* Заголовок страницы */}
-        <div className="text-center mb-12">
-          <p className="text-lg text-green-600 max-w-2xl mx-auto">
-            Изучите связи между членами семьи и узнайте больше о своих корнях
-          </p>
-        </div>
+        <div className="text-center mb-12"></div>
 
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Визуализация древа */}
