@@ -49,7 +49,7 @@ const FamilyMemberCombobox = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between focus:outline-none focus:ring-0 border-green-200 focus:border-green-400 hover:border-green-300 hover:bg-green-50/50"
+          className="w-full justify-between focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-input bg-background hover:bg-accent/50 transition-colors"
         >
           {selectedMember ? (
             <div className="flex items-center gap-3">
@@ -77,14 +77,19 @@ const FamilyMemberCombobox = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[--radix-popover-trigger-width] p-0"
+        className="w-[--radix-popover-trigger-width] p-0 shadow-lg border-border bg-popover"
         align="start"
       >
-        <Command>
-          <CommandInput placeholder="Найти члена семьи..." />
-          <CommandList>
-            <CommandEmpty>Члены семьи не найдены.</CommandEmpty>
-            <CommandGroup>
+        <Command className="rounded-md">
+          <CommandInput
+            placeholder="Найти члена семьи..."
+            className="border-none focus:ring-0 h-10 px-3"
+          />
+          <CommandList className="max-h-64 overflow-auto">
+            <CommandEmpty className="py-6 text-center text-sm text-muted-foreground">
+              Члены семьи не найдены.
+            </CommandEmpty>
+            <CommandGroup className="p-1">
               {members.map((member) => (
                 <CommandItem
                   key={member.id}
@@ -93,33 +98,34 @@ const FamilyMemberCombobox = ({
                     onValueChange(member.id);
                     setOpen(false);
                   }}
+                  className="px-3 py-3 rounded-lg cursor-pointer transition-colors hover:bg-accent focus:bg-accent data-[selected]:bg-accent"
                 >
                   <div className="flex items-center gap-3 w-full">
                     <div className="relative">
                       <img
                         src={member.photo}
                         alt={getMemberDisplayName(member)}
-                        className="w-8 h-8 rounded-full object-cover border border-green-100"
+                        className="w-8 h-8 rounded-full object-cover border-2 border-border shadow-sm"
                       />
                       {member.deceased && (
-                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-gray-400 rounded-full border border-white"></div>
+                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-muted-foreground rounded-full border-2 border-background shadow-sm"></div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-medium text-sm truncate">
+                        <h4 className="font-medium text-sm truncate text-foreground">
                           {getMemberDisplayName(member)}
                         </h4>
                         <Icon
                           name="Check"
                           className={cn(
-                            "ml-2 h-4 w-4",
+                            "ml-2 h-4 w-4 text-primary",
                             value === member.id ? "opacity-100" : "opacity-0",
                           )}
                         />
                       </div>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+                        <span className="text-xs text-muted-foreground bg-accent px-2 py-0.5 rounded-full border border-border">
                           {member.relation}
                         </span>
                         {member.age && (
@@ -128,7 +134,7 @@ const FamilyMemberCombobox = ({
                           </span>
                         )}
                         {member.deceased && (
-                          <span className="text-xs text-muted-foreground italic">
+                          <span className="text-xs text-muted-foreground italic opacity-75">
                             ушел из жизни
                           </span>
                         )}
