@@ -130,7 +130,7 @@ const FamilyMemberCard = ({
 
   return (
     <Card
-      className="relative w-52 cursor-pointer hover:shadow-lg transition-shadow flex-shrink-0"
+      className="relative w-52 cursor-pointer hover:shadow-lg hover:bg-green-50 transition-all duration-300 flex-shrink-0"
       onClick={() => onClick(member)}
     >
       <CardContent className="p-5 flex flex-col items-center h-full">
