@@ -140,6 +140,7 @@ const EditMember = () => {
                   id="photo"
                   type="file"
                   accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                  className="text-center"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
                     if (file) {
