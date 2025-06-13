@@ -45,6 +45,12 @@ const Footer = () => {
               >
                 Профиль
               </Link>
+              <Link
+                to="/changelog"
+                className="block text-green-600 hover:text-green-800 transition-colors text-sm"
+              >
+                История обновлений
+              </Link>
             </div>
           </div>
 
