@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
 import { FamilyRelation, RELATION_TYPES } from "@/types/family";
 import { useFamilyData } from "@/hooks/useFamilyData";
+import FamilyMemberCombobox from "@/components/FamilyMemberCombobox";
 
 interface FamilyRelationsSectionProps {
   relations: FamilyRelation[];
@@ -91,25 +92,14 @@ const FamilyRelationsSection = ({
             >
               <div className="flex-1 space-y-2">
                 <Label className="text-sm font-medium">Член семьи</Label>
-                <Select
+                <FamilyMemberCombobox
                   value={relation.memberId}
                   onValueChange={(value) =>
                     updateRelation(relation.id, "memberId", value)
                   }
-                >
-                  <SelectTrigger className="focus:outline-none focus:ring-0 border-green-200 focus:border-green-400">
-                    <SelectValue placeholder="Выберите члена семьи" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {availableMembers.map((member) => (
-                      <SelectItem key={member.id} value={member.id}>
-                        {member.name ||
-                          `${member.firstName} ${member.lastName}`.trim() ||
-                          member.relation}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  members={availableMembers}
+                  placeholder="Найти члена семьи..."
+                />
               </div>
 
               <div className="flex-1 space-y-2">
