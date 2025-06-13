@@ -88,7 +88,7 @@ const FamilyRelationsSection = ({
           relations.map((relation, index) => (
             <div
               key={relation.id}
-              className="flex items-start gap-3 p-4 bg-green-50 rounded-lg"
+              className="flex items-end gap-3 p-4 bg-green-50 rounded-lg"
             >
               <div className="flex-1 space-y-2">
                 <Label className="text-sm font-medium">Член семьи</Label>
@@ -123,17 +123,15 @@ const FamilyRelationsSection = ({
                 </Select>
               </div>
 
-              <div className="flex flex-col justify-end">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => removeRelation(relation.id)}
-                  className="border-red-300 text-red-600 hover:bg-red-50"
-                >
-                  <Icon name="Trash2" size={16} />
-                </Button>
-              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => removeRelation(relation.id)}
+                className="border-red-300 text-red-600 hover:bg-red-50"
+              >
+                <Icon name="Trash2" size={16} />
+              </Button>
             </div>
           ))
         )}
