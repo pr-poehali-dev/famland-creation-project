@@ -18,7 +18,17 @@ interface CropDialogProps {
 interface CropArea {
   x: number;
   y: number;
-  size: number;
+  width: number;
+  height: number;
+}
+
+interface ImageDimensions {
+  displayWidth: number;
+  displayHeight: number;
+  displayX: number;
+  displayY: number;
+  naturalWidth: number;
+  naturalHeight: number;
 }
 
 const CropDialog = ({
@@ -30,7 +40,8 @@ const CropDialog = ({
   const [cropArea, setCropArea] = useState<CropArea>({
     x: 50,
     y: 50,
-    size: 176,
+    width: 150,
+    height: 150,
   });
   const [isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
@@ -39,45 +50,61 @@ const CropDialog = ({
   const [initialCropArea, setInitialCropArea] = useState<CropArea>({
     x: 0,
     y: 0,
-    size: 0,
+    width: 0,
+    height: 0,
   });
+  const [imageDimensions, setImageDimensions] =
+    useState<ImageDimensions | null>(null);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
-  // Инициализация области кропа при загрузке изображения
+  // Вычисляем размеры и позицию изображения
+  const calculateImageDimensions = useCallback(() => {
+    if (!imageRef.current || !containerRef.current) return null;
+
+    const img = imageRef.current;
+    const container = containerRef.current;
+
+    const containerRect = container.getBoundingClientRect();
+    const imgRect = img.getBoundingClientRect();
+
+    return {
+      displayWidth: imgRect.width,
+      displayHeight: imgRect.height,
+      displayX: imgRect.left - containerRect.left,
+      displayY: imgRect.top - containerRect.top,
+      naturalWidth: img.naturalWidth,
+      naturalHeight: img.naturalHeight,
+    };
+  }, []);
+
+  // Инициализация области кропа
   useEffect(() => {
-    if (isOpen && imageRef.current && containerRef.current) {
+    if (isOpen && imageRef.current) {
       const timer = setTimeout(() => {
-        const imageElement = imageRef.current!;
-        const containerElement = containerRef.current!;
-        const imageRect = imageElement.getBoundingClientRect();
-        const containerRect = containerElement.getBoundingClientRect();
+        const dims = calculateImageDimensions();
+        if (dims) {
+          setImageDimensions(dims);
 
-        // Вычисляем позицию изображения внутри контейнера
-        const imageOffsetX = imageRect.left - containerRect.left;
-        const imageOffsetY = imageRect.top - containerRect.top;
+          // Устанавливаем квадратную область кропа в центре изображения
+          const cropSize =
+            Math.min(dims.displayWidth, dims.displayHeight) * 0.6;
+          const cropX = dims.displayX + (dims.displayWidth - cropSize) / 2;
+          const cropY = dims.displayY + (dims.displayHeight - cropSize) / 2;
 
-        // Размер области кропа (квадрат)
-        const cropSize = Math.min(
-          176,
-          imageRect.width * 0.6,
-          imageRect.height * 0.6,
-        );
-
-        // Центрируем область кропа на изображении
-        const cropX = imageOffsetX + (imageRect.width - cropSize) / 2;
-        const cropY = imageOffsetY + (imageRect.height - cropSize) / 2;
-
-        setCropArea({
-          x: cropX,
-          y: cropY,
-          size: cropSize,
-        });
-      }, 100); // Небольшая задержка для корректного расчета размеров
+          setCropArea({
+            x: cropX,
+            y: cropY,
+            width: cropSize,
+            height: cropSize,
+          });
+        }
+      }, 100);
 
       return () => clearTimeout(timer);
     }
-  }, [isOpen, imageUrl]);
+  }, [isOpen, imageUrl, calculateImageDimensions]);
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -112,9 +139,47 @@ const CropDialog = ({
     [cropArea],
   );
 
+  const constrainCropArea = useCallback(
+    (area: CropArea): CropArea => {
+      if (!imageDimensions) return area;
+
+      const { displayX, displayY, displayWidth, displayHeight } =
+        imageDimensions;
+
+      // Ограничиваем область кропа границами изображения
+      const minX = displayX;
+      const minY = displayY;
+      const maxX = displayX + displayWidth;
+      const maxY = displayY + displayHeight;
+
+      let { x, y, width, height } = area;
+
+      // Минимальный размер
+      const minSize = 50;
+      width = Math.max(minSize, width);
+      height = Math.max(minSize, height);
+
+      // Максимальный размер не больше изображения
+      width = Math.min(width, displayWidth);
+      height = Math.min(height, displayHeight);
+
+      // Держим квадратную форму
+      const size = Math.min(width, height);
+      width = size;
+      height = size;
+
+      // Ограничиваем позицию
+      x = Math.max(minX, Math.min(x, maxX - width));
+      y = Math.max(minY, Math.min(y, maxY - height));
+
+      return { x, y, width, height };
+    },
+    [imageDimensions],
+  );
+
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
-      if (!containerRef.current) return;
+      if (!containerRef.current || !imageDimensions) return;
 
       const rect = containerRef.current.getBoundingClientRect();
       const currentX = e.clientX - rect.left;
@@ -124,59 +189,56 @@ const CropDialog = ({
         const deltaX = currentX - dragStart.x;
         const deltaY = currentY - dragStart.y;
 
-        let newSize = initialCropArea.size;
-        let newX = initialCropArea.x;
-        let newY = initialCropArea.y;
+        let newArea = { ...initialCropArea };
 
         // Определяем новый размер в зависимости от ручки
-        if (resizeHandle.includes("right") || resizeHandle.includes("bottom")) {
-          newSize = initialCropArea.size + Math.max(deltaX, deltaY);
-        } else if (
-          resizeHandle.includes("left") ||
-          resizeHandle.includes("top")
-        ) {
-          const sizeDelta = Math.max(-deltaX, -deltaY);
-          newSize = initialCropArea.size + sizeDelta;
-          newX = initialCropArea.x - sizeDelta;
-          newY = initialCropArea.y - sizeDelta;
+        if (resizeHandle.includes("right")) {
+          newArea.width = initialCropArea.width + deltaX;
+        } else if (resizeHandle.includes("left")) {
+          newArea.width = initialCropArea.width - deltaX;
+          newArea.x = initialCropArea.x + deltaX;
         }
 
-        // Ограничиваем минимальный и максимальный размер
-        const minSize = 50;
-        const maxSize = Math.min(rect.width, rect.height) - 20;
-        newSize = Math.max(minSize, Math.min(newSize, maxSize));
-
-        // Корректируем позицию при изменении размера от левого/верхнего края
-        if (resizeHandle.includes("left") || resizeHandle.includes("top")) {
-          const sizeDiff = newSize - initialCropArea.size;
-          newX = initialCropArea.x - sizeDiff;
-          newY = initialCropArea.y - sizeDiff;
+        if (resizeHandle.includes("bottom")) {
+          newArea.height = initialCropArea.height + deltaY;
+        } else if (resizeHandle.includes("top")) {
+          newArea.height = initialCropArea.height - deltaY;
+          newArea.y = initialCropArea.y + deltaY;
         }
 
-        // Ограничиваем область границами контейнера
-        const maxX = rect.width - newSize;
-        const maxY = rect.height - newSize;
-        newX = Math.max(0, Math.min(newX, maxX));
-        newY = Math.max(0, Math.min(newY, maxY));
+        // Для угловых ручек используем максимальное изменение для сохранения квадрата
+        if (resizeHandle.includes("-")) {
+          const maxDelta = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+          if (
+            resizeHandle.includes("right") ||
+            resizeHandle.includes("bottom")
+          ) {
+            newArea.width = initialCropArea.width + maxDelta;
+            newArea.height = initialCropArea.height + maxDelta;
+          } else {
+            newArea.width = initialCropArea.width + maxDelta;
+            newArea.height = initialCropArea.height + maxDelta;
+            if (resizeHandle.includes("left")) {
+              newArea.x = initialCropArea.x - maxDelta;
+            }
+            if (resizeHandle.includes("top")) {
+              newArea.y = initialCropArea.y - maxDelta;
+            }
+          }
+        }
 
-        setCropArea({
-          x: newX,
-          y: newY,
-          size: newSize,
-        });
+        setCropArea(constrainCropArea(newArea));
       } else if (isDragging) {
         const newX = currentX - dragStart.x;
         const newY = currentY - dragStart.y;
 
-        // Ограничиваем область кропа границами изображения
-        const maxX = rect.width - cropArea.size;
-        const maxY = rect.height - cropArea.size;
-
-        setCropArea((prev) => ({
-          ...prev,
-          x: Math.max(0, Math.min(newX, maxX)),
-          y: Math.max(0, Math.min(newY, maxY)),
-        }));
+        setCropArea(
+          constrainCropArea({
+            ...cropArea,
+            x: newX,
+            y: newY,
+          }),
+        );
       }
     },
     [
@@ -185,7 +247,9 @@ const CropDialog = ({
       dragStart,
       resizeHandle,
       initialCropArea,
-      cropArea.size,
+      cropArea,
+      imageDimensions,
+      constrainCropArea,
     ],
   );
 
@@ -196,56 +260,60 @@ const CropDialog = ({
   }, []);
 
   const createCroppedImage = () => {
-    if (!imageRef.current || !containerRef.current) return;
+    if (!imageDimensions) return;
 
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
     const img = new Image();
+    img.crossOrigin = "anonymous";
 
     img.onload = () => {
-      const imageElement = imageRef.current!;
-      const imageRect = imageElement.getBoundingClientRect();
-      const containerRect = containerRef.current!.getBoundingClientRect();
+      const {
+        displayX,
+        displayY,
+        displayWidth,
+        displayHeight,
+        naturalWidth,
+        naturalHeight,
+      } = imageDimensions;
 
-      // Вычисляем позицию изображения внутри контейнера
-      const imageOffsetX = imageRect.left - containerRect.left;
-      const imageOffsetY = imageRect.top - containerRect.top;
+      // Рассчитываем координаты обрезки относительно изображения
+      const cropRelativeX = cropArea.x - displayX;
+      const cropRelativeY = cropArea.y - displayY;
 
-      // Корректируем координаты кропа относительно изображения
-      const cropRelativeX = cropArea.x - imageOffsetX;
-      const cropRelativeY = cropArea.y - imageOffsetY;
+      // Рассчитываем масштаб между отображаемым и исходным изображением
+      const scaleX = naturalWidth / displayWidth;
+      const scaleY = naturalHeight / displayHeight;
 
-      // Проверяем, что область кропа находится внутри изображения
-      if (
-        cropRelativeX < 0 ||
-        cropRelativeY < 0 ||
-        cropRelativeX + cropArea.size > imageRect.width ||
-        cropRelativeY + cropArea.size > imageRect.height
-      ) {
-        console.warn("Область кропа выходит за границы изображения");
-        return;
-      }
+      // Переводим координаты в координаты исходного изображения
+      const sourceX = cropRelativeX * scaleX;
+      const sourceY = cropRelativeY * scaleY;
+      const sourceWidth = cropArea.width * scaleX;
+      const sourceHeight = cropArea.height * scaleY;
 
-      // Вычисляем масштаб между отображаемым и оригинальным изображением
-      const scaleX = img.naturalWidth / imageRect.width;
-      const scaleY = img.naturalHeight / imageRect.height;
+      // Устанавливаем размер канваса для квадратного результата 300x300
+      const outputSize = 300;
+      canvas.width = outputSize;
+      canvas.height = outputSize;
 
-      // Переводим координаты в координаты оригинального изображения
-      const cropX = cropRelativeX * scaleX;
-      const cropY = cropRelativeY * scaleY;
-      const cropWidth = cropArea.size * scaleX;
-      const cropHeight = cropArea.size * scaleY;
+      // Заливаем канвас белым цветом
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, outputSize, outputSize);
 
-      // Устанавливаем размер канваса 300x300 для квадратного результата
-      canvas.width = 300;
-      canvas.height = 300;
-
-      // Заливаем канвас белым цветом для прозрачных областей
-      if (ctx) {
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, 300, 300);
-        ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, 300, 300);
-      }
+      // Обрезаем и рисуем изображение
+      ctx.drawImage(
+        img,
+        Math.max(0, sourceX),
+        Math.max(0, sourceY),
+        Math.min(sourceWidth, naturalWidth - Math.max(0, sourceX)),
+        Math.min(sourceHeight, naturalHeight - Math.max(0, sourceY)),
+        0,
+        0,
+        outputSize,
+        outputSize,
+      );
 
       const croppedImageUrl = canvas.toDataURL("image/jpeg", 0.9);
       onCropSelect(croppedImageUrl);
@@ -267,12 +335,12 @@ const CropDialog = ({
 
         <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            Перетащите квадрат на нужную область фото для обрезки
+            Перетащите и измените размер квадрата для обрезки фото
           </p>
 
           <div
             ref={containerRef}
-            className="relative bg-gray-100 rounded-lg overflow-hidden cursor-move select-none flex items-center justify-center"
+            className="relative bg-gray-100 rounded-lg overflow-hidden select-none flex items-center justify-center"
             style={{ width: "100%", height: "400px" }}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
@@ -284,31 +352,35 @@ const CropDialog = ({
               alt="Изображение для обрезки"
               className="max-w-full max-h-full object-contain"
               draggable={false}
+              onLoad={() => {
+                const dims = calculateImageDimensions();
+                if (dims) setImageDimensions(dims);
+              }}
             />
 
             {/* Затемнение вокруг области кропа */}
             <div
-              className="absolute inset-0 bg-black bg-opacity-50"
+              className="absolute inset-0 bg-black bg-opacity-50 pointer-events-none"
               style={{
                 clipPath: `polygon(
                   0% 0%, 
                   ${cropArea.x}px 0%, 
                   ${cropArea.x}px ${cropArea.y}px, 
-                  ${cropArea.x + cropArea.size}px ${cropArea.y}px, 
-                  ${cropArea.x + cropArea.size}px ${cropArea.y + cropArea.size}px, 
-                  ${cropArea.x}px ${cropArea.y + cropArea.size}px, 
+                  ${cropArea.x + cropArea.width}px ${cropArea.y}px, 
+                  ${cropArea.x + cropArea.width}px ${cropArea.y + cropArea.height}px, 
+                  ${cropArea.x}px ${cropArea.y + cropArea.height}px, 
                   ${cropArea.x}px 100%, 
                   0% 100%,
                   0% 0%,
                   100% 0%,
                   100% ${cropArea.y}px,
-                  ${cropArea.x + cropArea.size}px ${cropArea.y}px,
-                  ${cropArea.x + cropArea.size}px 0%,
+                  ${cropArea.x + cropArea.width}px ${cropArea.y}px,
+                  ${cropArea.x + cropArea.width}px 0%,
                   100% 0%,
                   100% 100%,
-                  ${cropArea.x + cropArea.size}px 100%,
-                  ${cropArea.x + cropArea.size}px ${cropArea.y + cropArea.size}px,
-                  100% ${cropArea.y + cropArea.size}px,
+                  ${cropArea.x + cropArea.width}px 100%,
+                  ${cropArea.x + cropArea.width}px ${cropArea.y + cropArea.height}px,
+                  100% ${cropArea.y + cropArea.height}px,
                   100% 100%,
                   0% 100%
                 )`,
@@ -321,51 +393,33 @@ const CropDialog = ({
               style={{
                 left: cropArea.x,
                 top: cropArea.y,
-                width: cropArea.size,
-                height: cropArea.size,
-                boxShadow: "0 0 0 2px rgba(0,0,0,0.3)",
+                width: cropArea.width,
+                height: cropArea.height,
+                boxShadow: "0 0 0 1px rgba(0,0,0,0.3)",
               }}
               onMouseDown={handleMouseDown}
             >
               {/* Ручки для изменения размера по углам */}
               <div
-                className="absolute -top-1 -left-1 w-3 h-3 bg-white border border-gray-400 rounded-sm cursor-nw-resize"
+                className="absolute -top-2 -left-2 w-4 h-4 bg-white border-2 border-blue-500 rounded-full cursor-nw-resize hover:bg-blue-50"
                 onMouseDown={(e) => handleResizeStart(e, "top-left")}
-              ></div>
+              />
               <div
-                className="absolute -top-1 -right-1 w-3 h-3 bg-white border border-gray-400 rounded-sm cursor-ne-resize"
+                className="absolute -top-2 -right-2 w-4 h-4 bg-white border-2 border-blue-500 rounded-full cursor-ne-resize hover:bg-blue-50"
                 onMouseDown={(e) => handleResizeStart(e, "top-right")}
-              ></div>
+              />
               <div
-                className="absolute -bottom-1 -left-1 w-3 h-3 bg-white border border-gray-400 rounded-sm cursor-sw-resize"
+                className="absolute -bottom-2 -left-2 w-4 h-4 bg-white border-2 border-blue-500 rounded-full cursor-sw-resize hover:bg-blue-50"
                 onMouseDown={(e) => handleResizeStart(e, "bottom-left")}
-              ></div>
+              />
               <div
-                className="absolute -bottom-1 -right-1 w-3 h-3 bg-white border border-gray-400 rounded-sm cursor-se-resize"
+                className="absolute -bottom-2 -right-2 w-4 h-4 bg-white border-2 border-blue-500 rounded-full cursor-se-resize hover:bg-blue-50"
                 onMouseDown={(e) => handleResizeStart(e, "bottom-right")}
-              ></div>
-
-              {/* Ручки для изменения размера по краям */}
-              <div
-                className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white border border-gray-400 rounded-sm cursor-n-resize"
-                onMouseDown={(e) => handleResizeStart(e, "top")}
-              ></div>
-              <div
-                className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white border border-gray-400 rounded-sm cursor-s-resize"
-                onMouseDown={(e) => handleResizeStart(e, "bottom")}
-              ></div>
-              <div
-                className="absolute -left-1 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border border-gray-400 rounded-sm cursor-w-resize"
-                onMouseDown={(e) => handleResizeStart(e, "left")}
-              ></div>
-              <div
-                className="absolute -right-1 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-white border border-gray-400 rounded-sm cursor-e-resize"
-                onMouseDown={(e) => handleResizeStart(e, "right")}
-              ></div>
+              />
 
               {/* Центральная иконка */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="bg-white bg-opacity-80 rounded-full p-1">
+                <div className="bg-white bg-opacity-90 rounded-full p-2 shadow-sm">
                   <Icon name="Move" size={16} className="text-gray-600" />
                 </div>
               </div>
@@ -380,6 +434,7 @@ const CropDialog = ({
             <Button
               onClick={createCroppedImage}
               className="bg-green-700 hover:bg-green-800"
+              disabled={!imageDimensions}
             >
               <Icon name="Check" size={16} className="mr-2" />
               Применить обрезку
