@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import Icon from "@/components/ui/icon";
+import useEmblaCarousel from "embla-carousel-react";
 
 interface Photo {
   id: string;
@@ -30,49 +31,89 @@ const PhotoGallery = ({
   allowEdit = false,
 }: PhotoGalleryProps) => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
-  const [hoveredPhoto, setHoveredPhoto] = useState<string | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "start",
+    slidesToScroll: 1,
+    containScroll: "trimSnaps",
+  });
+  const [selectedSlide, setSelectedSlide] = useState(0);
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
 
   // Заглушечные фотографии для демонстрации
   const defaultPhotos: Photo[] = [
     {
       id: "1",
-      url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop",
+      url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
       title: "Семейный праздник",
       date: "2023-12-25",
     },
     {
       id: "2",
-      url: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&h=300&fit=crop",
+      url: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&h=400&fit=crop",
       title: "День рождения",
       date: "2023-07-15",
     },
     {
       id: "3",
-      url: "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=400&h=500&fit=crop",
+      url: "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=600&h=400&fit=crop",
       title: "Отпуск на даче",
       date: "2023-08-20",
     },
     {
       id: "4",
-      url: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=350&fit=crop",
+      url: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600&h=400&fit=crop",
       title: "Рабочие моменты",
       date: "2023-05-10",
     },
     {
       id: "5",
-      url: "https://images.unsplash.com/photo-1542596768-5d1d21f1cf98?w=400&h=450&fit=crop",
+      url: "https://images.unsplash.com/photo-1542596768-5d1d21f1cf98?w=600&h=400&fit=crop",
       title: "Выходные дома",
       date: "2023-09-03",
     },
     {
       id: "6",
-      url: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400&h=320&fit=crop",
+      url: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&h=400&fit=crop",
       title: "С друзьями",
       date: "2023-06-12",
     },
   ];
 
   const displayPhotos = photos.length > 0 ? photos : defaultPhotos;
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback(
+    (index: number) => emblaApi?.scrollTo(index),
+    [emblaApi],
+  );
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedSlide(emblaApi.selectedScrollSnap());
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+  }, [emblaApi, onSelect]);
+
+  // Автопрокрутка
+  useEffect(() => {
+    if (!emblaApi || displayPhotos.length <= 1) return;
+
+    const autoplay = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 4000);
+
+    return () => clearInterval(autoplay);
+  }, [emblaApi, displayPhotos.length]);
 
   return (
     <>
@@ -125,71 +166,121 @@ const PhotoGallery = ({
               )}
             </div>
           ) : (
-            <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
-              {displayPhotos.map((photo, index) => (
-                <div
-                  key={photo.id}
-                  className="break-inside-avoid group relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-                  style={{
-                    animationDelay: `${index * 100}ms`,
-                  }}
-                  onMouseEnter={() => setHoveredPhoto(photo.id)}
-                  onMouseLeave={() => setHoveredPhoto(null)}
-                >
-                  <div
-                    className="relative cursor-pointer overflow-hidden"
-                    onClick={() => setSelectedPhoto(photo)}
-                  >
-                    <img
-                      src={photo.url}
-                      alt={photo.title || "Фотография"}
-                      className="w-full h-auto object-cover transition-all duration-700 group-hover:scale-110"
-                    />
-
-                    {/* Градиентный оверлей */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                    {/* Информация о фото */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      {photo.title && (
-                        <h4 className="text-sm font-semibold mb-1 drop-shadow-lg">
-                          {photo.title}
-                        </h4>
-                      )}
-                      {photo.date && (
-                        <p className="text-xs opacity-90 flex items-center gap-1 drop-shadow">
-                          <Icon name="Calendar" size={12} />
-                          {new Date(photo.date).toLocaleDateString("ru-RU", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          })}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Иконка увеличения */}
-                    <div className="absolute top-3 right-3 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100">
-                      <Icon name="Expand" size={16} className="text-white" />
-                    </div>
-                  </div>
-
-                  {/* Кнопка удаления */}
-                  {allowEdit && onDeletePhoto && (
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100 p-2 h-8 w-8 rounded-full shadow-lg"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onDeletePhoto(photo.id);
-                      }}
+            <div className="relative">
+              {/* Карусель */}
+              <div className="overflow-hidden rounded-xl" ref={emblaRef}>
+                <div className="flex">
+                  {displayPhotos.map((photo, index) => (
+                    <div
+                      key={photo.id}
+                      className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 pl-4 first:pl-0"
                     >
-                      <Icon name="Trash2" size={12} />
-                    </Button>
-                  )}
+                      <div className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white">
+                        <div
+                          className="relative cursor-pointer overflow-hidden aspect-[4/3]"
+                          onClick={() => setSelectedPhoto(photo)}
+                        >
+                          <img
+                            src={photo.url}
+                            alt={photo.title || "Фотография"}
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                          />
+
+                          {/* Градиентный оверлей */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                          {/* Информация о фото */}
+                          <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            {photo.title && (
+                              <h4 className="text-sm font-semibold mb-1 drop-shadow-lg">
+                                {photo.title}
+                              </h4>
+                            )}
+                            {photo.date && (
+                              <p className="text-xs opacity-90 flex items-center gap-1 drop-shadow">
+                                <Icon name="Calendar" size={12} />
+                                {new Date(photo.date).toLocaleDateString(
+                                  "ru-RU",
+                                  {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric",
+                                  },
+                                )}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Иконка увеличения */}
+                          <div className="absolute top-3 right-3 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100">
+                            <Icon
+                              name="Expand"
+                              size={16}
+                              className="text-white"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Кнопка удаления */}
+                        {allowEdit && onDeletePhoto && (
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100 p-2 h-8 w-8 rounded-full shadow-lg"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onDeletePhoto(photo.id);
+                            }}
+                          >
+                            <Icon name="Trash2" size={12} />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* Навигационные кнопки */}
+              {displayPhotos.length > 1 && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border-white/20 shadow-lg hover:bg-white transition-all duration-300 ${!canScrollPrev ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}`}
+                    onClick={scrollPrev}
+                    disabled={!canScrollPrev}
+                  >
+                    <Icon name="ChevronLeft" size={16} />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border-white/20 shadow-lg hover:bg-white transition-all duration-300 ${!canScrollNext ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}`}
+                    onClick={scrollNext}
+                    disabled={!canScrollNext}
+                  >
+                    <Icon name="ChevronRight" size={16} />
+                  </Button>
+                </>
+              )}
+
+              {/* Индикаторы */}
+              {displayPhotos.length > 1 && (
+                <div className="flex justify-center gap-2 mt-6">
+                  {displayPhotos.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === selectedSlide
+                          ? "bg-green-600 scale-125"
+                          : "bg-green-200 hover:bg-green-400"
+                      }`}
+                      onClick={() => scrollTo(index)}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </CardContent>
