@@ -128,7 +128,7 @@ const FamilyRelationsSection = ({
                 variant="outline"
                 size="sm"
                 onClick={() => removeRelation(relation.id)}
-                className="border-red-300 text-red-600 hover:bg-red-50"
+                className="h-10 border-red-300 text-red-600 hover:bg-red-50"
               >
                 <Icon name="Trash2" size={16} />
               </Button>
