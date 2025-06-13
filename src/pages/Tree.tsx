@@ -132,10 +132,24 @@ const Tree = () => {
       photo:
         "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop&crop=face",
     },
+    {
+      id: "12",
+      name: "Прапрадедушка Иван",
+      relation: "Прапрадедушка",
+      generation: -2,
+      deceased: true,
+      birthDate: "1850-1920",
+      description: "Основатель рода",
+      photo:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    },
   ]);
 
   const getGenerationText = (generation: number) => {
     const ordinals = ["1-е", "2-е", "3-е", "4-е", "5-е"];
+    if (generation < 0) {
+      return `Прошлое поколение: ${Math.abs(generation)}`;
+    }
     return `Поколение: ${ordinals[generation] || `${generation + 1}-е`}`;
   };
 
@@ -173,6 +187,24 @@ const Tree = () => {
           <TreeHeader onAddMember={handleAddMember} />
           <CardContent>
             <div className="space-y-8">
+              <GenerationSection
+                title="Предки"
+                members={getGenerationMembers(-1)}
+                onMemberClick={handleViewMember}
+                getGenerationText={getGenerationText}
+              />
+
+              <TreeConnector />
+
+              <GenerationSection
+                title="Далекие предки"
+                members={getGenerationMembers(-2)}
+                onMemberClick={handleViewMember}
+                getGenerationText={getGenerationText}
+              />
+
+              <TreeConnector />
+
               <GenerationSection
                 title="Старшее поколение"
                 members={getGenerationMembers(0)}
