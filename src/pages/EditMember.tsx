@@ -260,37 +260,17 @@ const EditMember = () => {
               </Select>
             </div>
 
-            <div className="flex gap-4">
-              <div className="flex-1 space-y-2">
-                <Label htmlFor="birthDate">Дата рождения</Label>
-                <Input
-                  id="birthDate"
-                  type="date"
-                  value={formData.birthDate}
-                  onChange={(e) =>
-                    setFormData({ ...formData, birthDate: e.target.value })
-                  }
-                  className="border-green-200 focus:border-green-400"
-                />
-              </div>
-
-              <div className="flex-1 space-y-2">
-                <Label htmlFor="gender">Пол</Label>
-                <Select
-                  value={formData.gender || ""}
-                  onValueChange={(value) =>
-                    setFormData({ ...formData, gender: value })
-                  }
-                >
-                  <SelectTrigger className="border-green-200 focus:border-green-400">
-                    <SelectValue placeholder="Выберите пол" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Мужской">Мужской</SelectItem>
-                    <SelectItem value="Женский">Женский</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="birthDate">Дата рождения</Label>
+              <Input
+                id="birthDate"
+                type="date"
+                value={formData.birthDate}
+                onChange={(e) =>
+                  setFormData({ ...formData, birthDate: e.target.value })
+                }
+                className="border-green-200 focus:border-green-400"
+              />
             </div>
 
             <div className="space-y-2">
