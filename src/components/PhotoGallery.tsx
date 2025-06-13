@@ -171,10 +171,7 @@ const PhotoGallery = ({
               <div className="overflow-hidden rounded-xl" ref={emblaRef}>
                 <div className="flex">
                   {displayPhotos.map((photo, index) => (
-                    <div
-                      key={photo.id}
-                      className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0 pl-4 first:pl-0"
-                    >
+                    <div key={photo.id} className="flex-[0_0_100%] min-w-0">
                       <div className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white">
                         <div
                           className="relative cursor-pointer overflow-hidden aspect-[4/3]"
