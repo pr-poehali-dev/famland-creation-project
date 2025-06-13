@@ -294,6 +294,7 @@ const EditMember = () => {
                 <Input
                   id="birthDate"
                   type="date"
+                  placeholder="дд.мм.гггг"
                   value={formData.birthDate}
                   onChange={(e) =>
                     setFormData({ ...formData, birthDate: e.target.value })
