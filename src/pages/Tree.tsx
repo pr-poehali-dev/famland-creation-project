@@ -107,7 +107,7 @@ const Tree = () => {
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Визуализация древа */}
         <Card className="border-green-200">
-          <CardHeader className="p-6">
+          <CardHeader>
             <CardTitle className="flex items-center justify-between text-green-800">
               <span className="flex items-center gap-2">
                 <Icon name="TreePine" size={24} />
@@ -122,7 +122,7 @@ const Tree = () => {
               </button>
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-6">
+          <CardContent>
             <div className="space-y-8">
               {/* Поколение 0 - Дедушки и бабушки */}
               <div className="text-center">
@@ -136,7 +136,7 @@ const Tree = () => {
                       className="w-48 h-64 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                       onClick={() => setSelectedMember(member)}
                     >
-                      <CardContent className="p-6 text-center h-full flex flex-col justify-between">
+                      <CardContent className="p-4 text-center h-full flex flex-col justify-between">
                         <Avatar className="h-40 w-40 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
                           <AvatarFallback className="h-40 w-40 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
@@ -180,7 +180,7 @@ const Tree = () => {
                       className="w-48 h-64 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                       onClick={() => setSelectedMember(member)}
                     >
-                      <CardContent className="p-6 text-center h-full flex flex-col justify-between">
+                      <CardContent className="p-4 text-center h-full flex flex-col justify-between">
                         <Avatar className="h-40 w-40 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
                           <AvatarFallback className="h-40 w-40 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
@@ -224,7 +224,7 @@ const Tree = () => {
                       className="w-48 h-64 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                       onClick={() => setSelectedMember(member)}
                     >
-                      <CardContent className="p-6 text-center h-full flex flex-col justify-between">
+                      <CardContent className="p-4 text-center h-full flex flex-col justify-between">
                         <Avatar className="h-40 w-40 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
                           <AvatarFallback className="h-40 w-40 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
