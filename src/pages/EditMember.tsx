@@ -74,10 +74,25 @@ const EditMember = () => {
   }, [isEditing, memberId]);
 
   const handleSave = () => {
-    if (formData.firstName?.trim() || formData.name.trim()) {
+    const requiredFields = [
+      formData.photo,
+      formData.lastName?.trim(),
+      formData.firstName?.trim(),
+      formData.middleName?.trim(),
+      formData.birthDate?.trim(),
+      formData.gender?.trim(),
+    ];
+
+    const hasAllRequiredFields = requiredFields.every((field) => field);
+
+    if (hasAllRequiredFields) {
       // Здесь будет логика сохранения данных
       console.log("Сохранение:", formData);
       navigate("/tree");
+    } else {
+      alert(
+        "Пожалуйста, заполните все обязательные поля отмеченные звездочкой (*)",
+      );
     }
   };
 
@@ -108,11 +123,18 @@ const EditMember = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label></Label>
+              <Label className="flex items-center gap-1">
+                Фотография
+                <span className="text-red-500">*</span>
+              </Label>
               <div className="flex flex-col items-center gap-3">
                 <div className="relative">
                   <Avatar
-                    className="w-44 h-44 cursor-pointer border-2 border-green-200 hover:border-green-400 transition-colors rounded-lg"
+                    className={`w-44 h-44 cursor-pointer border-2 transition-colors rounded-lg ${
+                      !formData.photo
+                        ? "border-red-300 hover:border-red-400"
+                        : "border-green-200 hover:border-green-400"
+                    }`}
                     onClick={() => fileInputRef.current?.click()}
                   >
                     {formData.photo ? (
@@ -122,7 +144,7 @@ const EditMember = () => {
                         className="object-cover w-full h-full"
                       />
                     ) : (
-                      <AvatarFallback className="bg-green-50 text-green-600 rounded-lg">
+                      <AvatarFallback className="bg-red-50 text-red-600 rounded-lg">
                         <Icon name="Camera" size={32} />
                       </AvatarFallback>
                     )}
@@ -177,12 +199,20 @@ const EditMember = () => {
                   <br />
                   Поддерживаются форматы: JPG, PNG, WEBP
                 </p>
+                {!formData.photo && (
+                  <p className="text-xs text-red-500 text-center">
+                    Фотография обязательна для заполнения
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="lastName">Фамилия</Label>
+                <Label htmlFor="lastName" className="flex items-center gap-1">
+                  Фамилия
+                  <span className="text-red-500">*</span>
+                </Label>
                 <Input
                   id="lastName"
                   value={formData.lastName || ""}
@@ -190,12 +220,25 @@ const EditMember = () => {
                     setFormData({ ...formData, lastName: e.target.value })
                   }
                   placeholder="Введите фамилию"
-                  className="border-green-200 focus:border-green-400"
+                  className={`${
+                    !formData.lastName?.trim()
+                      ? "border-red-300 focus:border-red-400"
+                      : "border-green-200 focus:border-green-400"
+                  }`}
+                  required
                 />
+                {!formData.lastName?.trim() && (
+                  <p className="text-xs text-red-500">
+                    Фамилия обязательна для заполнения
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="firstName">Имя</Label>
+                <Label htmlFor="firstName" className="flex items-center gap-1">
+                  Имя
+                  <span className="text-red-500">*</span>
+                </Label>
                 <Input
                   id="firstName"
                   value={formData.firstName || ""}
@@ -203,12 +246,25 @@ const EditMember = () => {
                     setFormData({ ...formData, firstName: e.target.value })
                   }
                   placeholder="Введите имя"
-                  className="border-green-200 focus:border-green-400"
+                  className={`${
+                    !formData.firstName?.trim()
+                      ? "border-red-300 focus:border-red-400"
+                      : "border-green-200 focus:border-green-400"
+                  }`}
+                  required
                 />
+                {!formData.firstName?.trim() && (
+                  <p className="text-xs text-red-500">
+                    Имя обязательно для заполнения
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="middleName">Отчество</Label>
+                <Label htmlFor="middleName" className="flex items-center gap-1">
+                  Отчество
+                  <span className="text-red-500">*</span>
+                </Label>
                 <Input
                   id="middleName"
                   value={formData.middleName || ""}
@@ -216,14 +272,27 @@ const EditMember = () => {
                     setFormData({ ...formData, middleName: e.target.value })
                   }
                   placeholder="Введите отчество"
-                  className="border-green-200 focus:border-green-400"
+                  className={`${
+                    !formData.middleName?.trim()
+                      ? "border-red-300 focus:border-red-400"
+                      : "border-green-200 focus:border-green-400"
+                  }`}
+                  required
                 />
+                {!formData.middleName?.trim() && (
+                  <p className="text-xs text-red-500">
+                    Отчество обязательно для заполнения
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="flex gap-4">
               <div className="flex-1 space-y-2">
-                <Label htmlFor="birthDate">Дата рождения</Label>
+                <Label htmlFor="birthDate" className="flex items-center gap-1">
+                  Дата рождения
+                  <span className="text-red-500">*</span>
+                </Label>
                 <Input
                   id="birthDate"
                   type="date"
@@ -231,19 +300,39 @@ const EditMember = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, birthDate: e.target.value })
                   }
-                  className="border-green-200 focus:border-green-400"
+                  className={`${
+                    !formData.birthDate?.trim()
+                      ? "border-red-300 focus:border-red-400"
+                      : "border-green-200 focus:border-green-400"
+                  }`}
+                  required
                 />
+                {!formData.birthDate?.trim() && (
+                  <p className="text-xs text-red-500">
+                    Дата рождения обязательна для заполнения
+                  </p>
+                )}
               </div>
 
               <div className="flex-1 space-y-2">
-                <Label htmlFor="gender">Пол</Label>
+                <Label htmlFor="gender" className="flex items-center gap-1">
+                  Пол
+                  <span className="text-red-500">*</span>
+                </Label>
                 <Select
                   value={formData.gender || ""}
                   onValueChange={(value) =>
                     setFormData({ ...formData, gender: value })
                   }
+                  required
                 >
-                  <SelectTrigger className="border-green-200 focus:border-green-400">
+                  <SelectTrigger
+                    className={`${
+                      !formData.gender?.trim()
+                        ? "border-red-300 focus:border-red-400"
+                        : "border-green-200 focus:border-green-400"
+                    }`}
+                  >
                     <SelectValue placeholder="Выберите пол" />
                   </SelectTrigger>
                   <SelectContent>
@@ -251,6 +340,11 @@ const EditMember = () => {
                     <SelectItem value="Женский">Женский</SelectItem>
                   </SelectContent>
                 </Select>
+                {!formData.gender?.trim() && (
+                  <p className="text-xs text-red-500">
+                    Пол обязателен для заполнения
+                  </p>
+                )}
               </div>
             </div>
 
@@ -292,7 +386,14 @@ const EditMember = () => {
               <Button
                 onClick={handleSave}
                 className="bg-green-700 hover:bg-green-800"
-                disabled={!formData.firstName?.trim() && !formData.name.trim()}
+                disabled={
+                  !formData.photo ||
+                  !formData.lastName?.trim() ||
+                  !formData.firstName?.trim() ||
+                  !formData.middleName?.trim() ||
+                  !formData.birthDate?.trim() ||
+                  !formData.gender?.trim()
+                }
               >
                 <Icon name="Check" size={16} className="mr-2" />
                 {isEditing ? "Сохранить изменения" : "Добавить члена"}
