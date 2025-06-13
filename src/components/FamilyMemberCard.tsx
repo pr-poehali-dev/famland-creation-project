@@ -7,6 +7,7 @@ export interface FamilyMember {
   name: string;
   relation: string;
   generation: number;
+  age?: number;
   birthDate?: string;
   description?: string;
   children?: string[];
@@ -120,6 +121,13 @@ const FamilyMemberCard = ({
             className={`font-medium mb-1 text-base ${getTextColor("text-green-800")}`}
           >
             {member.fullName || member.name}
+            {member.age && (
+              <span
+                className={`text-sm ml-2 ${getSubTextColor("text-green-600")}`}
+              >
+                ({member.age} лет)
+              </span>
+            )}
             {member.deceased && member.id === "7" && (
               <span className="text-xs text-gray-500 ml-2">✝</span>
             )}
