@@ -84,18 +84,19 @@ const FamilyMemberCombobox = ({
                     onValueChange(member.id);
                     setOpen(false);
                   }}
+                  className="px-3 py-3"
                 >
-                  <div className="flex items-center gap-2 flex-1">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
                     <img
                       src={member.photo}
                       alt={getMemberDisplayName(member)}
-                      className="w-6 h-6 rounded-full object-cover"
+                      className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                     />
-                    <div className="flex flex-col">
-                      <span className="font-medium">
+                    <div className="flex flex-col gap-1 min-w-0 flex-1">
+                      <span className="font-medium text-sm leading-tight">
                         {getMemberDisplayName(member)}
                       </span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs text-muted-foreground leading-tight">
                         {member.relation}
                         {member.age && ` • ${member.age} лет`}
                         {member.deceased && " • ушел из жизни"}
@@ -106,7 +107,7 @@ const FamilyMemberCombobox = ({
                     name="Check"
                     size={16}
                     className={cn(
-                      "ml-auto h-4 w-4",
+                      "ml-3 h-4 w-4 flex-shrink-0",
                       value === member.id ? "opacity-100" : "opacity-0",
                     )}
                   />
