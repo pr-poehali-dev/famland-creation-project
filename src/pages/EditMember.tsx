@@ -135,6 +135,7 @@ const EditMember = () => {
                       <AvatarImage
                         src={formData.photo}
                         alt="Фото члена семьи"
+                        className="object-cover w-full h-full"
                       />
                     ) : (
                       <AvatarFallback className="bg-green-50 text-green-600 rounded-lg">
