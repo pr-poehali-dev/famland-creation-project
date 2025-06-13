@@ -218,7 +218,7 @@ const EditMember = () => {
                     setFormData({ ...formData, lastName: e.target.value })
                   }
                   placeholder="Введите фамилию"
-                  className={`${
+                  className={`focus:outline-none ${
                     !formData.lastName?.trim()
                       ? "border-red-300 focus:border-red-400"
                       : "border-green-200 focus:border-green-400"
@@ -242,7 +242,7 @@ const EditMember = () => {
                     setFormData({ ...formData, firstName: e.target.value })
                   }
                   placeholder="Введите имя"
-                  className={`${
+                  className={`focus:outline-none ${
                     !formData.firstName?.trim()
                       ? "border-red-300 focus:border-red-400"
                       : "border-green-200 focus:border-green-400"
@@ -266,7 +266,7 @@ const EditMember = () => {
                     setFormData({ ...formData, middleName: e.target.value })
                   }
                   placeholder="Введите отчество"
-                  className={`${
+                  className={`focus:outline-none ${
                     !formData.middleName?.trim()
                       ? "border-red-300 focus:border-red-400"
                       : "border-green-200 focus:border-green-400"
@@ -292,7 +292,7 @@ const EditMember = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, birthDate: e.target.value })
                   }
-                  className={`${
+                  className={`focus:outline-none ${
                     !formData.birthDate?.trim()
                       ? "border-red-300 focus:border-red-400"
                       : "border-green-200 focus:border-green-400"
@@ -317,7 +317,7 @@ const EditMember = () => {
                   required
                 >
                   <SelectTrigger
-                    className={`${
+                    className={`focus:outline-none ${
                       !formData.gender?.trim()
                         ? "border-red-300 focus:border-red-400"
                         : "border-green-200 focus:border-green-400"
@@ -345,7 +345,7 @@ const EditMember = () => {
                   setFormData({ ...formData, description: e.target.value })
                 }
                 placeholder="Добавьте заметки о члене семьи..."
-                className="border-green-200 focus:border-green-400 min-h-[100px]"
+                className="focus:outline-none border-green-200 focus:border-green-400 min-h-[100px]"
               />
             </div>
 
