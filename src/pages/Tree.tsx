@@ -105,296 +105,181 @@ const Tree = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Визуализация древа */}
-          <div className="lg:col-span-3">
-            <Card className="border-green-200">
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between text-green-800">
-                  <span className="flex items-center gap-2">
-                    <Icon name="TreePine" size={24} />
-                    Генеалогическое древо
-                  </span>
-                  <button
-                    className="flex items-center gap-2 px-3 py-2 text-sm bg-green-100 hover:bg-green-200 text-green-700 rounded-lg transition-colors"
-                    title="Добавить члена семьи"
-                  >
-                    <Icon name="UserPlus" size={16} />
-                    <span className="hidden sm:inline">Добавить члена</span>
-                  </button>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-8">
-                  {/* Поколение 0 - Дедушки и бабушки */}
-                  <div className="text-center">
-                    <h3 className="text-sm font-medium text-green-600 mb-4">
-                      Старшее поколение
-                    </h3>
-                    <div className="flex justify-center gap-8">
-                      {getGenerationMembers(0).map((member) => (
-                        <Card
-                          key={member.id}
-                          className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
-                          onClick={() => setSelectedMember(member)}
-                        >
-                          <CardContent className="p-4 text-center">
-                            <Avatar className="h-16 w-16 mx-auto mb-3">
-                              <AvatarImage
-                                src={member.photo}
-                                alt={member.name}
-                              />
-                              <AvatarFallback className="text-sm bg-green-100 text-green-700">
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                            <h4 className="font-medium text-green-800 mb-1">
-                              {member.name}
-                            </h4>
-                            <p className="text-xs text-green-600 mb-1">
-                              Роль: {member.relation}
-                            </p>
-                            <p className="text-xs text-green-600 mb-3">
-                              Поколение: {member.generation + 1}
-                            </p>
-                            <Button
-                              size="sm"
-                              className="w-full bg-green-600 hover:bg-green-700"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleViewMember(member);
-                              }}
-                            >
-                              <Icon name="User" size={14} className="mr-1" />
-                              Подробнее
-                            </Button>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Соединительные линии */}
-                  <div className="flex justify-center">
-                    <div className="w-px h-8 bg-green-300"></div>
-                  </div>
-
-                  {/* Поколение 1 - Родители */}
-                  <div className="text-center">
-                    <h3 className="text-sm font-medium text-green-600 mb-4">
-                      Родители
-                    </h3>
-                    <div className="flex justify-center gap-8">
-                      {getGenerationMembers(1).map((member) => (
-                        <Card
-                          key={member.id}
-                          className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
-                          onClick={() => setSelectedMember(member)}
-                        >
-                          <CardContent className="p-4 text-center">
-                            <Avatar className="h-16 w-16 mx-auto mb-3">
-                              <AvatarImage
-                                src={member.photo}
-                                alt={member.name}
-                              />
-                              <AvatarFallback className="text-sm bg-green-100 text-green-700">
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                            <h4 className="font-medium text-green-800 mb-1">
-                              {member.name}
-                            </h4>
-                            <p className="text-xs text-green-600 mb-1">
-                              Роль: {member.relation}
-                            </p>
-                            <p className="text-xs text-green-600 mb-3">
-                              Поколение: {member.generation + 1}
-                            </p>
-                            <Button
-                              size="sm"
-                              className="w-full bg-green-600 hover:bg-green-700"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleViewMember(member);
-                              }}
-                            >
-                              <Icon name="User" size={14} className="mr-1" />
-                              Подробнее
-                            </Button>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Соединительные линии */}
-                  <div className="flex justify-center">
-                    <div className="w-px h-8 bg-green-300"></div>
-                  </div>
-
-                  {/* Поколение 2 - Дети */}
-                  <div className="text-center">
-                    <h3 className="text-sm font-medium text-green-600 mb-4">
-                      Наше поколение
-                    </h3>
-                    <div className="flex justify-center gap-8">
-                      {getGenerationMembers(2).map((member) => (
-                        <Card
-                          key={member.id}
-                          className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
-                          onClick={() => setSelectedMember(member)}
-                        >
-                          <CardContent className="p-4 text-center">
-                            <Avatar className="h-16 w-16 mx-auto mb-3">
-                              <AvatarImage
-                                src={member.photo}
-                                alt={member.name}
-                              />
-                              <AvatarFallback className="text-sm bg-green-100 text-green-700">
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                            <h4 className="font-medium text-green-800 mb-1">
-                              {member.name}
-                            </h4>
-                            <p className="text-xs text-green-600 mb-1">
-                              Роль: {member.relation}
-                            </p>
-                            <p className="text-xs text-green-600 mb-3">
-                              Поколение: {member.generation + 1}
-                            </p>
-                            <Button
-                              size="sm"
-                              className="w-full bg-green-600 hover:bg-green-700"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleViewMember(member);
-                              }}
-                            >
-                              <Icon name="User" size={14} className="mr-1" />
-                              Подробнее
-                            </Button>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Информационная панель */}
-          <div className="lg:col-span-1">
-            <Card className="border-green-200">
-              <CardHeader>
-                <CardTitle className="text-green-800">Информация</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {selectedMember ? (
-                  <div className="space-y-4">
-                    <div className="text-center">
-                      <Avatar className="h-20 w-20 mx-auto mb-2">
-                        <AvatarImage
-                          src={selectedMember.photo}
-                          alt={selectedMember.name}
-                        />
-                        <AvatarFallback className="bg-green-100 text-green-700">
-                          {selectedMember.name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <h3 className="font-semibold text-green-800">
-                        {selectedMember.name}
-                      </h3>
-                      <p className="text-sm text-green-600">
-                        {selectedMember.relation}
-                      </p>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="text-sm">
-                        <span className="font-medium text-green-700">
-                          Поколение:
-                        </span>
-                        <span className="ml-2">
-                          {selectedMember.generation + 1}
-                        </span>
-                      </div>
-                      <div className="text-sm">
-                        <span className="font-medium text-green-700">
-                          Роль в семье:
-                        </span>
-                        <span className="ml-2">{selectedMember.relation}</span>
-                      </div>
-                    </div>
-                    <Button
-                      className="w-full bg-green-600 hover:bg-green-700 mt-4"
-                      onClick={() => handleViewMember(selectedMember)}
+        {/* Визуализация древа */}
+        <Card className="border-green-200">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between text-green-800">
+              <span className="flex items-center gap-2">
+                <Icon name="TreePine" size={24} />
+                Генеалогическое древо
+              </span>
+              <button
+                className="flex items-center gap-2 px-3 py-2 text-sm bg-green-100 hover:bg-green-200 text-green-700 rounded-lg transition-colors"
+                title="Добавить члена семьи"
+              >
+                <Icon name="UserPlus" size={16} />
+                <span className="hidden sm:inline">Добавить члена</span>
+              </button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-8">
+              {/* Поколение 0 - Дедушки и бабушки */}
+              <div className="text-center">
+                <h3 className="text-sm font-medium text-green-600 mb-4">
+                  Старшее поколение
+                </h3>
+                <div className="flex justify-center gap-8">
+                  {getGenerationMembers(0).map((member) => (
+                    <Card
+                      key={member.id}
+                      className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      onClick={() => setSelectedMember(member)}
                     >
-                      <Icon name="User" size={16} className="mr-2" />
-                      Подробнее
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="text-center text-green-600">
-                    <Icon
-                      name="MousePointer"
-                      size={48}
-                      className="mx-auto mb-2 opacity-50"
-                    />
-                    <p className="text-sm">
-                      Нажмите на члена семьи, чтобы узнать больше
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Действия */}
-            <Card className="border-green-200 mt-4">
-              <CardContent className="pt-6">
-                <div className="space-y-3">
-                  <Button
-                    className="w-full bg-green-700 hover:bg-green-800"
-                    onClick={handleAddMember}
-                  >
-                    <Icon name="Plus" size={16} className="mr-2" />
-                    Добавить члена
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full border-green-300 text-green-700"
-                    onClick={() =>
-                      selectedMember && handleEditMember(selectedMember)
-                    }
-                    disabled={!selectedMember}
-                  >
-                    <Icon name="Edit" size={16} className="mr-2" />
-                    Редактировать
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full border-green-300 text-green-700"
-                  >
-                    <Icon name="Download" size={16} className="mr-2" />
-                    Скачать древо
-                  </Button>
+                      <CardContent className="p-4 text-center">
+                        <Avatar className="h-16 w-16 mx-auto mb-3">
+                          <AvatarImage src={member.photo} alt={member.name} />
+                          <AvatarFallback className="text-sm bg-green-100 text-green-700">
+                            {member.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <h4 className="font-medium text-green-800 mb-1">
+                          {member.name}
+                        </h4>
+                        <p className="text-xs text-green-600 mb-1">
+                          Роль: {member.relation}
+                        </p>
+                        <p className="text-xs text-green-600 mb-3">
+                          Поколение: {member.generation + 1}
+                        </p>
+                        <Button
+                          size="sm"
+                          className="w-full bg-green-600 hover:bg-green-700"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleViewMember(member);
+                          }}
+                        >
+                          <Icon name="User" size={14} className="mr-1" />
+                          Подробнее
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+              </div>
+
+              {/* Соединительные линии */}
+              <div className="flex justify-center">
+                <div className="w-px h-8 bg-green-300"></div>
+              </div>
+
+              {/* Поколение 1 - Родители */}
+              <div className="text-center">
+                <h3 className="text-sm font-medium text-green-600 mb-4">
+                  Родители
+                </h3>
+                <div className="flex justify-center gap-8">
+                  {getGenerationMembers(1).map((member) => (
+                    <Card
+                      key={member.id}
+                      className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      onClick={() => setSelectedMember(member)}
+                    >
+                      <CardContent className="p-4 text-center">
+                        <Avatar className="h-16 w-16 mx-auto mb-3">
+                          <AvatarImage src={member.photo} alt={member.name} />
+                          <AvatarFallback className="text-sm bg-green-100 text-green-700">
+                            {member.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <h4 className="font-medium text-green-800 mb-1">
+                          {member.name}
+                        </h4>
+                        <p className="text-xs text-green-600 mb-1">
+                          Роль: {member.relation}
+                        </p>
+                        <p className="text-xs text-green-600 mb-3">
+                          Поколение: {member.generation + 1}
+                        </p>
+                        <Button
+                          size="sm"
+                          className="w-full bg-green-600 hover:bg-green-700"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleViewMember(member);
+                          }}
+                        >
+                          <Icon name="User" size={14} className="mr-1" />
+                          Подробнее
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+
+              {/* Соединительные линии */}
+              <div className="flex justify-center">
+                <div className="w-px h-8 bg-green-300"></div>
+              </div>
+
+              {/* Поколение 2 - Дети */}
+              <div className="text-center">
+                <h3 className="text-sm font-medium text-green-600 mb-4">
+                  Наше поколение
+                </h3>
+                <div className="flex justify-center gap-8">
+                  {getGenerationMembers(2).map((member) => (
+                    <Card
+                      key={member.id}
+                      className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      onClick={() => setSelectedMember(member)}
+                    >
+                      <CardContent className="p-4 text-center">
+                        <Avatar className="h-16 w-16 mx-auto mb-3">
+                          <AvatarImage src={member.photo} alt={member.name} />
+                          <AvatarFallback className="text-sm bg-green-100 text-green-700">
+                            {member.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <h4 className="font-medium text-green-800 mb-1">
+                          {member.name}
+                        </h4>
+                        <p className="text-xs text-green-600 mb-1">
+                          Роль: {member.relation}
+                        </p>
+                        <p className="text-xs text-green-600 mb-3">
+                          Поколение: {member.generation + 1}
+                        </p>
+                        <Button
+                          size="sm"
+                          className="w-full bg-green-600 hover:bg-green-700"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleViewMember(member);
+                          }}
+                        >
+                          <Icon name="User" size={14} className="mr-1" />
+                          Подробнее
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
