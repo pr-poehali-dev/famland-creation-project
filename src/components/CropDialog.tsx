@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,61 +15,108 @@ interface CropDialogProps {
   onCropSelect: (croppedImage: string) => void;
 }
 
+interface CropArea {
+  x: number;
+  y: number;
+  size: number;
+}
+
 const CropDialog = ({
   isOpen,
   onClose,
   imageUrl,
   onCropSelect,
 }: CropDialogProps) => {
-  const [selectedCrop, setSelectedCrop] = useState<
-    "portrait" | "square" | null
-  >(null);
+  const [cropArea, setCropArea] = useState<CropArea>({
+    x: 50,
+    y: 50,
+    size: 150,
+  });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
 
-  const createCroppedImage = (cropType: "portrait" | "square") => {
+  // Инициализация области кропа при загрузке изображения
+  useEffect(() => {
+    if (isOpen && imageRef.current) {
+      const img = imageRef.current;
+      const containerRect = img.getBoundingClientRect();
+      const size = Math.min(containerRect.width, containerRect.height) * 0.4;
+      setCropArea({
+        x: (containerRect.width - size) / 2,
+        y: (containerRect.height - size) / 2,
+        size: size,
+      });
+    }
+  }, [isOpen, imageUrl]);
+
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      setIsDragging(true);
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (rect) {
+        setDragStart({
+          x: e.clientX - rect.left - cropArea.x,
+          y: e.clientY - rect.top - cropArea.y,
+        });
+      }
+    },
+    [cropArea],
+  );
+
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isDragging || !containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const newX = e.clientX - rect.left - dragStart.x;
+      const newY = e.clientY - rect.top - dragStart.y;
+
+      // Ограничиваем область кропа границами изображения
+      const maxX = rect.width - cropArea.size;
+      const maxY = rect.height - cropArea.size;
+
+      setCropArea((prev) => ({
+        ...prev,
+        x: Math.max(0, Math.min(newX, maxX)),
+        y: Math.max(0, Math.min(newY, maxY)),
+      }));
+    },
+    [isDragging, dragStart, cropArea.size],
+  );
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  const createCroppedImage = () => {
+    if (!imageRef.current || !containerRef.current) return;
+
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     const img = new Image();
 
     img.onload = () => {
-      const { width, height } = img;
+      const containerRect = containerRef.current!.getBoundingClientRect();
+      const imageRect = imageRef.current!.getBoundingClientRect();
 
-      // Определяем размеры обрезки
-      let cropWidth, cropHeight, startX, startY;
+      // Вычисляем масштаб между отображаемым изображением и оригинальным
+      const scaleX = img.naturalWidth / imageRect.width;
+      const scaleY = img.naturalHeight / imageRect.height;
 
-      if (cropType === "square") {
-        const size = Math.min(width, height);
-        cropWidth = cropHeight = size;
-        startX = (width - size) / 2;
-        startY = (height - size) / 2;
-        canvas.width = canvas.height = 200;
-      } else {
-        // portrait
-        if (width > height) {
-          cropWidth = height * 0.75;
-          cropHeight = height;
-          startX = (width - cropWidth) / 2;
-          startY = 0;
-        } else {
-          cropWidth = width;
-          cropHeight = width * 1.33;
-          startX = 0;
-          startY = (height - cropHeight) / 2;
-        }
-        canvas.width = 150;
-        canvas.height = 200;
-      }
+      // Переводим координаты области кропа в координаты оригинального изображения
+      const cropX = cropArea.x * scaleX;
+      const cropY = cropArea.y * scaleY;
+      const cropSize = cropArea.size * Math.min(scaleX, scaleY);
 
-      ctx?.drawImage(
-        img,
-        startX,
-        startY,
-        cropWidth,
-        cropHeight,
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-      );
+      // Устанавливаем размер канваса 300x300 для квадратного результата
+      canvas.width = 300;
+      canvas.height = 300;
+
+      ctx?.drawImage(img, cropX, cropY, cropSize, cropSize, 0, 0, 300, 300);
+
       const croppedImageUrl = canvas.toDataURL("image/jpeg", 0.9);
       onCropSelect(croppedImageUrl);
       onClose();
@@ -78,81 +125,88 @@ const CropDialog = ({
     img.src = imageUrl;
   };
 
-  const getCropPreview = (cropType: "portrait" | "square") => {
-    const img = new Image();
-    img.src = imageUrl;
-
-    const aspectRatio = cropType === "square" ? "1:1" : "3:4";
-    const className =
-      cropType === "square"
-        ? "w-32 h-32 object-cover rounded-lg"
-        : "w-24 h-32 object-cover rounded-lg";
-
-    return { aspectRatio, className };
-  };
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-lg">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Icon name="Crop" size={20} />
-            Выберите обрезку фото
+            Обрезка фото
           </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            Выберите подходящий вариант обрезки для аватарки:
+            Перетащите квадрат на нужную область фото для обрезки
           </p>
 
-          <div className="grid grid-cols-2 gap-4">
-            {/* Квадратная обрезка */}
-            <div
-              className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                selectedCrop === "square"
-                  ? "border-green-500 bg-green-50"
-                  : "border-gray-200 hover:border-green-300"
-              }`}
-              onClick={() => setSelectedCrop("square")}
-            >
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img
-                    src={imageUrl}
-                    alt="Квадратная обрезка"
-                    className="w-full h-full object-cover"
-                    style={{ objectPosition: "center" }}
-                  />
-                </div>
-                <div className="text-center">
-                  <p className="text-sm font-medium">Квадрат</p>
-                  <p className="text-xs text-muted-foreground">1:1</p>
-                </div>
-              </div>
-            </div>
+          <div
+            ref={containerRef}
+            className="relative bg-gray-100 rounded-lg overflow-hidden cursor-move select-none"
+            style={{ aspectRatio: "1/1", width: "100%", height: "400px" }}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+          >
+            <img
+              ref={imageRef}
+              src={imageUrl}
+              alt="Изображение для обрезки"
+              className="w-full h-full object-cover"
+              draggable={false}
+            />
 
-            {/* Портретная обрезка */}
+            {/* Затемнение вокруг области кропа */}
             <div
-              className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                selectedCrop === "portrait"
-                  ? "border-green-500 bg-green-50"
-                  : "border-gray-200 hover:border-green-300"
-              }`}
-              onClick={() => setSelectedCrop("portrait")}
+              className="absolute inset-0 bg-black bg-opacity-50"
+              style={{
+                clipPath: `polygon(
+                  0% 0%, 
+                  ${cropArea.x}px 0%, 
+                  ${cropArea.x}px ${cropArea.y}px, 
+                  ${cropArea.x + cropArea.size}px ${cropArea.y}px, 
+                  ${cropArea.x + cropArea.size}px ${cropArea.y + cropArea.size}px, 
+                  ${cropArea.x}px ${cropArea.y + cropArea.size}px, 
+                  ${cropArea.x}px 100%, 
+                  0% 100%,
+                  0% 0%,
+                  100% 0%,
+                  100% ${cropArea.y}px,
+                  ${cropArea.x + cropArea.size}px ${cropArea.y}px,
+                  ${cropArea.x + cropArea.size}px 0%,
+                  100% 0%,
+                  100% 100%,
+                  ${cropArea.x + cropArea.size}px 100%,
+                  ${cropArea.x + cropArea.size}px ${cropArea.y + cropArea.size}px,
+                  100% ${cropArea.y + cropArea.size}px,
+                  100% 100%,
+                  0% 100%
+                )`,
+              }}
+            />
+
+            {/* Область кропа */}
+            <div
+              className="absolute border-2 border-white border-dashed cursor-move"
+              style={{
+                left: cropArea.x,
+                top: cropArea.y,
+                width: cropArea.size,
+                height: cropArea.size,
+                boxShadow: "0 0 0 2px rgba(0,0,0,0.3)",
+              }}
+              onMouseDown={handleMouseDown}
             >
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-16 h-20 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img
-                    src={imageUrl}
-                    alt="Портретная обрезка"
-                    className="w-full h-full object-cover"
-                    style={{ objectPosition: "center" }}
-                  />
-                </div>
-                <div className="text-center">
-                  <p className="text-sm font-medium">Портрет</p>
-                  <p className="text-xs text-muted-foreground">3:4</p>
+              {/* Углы для визуального указания */}
+              <div className="absolute -top-1 -left-1 w-3 h-3 bg-white border border-gray-400 rounded-sm"></div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-white border border-gray-400 rounded-sm"></div>
+              <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-white border border-gray-400 rounded-sm"></div>
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-white border border-gray-400 rounded-sm"></div>
+
+              {/* Центральная иконка */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-white bg-opacity-80 rounded-full p-1">
+                  <Icon name="Move" size={16} className="text-gray-600" />
                 </div>
               </div>
             </div>
@@ -164,12 +218,11 @@ const CropDialog = ({
               Отмена
             </Button>
             <Button
-              onClick={() => selectedCrop && createCroppedImage(selectedCrop)}
-              disabled={!selectedCrop}
+              onClick={createCroppedImage}
               className="bg-green-700 hover:bg-green-800"
             >
               <Icon name="Check" size={16} className="mr-2" />
-              Применить
+              Применить обрезку
             </Button>
           </div>
         </div>
