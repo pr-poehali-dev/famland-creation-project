@@ -133,10 +133,10 @@ const Tree = () => {
                   {getGenerationMembers(0).map((member) => (
                     <Card
                       key={member.id}
-                      className="w-56 h-72 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      className="w-56 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                       onClick={() => handleViewMember(member)}
                     >
-                      <CardContent className="p-5 text-center h-full flex flex-col justify-between">
+                      <CardContent className="p-5 text-center flex flex-col">
                         <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
                           <AvatarFallback className="h-44 w-44 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
@@ -177,10 +177,10 @@ const Tree = () => {
                   {getGenerationMembers(1).map((member) => (
                     <Card
                       key={member.id}
-                      className="w-56 h-72 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      className="w-56 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                       onClick={() => handleViewMember(member)}
                     >
-                      <CardContent className="p-5 text-center h-full flex flex-col justify-between">
+                      <CardContent className="p-5 text-center flex flex-col">
                         <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
                           <AvatarFallback className="h-44 w-44 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
@@ -221,10 +221,10 @@ const Tree = () => {
                   {getGenerationMembers(2).map((member) => (
                     <Card
                       key={member.id}
-                      className="w-56 h-72 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      className="w-56 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                       onClick={() => handleViewMember(member)}
                     >
-                      <CardContent className="p-5 text-center h-full flex flex-col justify-between">
+                      <CardContent className="p-5 text-center flex flex-col">
                         <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
                           <AvatarFallback className="h-44 w-44 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
