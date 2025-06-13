@@ -129,7 +129,7 @@ const EditMember = () => {
                         alt="Фото члена семьи"
                       />
                     ) : (
-                      <AvatarFallback className="bg-green-50 text-green-600">
+                      <AvatarFallback className="bg-green-50 text-green-600 rounded-lg">
                         <Icon name="Camera" size={32} />
                       </AvatarFallback>
                     )}
