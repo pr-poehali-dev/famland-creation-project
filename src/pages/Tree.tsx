@@ -137,9 +137,9 @@ const Tree = () => {
                       onClick={() => setSelectedMember(member)}
                     >
                       <CardContent className="p-4 text-center h-full flex flex-col justify-between">
-                        <Avatar className="h-38 w-38 mx-auto mb-3 rounded-lg">
+                        <Avatar className="h-40 w-40 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="h-38 w-38 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
+                          <AvatarFallback className="h-40 w-40 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
                             {member.name
                               .split(" ")
                               .map((n) => n[0])
@@ -192,9 +192,9 @@ const Tree = () => {
                       onClick={() => setSelectedMember(member)}
                     >
                       <CardContent className="p-4 text-center h-full flex flex-col justify-between">
-                        <Avatar className="h-38 w-38 mx-auto mb-3 rounded-lg">
+                        <Avatar className="h-40 w-40 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="h-38 w-38 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
+                          <AvatarFallback className="h-40 w-40 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
                             {member.name
                               .split(" ")
                               .map((n) => n[0])
@@ -247,9 +247,9 @@ const Tree = () => {
                       onClick={() => setSelectedMember(member)}
                     >
                       <CardContent className="p-4 text-center h-full flex flex-col justify-between">
-                        <Avatar className="h-38 w-38 mx-auto mb-3 rounded-lg">
+                        <Avatar className="h-40 w-40 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="h-38 w-38 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
+                          <AvatarFallback className="h-40 w-40 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
                             {member.name
                               .split(" ")
                               .map((n) => n[0])
