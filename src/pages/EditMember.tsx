@@ -300,7 +300,6 @@ const EditMember = () => {
                 <SelectContent>
                   <SelectItem value="Мужской">Мужской</SelectItem>
                   <SelectItem value="Женский">Женский</SelectItem>
-                  <SelectItem value="Другой">Другой</SelectItem>
                 </SelectContent>
               </Select>
             </div>
