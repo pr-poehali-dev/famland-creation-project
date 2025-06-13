@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Icon from "@/components/ui/icon";
+import CropDialog from "@/components/CropDialog";
 
 interface FamilyMember {
   id: string;
@@ -35,6 +36,13 @@ const EditMember = () => {
   const memberId = searchParams.get("id");
   const isEditing = Boolean(memberId);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [cropDialog, setCropDialog] = useState<{
+    isOpen: boolean;
+    imageUrl: string;
+  }>({
+    isOpen: false,
+    imageUrl: "",
+  });
 
   const [formData, setFormData] = useState<FamilyMember>({
     id: "",
@@ -168,10 +176,8 @@ const EditMember = () => {
                       }
                       const reader = new FileReader();
                       reader.onload = (e) => {
-                        setFormData((prev) => ({
-                          ...prev,
-                          photo: e.target?.result as string,
-                        }));
+                        const imageUrl = e.target?.result as string;
+                        setCropDialog({ isOpen: true, imageUrl });
                       };
                       reader.readAsDataURL(file);
                     }
@@ -306,6 +312,15 @@ const EditMember = () => {
             </div>
           </CardContent>
         </Card>
+
+        <CropDialog
+          isOpen={cropDialog.isOpen}
+          onClose={() => setCropDialog({ isOpen: false, imageUrl: "" })}
+          imageUrl={cropDialog.imageUrl}
+          onCropSelect={(croppedImage) => {
+            setFormData((prev) => ({ ...prev, photo: croppedImage }));
+          }}
+        />
       </div>
     </div>
   );
