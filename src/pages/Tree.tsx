@@ -137,7 +137,7 @@ const Tree = () => {
                       onClick={() => setSelectedMember(member)}
                     >
                       <CardContent className="p-4 text-center">
-                        <Avatar className="h-20 w-20 mx-auto mb-3 rounded-lg">
+                        <Avatar className="h-28 w-28 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
                           <AvatarFallback className="text-sm bg-green-100 text-green-700">
                             {member.name
@@ -190,7 +190,7 @@ const Tree = () => {
                       onClick={() => setSelectedMember(member)}
                     >
                       <CardContent className="p-4 text-center">
-                        <Avatar className="h-20 w-20 mx-auto mb-3 rounded-lg">
+                        <Avatar className="h-28 w-28 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
                           <AvatarFallback className="text-sm bg-green-100 text-green-700">
                             {member.name
@@ -243,7 +243,7 @@ const Tree = () => {
                       onClick={() => setSelectedMember(member)}
                     >
                       <CardContent className="p-4 text-center">
-                        <Avatar className="h-20 w-20 mx-auto mb-3 rounded-lg">
+                        <Avatar className="h-28 w-28 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
                           <AvatarFallback className="text-sm bg-green-100 text-green-700">
                             {member.name
