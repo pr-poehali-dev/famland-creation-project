@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Icon from "@/components/ui/icon";
 
 interface FamilyMember {
@@ -33,6 +34,7 @@ const EditMember = () => {
   const [searchParams] = useSearchParams();
   const memberId = searchParams.get("id");
   const isEditing = Boolean(memberId);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState<FamilyMember>({
     id: "",
@@ -114,15 +116,25 @@ const EditMember = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="photo">Фотография</Label>
+              <Label>Фотография</Label>
               <div className="flex flex-col items-center gap-3">
-                {formData.photo && (
-                  <div className="relative">
-                    <img
-                      src={formData.photo}
-                      alt="Предпросмотр"
-                      className="w-24 h-24 object-cover rounded-full border-2 border-green-200"
-                    />
+                <div className="relative">
+                  <Avatar
+                    className="w-24 h-24 cursor-pointer border-2 border-green-200 hover:border-green-400 transition-colors"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    {formData.photo ? (
+                      <AvatarImage
+                        src={formData.photo}
+                        alt="Фото члена семьи"
+                      />
+                    ) : (
+                      <AvatarFallback className="bg-green-50 text-green-600">
+                        <Icon name="Camera" size={32} />
+                      </AvatarFallback>
+                    )}
+                  </Avatar>
+                  {formData.photo && (
                     <Button
                       type="button"
                       variant="outline"
@@ -134,13 +146,13 @@ const EditMember = () => {
                     >
                       <Icon name="X" size={12} />
                     </Button>
-                  </div>
-                )}
-                <Input
-                  id="photo"
+                  )}
+                </div>
+                <input
+                  ref={fileInputRef}
                   type="file"
                   accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                  className="text-center"
+                  className="hidden"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
                     if (file) {
@@ -164,9 +176,10 @@ const EditMember = () => {
                       reader.readAsDataURL(file);
                     }
                   }}
-                  className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
                 />
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground text-center">
+                  Нажмите на аватарку для загрузки фото
+                  <br />
                   Поддерживаются форматы: JPG, PNG, WEBP
                 </p>
               </div>
