@@ -141,9 +141,13 @@ const MemberProfile = () => {
           <div className="lg:col-span-1">
             <Card className="border-green-200">
               <CardContent className="pt-6 text-center">
-                <Avatar className="h-40 w-40 mx-auto mb-4">
-                  <AvatarImage src={member.photo} alt={member.name} />
-                  <AvatarFallback className="bg-green-100 text-green-700 text-3xl">
+                <Avatar className="h-40 w-40 mx-auto mb-4 aspect-square rounded-xl">
+                  <AvatarImage
+                    src={member.photo}
+                    alt={member.name}
+                    className="rounded-xl"
+                  />
+                  <AvatarFallback className="bg-green-100 text-green-700 text-3xl rounded-xl">
                     {member.name
                       .split(" ")
                       .map((n) => n[0])
