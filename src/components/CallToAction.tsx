@@ -24,7 +24,7 @@ const CallToAction = () => {
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
           <button className="bg-white text-green-700 hover:bg-green-50 px-10 py-4 rounded-xl text-lg font-bold transition-all duration-300 hover:scale-105 shadow-lg">
             <Icon name="TreePine" size={24} className="inline mr-3" />
-            Начать создание древа
+            Создать древа
           </button>
 
           <button className="border-2 border-green-200 text-green-100 hover:bg-green-700 px-10 py-4 rounded-xl text-lg font-semibold transition-all duration-300">
