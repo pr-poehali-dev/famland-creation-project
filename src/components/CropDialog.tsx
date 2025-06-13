@@ -30,7 +30,7 @@ const CropDialog = ({
   const [cropArea, setCropArea] = useState<CropArea>({
     x: 50,
     y: 50,
-    size: 150,
+    size: 176,
   });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -42,11 +42,10 @@ const CropDialog = ({
     if (isOpen && imageRef.current) {
       const img = imageRef.current;
       const containerRect = img.getBoundingClientRect();
-      const size = Math.min(containerRect.width, containerRect.height) * 0.4;
       setCropArea({
-        x: (containerRect.width - size) / 2,
-        y: (containerRect.height - size) / 2,
-        size: size,
+        x: (containerRect.width - 176) / 2,
+        y: (containerRect.height - 176) / 2,
+        size: 176,
       });
     }
   }, [isOpen, imageUrl]);
@@ -75,8 +74,8 @@ const CropDialog = ({
       const newY = e.clientY - rect.top - dragStart.y;
 
       // Ограничиваем область кропа границами изображения
-      const maxX = rect.width - cropArea.size;
-      const maxY = rect.height - cropArea.size;
+      const maxX = rect.width - 176;
+      const maxY = rect.height - 176;
 
       setCropArea((prev) => ({
         ...prev,
@@ -84,7 +83,7 @@ const CropDialog = ({
         y: Math.max(0, Math.min(newY, maxY)),
       }));
     },
-    [isDragging, dragStart, cropArea.size],
+    [isDragging, dragStart],
   );
 
   const handleMouseUp = useCallback(() => {
