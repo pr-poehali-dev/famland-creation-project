@@ -134,14 +134,18 @@ const FamilyMemberCard = ({
       onClick={() => onClick(member)}
     >
       <CardContent className="p-3 flex flex-col items-center h-full">
-        <Avatar className="w-16 h-16 mb-2">
-          <AvatarImage src={member.photo} alt={member.name} />
+        <Avatar className="w-16 h-16 mb-2 rounded-none">
+          <AvatarImage
+            src={member.photo}
+            alt={member.name}
+            className="rounded-none"
+          />
           <AvatarFallback
-            className={`h-44 w-44 text-lg ${
+            className={`h-44 w-44 text-lg rounded-none ${
               member.deceased
                 ? "bg-gray-100 text-gray-500"
                 : "bg-green-100 text-green-700"
-            } flex items-center justify-center rounded-lg`}
+            } flex items-center justify-center`}
           >
             {member.name
               .split(" ")
