@@ -181,7 +181,6 @@ const CropDialog = ({
     const img = new Image();
 
     img.onload = () => {
-      const containerRect = containerRef.current!.getBoundingClientRect();
       const imageRect = imageRef.current!.getBoundingClientRect();
 
       // Вычисляем масштаб между отображаемым изображением и оригинальным
@@ -191,13 +190,14 @@ const CropDialog = ({
       // Переводим координаты области кропа в координаты оригинального изображения
       const cropX = cropArea.x * scaleX;
       const cropY = cropArea.y * scaleY;
-      const cropSize = cropArea.size * Math.min(scaleX, scaleY);
+      const cropWidth = cropArea.size * scaleX;
+      const cropHeight = cropArea.size * scaleY;
 
       // Устанавливаем размер канваса 300x300 для квадратного результата
       canvas.width = 300;
       canvas.height = 300;
 
-      ctx?.drawImage(img, cropX, cropY, cropSize, cropSize, 0, 0, 300, 300);
+      ctx?.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, 300, 300);
 
       const croppedImageUrl = canvas.toDataURL("image/jpeg", 0.9);
       onCropSelect(croppedImageUrl);
