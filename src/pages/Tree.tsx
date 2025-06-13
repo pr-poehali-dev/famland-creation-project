@@ -76,7 +76,8 @@ const Tree = () => {
   ]);
 
   const getGenerationText = (generation: number) => {
-    return `Поколение ${generation + 1}`;
+    const ordinals = ["1-е", "2-е", "3-е", "4-е", "5-е"];
+    return `Поколение: ${ordinals[generation] || `${generation + 1}-е`}`;
   };
 
   const handleViewMember = (member: FamilyMember) => {
@@ -157,7 +158,7 @@ const Tree = () => {
                           <p className="text-sm text-green-600 mb-1">
                             Роль: {member.relation}
                           </p>
-                          <p className="text-sm text-green-600">
+                          <p className="text-xs text-green-500 font-medium">
                             {getGenerationText(member.generation)}
                           </p>
                         </div>
