@@ -115,6 +115,76 @@ const EditMember = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
+            <div className="space-y-2">
+              <Label>Фотография</Label>
+              <div className="flex flex-col items-center gap-3">
+                <div className="relative">
+                  <Avatar
+                    className="w-24 h-24 cursor-pointer border-2 border-green-200 hover:border-green-400 transition-colors"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    {formData.photo ? (
+                      <AvatarImage
+                        src={formData.photo}
+                        alt="Фото члена семьи"
+                      />
+                    ) : (
+                      <AvatarFallback className="bg-green-50 text-green-600">
+                        <Icon name="Camera" size={32} />
+                      </AvatarFallback>
+                    )}
+                  </Avatar>
+                  {formData.photo && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 border-red-300 text-red-600 hover:bg-red-50"
+                      onClick={() =>
+                        setFormData((prev) => ({ ...prev, photo: "" }))
+                      }
+                    >
+                      <Icon name="X" size={12} />
+                    </Button>
+                  )}
+                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const validTypes = [
+                        "image/jpeg",
+                        "image/png",
+                        "image/webp",
+                      ];
+                      if (!validTypes.includes(file.type)) {
+                        alert("Поддерживаются только форматы JPG, PNG, WEBP");
+                        e.target.value = "";
+                        return;
+                      }
+                      const reader = new FileReader();
+                      reader.onload = (e) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          photo: e.target?.result as string,
+                        }));
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+                <p className="text-xs text-muted-foreground text-center">
+                  Нажмите на аватарку для загрузки фото
+                  <br />
+                  Поддерживаются форматы: JPG, PNG, WEBP
+                </p>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="lastName">Фамилия</Label>
