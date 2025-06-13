@@ -121,13 +121,6 @@ const FamilyMemberCard = ({
             className={`font-medium mb-1 text-base ${getTextColor("text-green-800")}`}
           >
             {member.fullName || member.name}
-            {member.age && (
-              <span
-                className={`text-sm ml-2 ${getSubTextColor("text-green-600")}`}
-              >
-                ({member.age} лет)
-              </span>
-            )}
             {member.deceased && member.id === "7" && (
               <span className="text-xs text-gray-500 ml-2">✝</span>
             )}
@@ -138,6 +131,15 @@ const FamilyMemberCard = ({
               <span className="text-xs text-purple-600 ml-2">🌸</span>
             )}
           </h4>
+
+          {member.age && (
+            <div
+              className={`flex items-center justify-center gap-1 mb-2 ${getSubTextColor("text-green-600")}`}
+            >
+              <Icon name="Calendar" size={14} />
+              <span className="text-sm font-medium">{member.age} лет</span>
+            </div>
+          )}
 
           {member.deceased &&
             member.birthDate &&
