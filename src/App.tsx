@@ -11,6 +11,7 @@ import EditMember from "./pages/EditMember";
 import MemberProfile from "./pages/MemberProfile";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import Heritage from "./pages/Heritage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/member/:id" element={<MemberProfile />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/heritage" element={<Heritage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

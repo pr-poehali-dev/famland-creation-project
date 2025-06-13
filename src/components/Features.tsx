@@ -1,6 +1,8 @@
 import Icon from "@/components/ui/icon";
+import { useNavigate } from "react-router-dom";
 
 const Features = () => {
+  const navigate = useNavigate();
   const features = [
     {
       icon: "GitBranch",
@@ -96,7 +98,10 @@ const Features = () => {
             <button className="bg-white text-green-700 hover:bg-green-50 px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">
               Начать создание древа
             </button>
-            <button className="border-2 border-green-200 text-green-100 hover:bg-green-600 px-8 py-3 rounded-lg font-semibold transition-all duration-300">
+            <button
+              onClick={() => navigate("/heritage")}
+              className="border-2 border-green-200 text-green-100 hover:bg-green-600 px-8 py-3 rounded-lg font-semibold transition-all duration-300"
+            >
               Узнать больше
             </button>
           </div>
