@@ -83,7 +83,7 @@ const BreadcrumbNavigation = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-3 bg-white/50 backdrop-blur-sm">
+    <div className="px-4 py-3 bg-white/50 backdrop-blur-sm">
       <Breadcrumb>
         <BreadcrumbList>
           {breadcrumbs.map((item, index) => (
