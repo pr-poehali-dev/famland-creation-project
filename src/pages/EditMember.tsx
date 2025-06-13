@@ -116,7 +116,7 @@ const EditMember = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label>Фотография</Label>
+              <Label></Label>
               <div className="flex flex-col items-center gap-3">
                 <div className="relative">
                   <Avatar
