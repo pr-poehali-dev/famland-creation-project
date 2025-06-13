@@ -90,7 +90,7 @@ const FamilyMemberCombobox = ({
                     onValueChange(member.id);
                     setOpen(false);
                   }}
-                  className="my-1.5"
+                  className="my-1.5 focus:outline-none"
                 >
                   <div className="flex items-center gap-3 w-full">
                     <div className="relative">
