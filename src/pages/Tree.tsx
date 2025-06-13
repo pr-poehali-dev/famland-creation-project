@@ -158,7 +158,7 @@ const Tree = () => {
                           <p className="text-sm text-green-600 mb-1">
                             Роль: {member.relation}
                           </p>
-                          <p className="text-xs text-green-500 font-medium">
+                          <p className="text-sm text-green-600">
                             {getGenerationText(member.generation)}
                           </p>
                         </div>
