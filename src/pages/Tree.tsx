@@ -157,17 +157,6 @@ const Tree = () => {
                             Поколение: {member.generation + 1}
                           </p>
                         </div>
-                        <Button
-                          size="sm"
-                          className="w-full bg-green-600 hover:bg-green-700"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleViewMember(member);
-                          }}
-                        >
-                          <Icon name="User" size={14} className="mr-1" />
-                          Подробнее
-                        </Button>
                       </CardContent>
                     </Card>
                   ))}
@@ -212,17 +201,6 @@ const Tree = () => {
                             Поколение: {member.generation + 1}
                           </p>
                         </div>
-                        <Button
-                          size="sm"
-                          className="w-full bg-green-600 hover:bg-green-700"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleViewMember(member);
-                          }}
-                        >
-                          <Icon name="User" size={14} className="mr-1" />
-                          Подробнее
-                        </Button>
                       </CardContent>
                     </Card>
                   ))}
@@ -267,17 +245,6 @@ const Tree = () => {
                             Поколение: {member.generation + 1}
                           </p>
                         </div>
-                        <Button
-                          size="sm"
-                          className="w-full bg-green-600 hover:bg-green-700"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleViewMember(member);
-                          }}
-                        >
-                          <Icon name="User" size={14} className="mr-1" />
-                          Подробнее
-                        </Button>
                       </CardContent>
                     </Card>
                   ))}
