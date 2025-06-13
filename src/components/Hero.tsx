@@ -1,4 +1,5 @@
 import Icon from "@/components/ui/icon";
+import ActionButton from "@/components/ui/action-button";
 
 const Hero = () => {
   return (
@@ -14,9 +15,7 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
-            Начать создание древа
-          </button>
+          <ActionButton size="lg">Начать создание древа</ActionButton>
         </div>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">

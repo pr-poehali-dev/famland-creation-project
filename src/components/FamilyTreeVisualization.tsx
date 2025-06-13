@@ -1,4 +1,7 @@
 import Icon from "@/components/ui/icon";
+import PersonCard from "@/components/ui/person-card";
+import SectionHeader from "@/components/ui/section-header";
+import ActionButton from "@/components/ui/action-button";
 
 const FamilyTreeVisualization = () => {
   const familyMembers = [
@@ -43,15 +46,10 @@ const FamilyTreeVisualization = () => {
   return (
     <section className="py-20 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-green-800 mb-4 font-serif">
-            Визуализация семейного древа
-          </h2>
-          <p className="text-xl text-green-600 max-w-2xl mx-auto">
-            Интерактивное представление семейных связей с возможностью
-            добавления деталей
-          </p>
-        </div>
+        <SectionHeader
+          title="Визуализация семейного древа"
+          subtitle="Интерактивное представление семейных связей с возможностью добавления деталей"
+        />
 
         <div className="relative">
           {/* Дерево фон */}
@@ -113,78 +111,26 @@ const FamilyTreeVisualization = () => {
           <div className="relative z-10 min-h-96">
             {/* Первое поколение */}
             <div className="flex justify-center gap-16 mb-16">
-              <div className="bg-green-100 hover:bg-green-200 p-4 rounded-xl border-2 border-green-300 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="w-16 h-16 bg-green-300 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Icon name="User" size={24} className="text-green-700" />
-                </div>
-                <h4 className="font-semibold text-green-800 text-center">
-                  Дедушка Иван
-                </h4>
-                <p className="text-sm text-green-600 text-center">1920-2010</p>
-              </div>
-
-              <div className="bg-green-100 hover:bg-green-200 p-4 rounded-xl border-2 border-green-300 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="w-16 h-16 bg-green-300 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Icon name="User" size={24} className="text-green-700" />
-                </div>
-                <h4 className="font-semibold text-green-800 text-center">
-                  Бабушка Мария
-                </h4>
-                <p className="text-sm text-green-600 text-center">1925-2015</p>
-              </div>
+              <PersonCard name="Дедушка Иван" years="1920-2010" />
+              <PersonCard name="Бабушка Мария" years="1925-2015" />
             </div>
 
             {/* Второе поколение */}
             <div className="flex justify-center gap-32 mb-16">
-              <div className="bg-green-100 hover:bg-green-200 p-4 rounded-xl border-2 border-green-300 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="w-16 h-16 bg-green-300 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Icon name="User" size={24} className="text-green-700" />
-                </div>
-                <h4 className="font-semibold text-green-800 text-center">
-                  Папа Сергей
-                </h4>
-                <p className="text-sm text-green-600 text-center">род. 1950</p>
-              </div>
-
-              <div className="bg-green-100 hover:bg-green-200 p-4 rounded-xl border-2 border-green-300 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="w-16 h-16 bg-green-300 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Icon name="User" size={24} className="text-green-700" />
-                </div>
-                <h4 className="font-semibold text-green-800 text-center">
-                  Мама Елена
-                </h4>
-                <p className="text-sm text-green-600 text-center">род. 1955</p>
-              </div>
+              <PersonCard name="Папа Сергей" years="род. 1950" />
+              <PersonCard name="Мама Елена" years="род. 1955" />
             </div>
 
             {/* Третье поколение */}
             <div className="flex justify-center gap-16">
-              <div className="bg-green-200 hover:bg-green-300 p-4 rounded-xl border-2 border-green-400 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="w-16 h-16 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Icon name="User" size={24} className="text-green-800" />
-                </div>
-                <h4 className="font-semibold text-green-800 text-center">Вы</h4>
-                <p className="text-sm text-green-600 text-center">род. 1985</p>
-              </div>
-
-              <div className="bg-green-100 hover:bg-green-200 p-4 rounded-xl border-2 border-green-300 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <div className="w-16 h-16 bg-green-300 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Icon name="User" size={24} className="text-green-700" />
-                </div>
-                <h4 className="font-semibold text-green-800 text-center">
-                  Сестра Анна
-                </h4>
-                <p className="text-sm text-green-600 text-center">род. 1988</p>
-              </div>
+              <PersonCard name="Вы" years="род. 1985" isHighlighted={true} />
+              <PersonCard name="Сестра Анна" years="род. 1988" />
             </div>
           </div>
 
           {/* Кнопка добавления */}
           <div className="text-center mt-12">
-            <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
-              <Icon name="Plus" size={20} className="inline mr-2" />
-              Добавить члена семьи
-            </button>
+            <ActionButton icon="Plus">Добавить члена семьи</ActionButton>
           </div>
         </div>
       </div>
