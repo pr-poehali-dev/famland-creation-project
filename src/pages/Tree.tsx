@@ -139,7 +139,7 @@ const Tree = () => {
                           className="h-16 w-32 border-green-300 hover:bg-green-50 flex flex-col"
                           onClick={() => setSelectedMember(member)}
                         >
-                          <Avatar className="h-6 w-6">
+                          <Avatar className="h-12 w-12">
                             <AvatarImage src={member.photo} alt={member.name} />
                             <AvatarFallback className="text-xs bg-green-100 text-green-700">
                               {member.name
@@ -172,7 +172,7 @@ const Tree = () => {
                           className="h-16 w-32 border-green-300 hover:bg-green-50 flex flex-col"
                           onClick={() => setSelectedMember(member)}
                         >
-                          <Avatar className="h-6 w-6">
+                          <Avatar className="h-12 w-12">
                             <AvatarImage src={member.photo} alt={member.name} />
                             <AvatarFallback className="text-xs bg-green-100 text-green-700">
                               {member.name
@@ -205,7 +205,7 @@ const Tree = () => {
                           className="h-16 w-32 border-green-300 hover:bg-green-50 flex flex-col"
                           onClick={() => setSelectedMember(member)}
                         >
-                          <Avatar className="h-6 w-6">
+                          <Avatar className="h-12 w-12">
                             <AvatarImage src={member.photo} alt={member.name} />
                             <AvatarFallback className="text-xs bg-green-100 text-green-700">
                               {member.name
@@ -234,7 +234,7 @@ const Tree = () => {
                 {selectedMember ? (
                   <div className="space-y-4">
                     <div className="text-center">
-                      <Avatar className="h-16 w-16 mx-auto mb-2">
+                      <Avatar className="h-20 w-20 mx-auto mb-2">
                         <AvatarImage
                           src={selectedMember.photo}
                           alt={selectedMember.name}
