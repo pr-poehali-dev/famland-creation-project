@@ -93,6 +93,28 @@ const Tree = () => {
       photo:
         "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=150&h=150&fit=crop&crop=face",
     },
+    {
+      id: "9",
+      name: "Прадедушка Николай",
+      relation: "Прадедушка",
+      generation: -1,
+      deceased: true,
+      birthDate: "1890-1965",
+      description: "Ветеран войны",
+      photo:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    },
+    {
+      id: "10",
+      name: "Прабабушка Елена",
+      relation: "Прабабушка",
+      generation: -1,
+      deceased: true,
+      birthDate: "1895-1970",
+      description: "Учительница",
+      photo:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+    },
   ]);
 
   const getGenerationText = (generation: number) => {

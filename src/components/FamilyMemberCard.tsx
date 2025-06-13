@@ -46,6 +46,21 @@ const FamilyMemberCard = ({
       );
     }
 
+    if (member.id === "10") {
+      return (
+        <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-purple-100 via-lavender-50 to-violet-100 border-2 border-purple-300 opacity-90">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg flex items-center gap-1">
+              <Icon name="Flower" size={12} />В наших сердцах
+            </div>
+          </div>
+          <div className="absolute top-2 right-2 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
+            <span className="text-white text-xs">♡</span>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center">
         <div className="bg-white bg-opacity-90 px-2 py-1 rounded-full text-xs text-gray-700 font-medium">
@@ -57,12 +72,16 @@ const FamilyMemberCard = ({
 
   const getTextColor = (baseColor: string) => {
     if (!member.deceased) return baseColor;
-    return member.id === "9" ? "text-amber-800 font-semibold" : "text-gray-600";
+    if (member.id === "9") return "text-amber-800 font-semibold";
+    if (member.id === "10") return "text-purple-800 font-semibold";
+    return "text-gray-600";
   };
 
   const getSubTextColor = (baseColor: string) => {
     if (!member.deceased) return baseColor;
-    return member.id === "9" ? "text-amber-700" : "text-gray-500";
+    if (member.id === "9") return "text-amber-700";
+    if (member.id === "10") return "text-purple-700";
+    return "text-gray-500";
   };
 
   return (
@@ -107,27 +126,38 @@ const FamilyMemberCard = ({
             {member.deceased && member.id === "9" && (
               <span className="text-xs text-amber-600 ml-2">⭐</span>
             )}
+            {member.deceased && member.id === "10" && (
+              <span className="text-xs text-purple-600 ml-2">🌸</span>
+            )}
           </h4>
 
           {member.deceased &&
             member.birthDate &&
-            (member.id === "8" || member.id === "9") && (
+            (member.id === "8" || member.id === "9" || member.id === "10") && (
               <p
                 className={`text-xs mb-1 italic ${
                   member.id === "9"
                     ? "text-amber-700 font-medium"
-                    : "text-gray-500"
+                    : member.id === "10"
+                      ? "text-purple-700 font-medium"
+                      : "text-gray-500"
                 }`}
               >
                 {member.birthDate}
               </p>
             )}
 
-          {member.deceased && member.description && member.id === "9" && (
-            <p className="text-xs text-amber-600 mb-1 font-medium">
-              {member.description}
-            </p>
-          )}
+          {member.deceased &&
+            member.description &&
+            (member.id === "9" || member.id === "10") && (
+              <p
+                className={`text-xs mb-1 font-medium ${
+                  member.id === "9" ? "text-amber-600" : "text-purple-600"
+                }`}
+              >
+                {member.description}
+              </p>
+            )}
 
           <p className={`text-sm mb-1 ${getSubTextColor("text-green-600")}`}>
             Роль: {member.relation}
@@ -138,7 +168,9 @@ const FamilyMemberCard = ({
               member.deceased
                 ? member.id === "9"
                   ? "text-amber-600"
-                  : "text-gray-400"
+                  : member.id === "10"
+                    ? "text-purple-600"
+                    : "text-gray-400"
                 : "text-green-500"
             }`}
           >
