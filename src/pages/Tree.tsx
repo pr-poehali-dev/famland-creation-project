@@ -111,7 +111,7 @@ const Tree = () => {
             <CardTitle className="flex items-center justify-between text-green-800">
               <span className="flex items-center gap-2">
                 <Icon name="TreePine" size={24} />
-                Генеалогическое древо
+                Семейное древо
               </span>
               <button
                 className="flex items-center gap-2 px-3 py-2 text-sm bg-green-100 hover:bg-green-200 text-green-700 rounded-lg transition-colors"
