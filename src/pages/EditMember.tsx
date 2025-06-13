@@ -26,6 +26,7 @@ interface FamilyMember {
   description?: string;
   children?: string[];
   photo?: string;
+  photoFormat?: "jpg" | "png" | "webp";
 }
 
 const EditMember = () => {
@@ -45,6 +46,7 @@ const EditMember = () => {
     birthDate: "",
     description: "",
     photo: "",
+    photoFormat: "jpg",
   });
 
   useEffect(() => {
@@ -79,6 +81,21 @@ const EditMember = () => {
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Проверяем соответствие формата файла выбранному формату
+      const fileExtension = file.name.split(".").pop()?.toLowerCase();
+      const expectedFormat = formData.photoFormat || "jpg";
+
+      if (
+        fileExtension !== expectedFormat &&
+        fileExtension !== "jpeg" &&
+        expectedFormat !== "jpg"
+      ) {
+        alert(
+          `Пожалуйста, выберите файл в формате ${expectedFormat.toUpperCase()}`,
+        );
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (event) => {
         setFormData({ ...formData, photo: event.target?.result as string });
@@ -116,6 +133,33 @@ const EditMember = () => {
             <div className="space-y-2">
               <Label htmlFor="photo">Фотография</Label>
               <div className="flex flex-col items-center gap-3">
+                <div className="w-full space-y-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="photoFormat">Формат фотографии</Label>
+                    <Select
+                      value={formData.photoFormat || "jpg"}
+                      onValueChange={(value: "jpg" | "png" | "webp") =>
+                        setFormData({ ...formData, photoFormat: value })
+                      }
+                    >
+                      <SelectTrigger className="border-green-200 focus:border-green-400">
+                        <SelectValue placeholder="Выберите формат" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="jpg">
+                          JPG - универсальный формат
+                        </SelectItem>
+                        <SelectItem value="png">
+                          PNG - с прозрачностью
+                        </SelectItem>
+                        <SelectItem value="webp">
+                          WEBP - современный формат
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
                 {formData.photo && (
                   <div className="relative">
                     <img
@@ -134,11 +178,12 @@ const EditMember = () => {
                     </Button>
                   </div>
                 )}
+
                 <div className="flex gap-2 w-full">
                   <Input
                     id="photo"
                     type="file"
-                    accept="image/*"
+                    accept={`image/${formData.photoFormat === "jpg" ? "jpeg" : formData.photoFormat}`}
                     onChange={handlePhotoUpload}
                     className="border-green-200 focus:border-green-400"
                   />
