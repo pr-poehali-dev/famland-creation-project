@@ -59,7 +59,7 @@ const CropDialog = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
-  // Вычисляем размеры и позицию изображения
+  // Вычисляем размеры и позицию изображения с учетом object-contain
   const calculateImageDimensions = useCallback(() => {
     if (!imageRef.current || !containerRef.current) return null;
 
@@ -67,15 +67,44 @@ const CropDialog = ({
     const container = containerRef.current;
 
     const containerRect = container.getBoundingClientRect();
-    const imgRect = img.getBoundingClientRect();
+
+    // Получаем естественные размеры изображения
+    const naturalWidth = img.naturalWidth;
+    const naturalHeight = img.naturalHeight;
+    const naturalAspect = naturalWidth / naturalHeight;
+
+    // Получаем размеры контейнера
+    const containerWidth = containerRect.width;
+    const containerHeight = containerRect.height;
+    const containerAspect = containerWidth / containerHeight;
+
+    let displayWidth: number;
+    let displayHeight: number;
+    let displayX: number;
+    let displayY: number;
+
+    // Рассчитываем реальные размеры изображения с object-contain
+    if (naturalAspect > containerAspect) {
+      // Изображение ограничено по ширине
+      displayWidth = containerWidth;
+      displayHeight = containerWidth / naturalAspect;
+      displayX = 0;
+      displayY = (containerHeight - displayHeight) / 2;
+    } else {
+      // Изображение ограничено по высоте
+      displayHeight = containerHeight;
+      displayWidth = containerHeight * naturalAspect;
+      displayX = (containerWidth - displayWidth) / 2;
+      displayY = 0;
+    }
 
     return {
-      displayWidth: imgRect.width,
-      displayHeight: imgRect.height,
-      displayX: imgRect.left - containerRect.left,
-      displayY: imgRect.top - containerRect.top,
-      naturalWidth: img.naturalWidth,
-      naturalHeight: img.naturalHeight,
+      displayWidth,
+      displayHeight,
+      displayX,
+      displayY,
+      naturalWidth,
+      naturalHeight,
     };
   }, []);
 
