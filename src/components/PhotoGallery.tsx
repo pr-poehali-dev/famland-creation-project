@@ -343,7 +343,6 @@ const PhotoGallery = ({
         onOpenChange={setUploadDialogOpen}
         onAddPhoto={(photo) => {
           onAddPhoto?.(photo);
-          setUploadDialogOpen(false);
         }}
       />
     </>
