@@ -173,11 +173,14 @@ const MemberProfile = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <h3 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                      <Icon name="Users" size={16} />
-                      Поколение
+                      <Icon name="User" size={16} />
+                      Пол
                     </h3>
                     <p className="text-gray-700">
-                      {getGenerationName(member.generation)}
+                      {member.relation === "Бабушка" ||
+                      member.relation === "Мать"
+                        ? "Женский"
+                        : "Мужской"}
                     </p>
                   </div>
 
