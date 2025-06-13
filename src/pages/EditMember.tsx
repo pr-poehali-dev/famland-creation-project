@@ -132,10 +132,7 @@ const EditMember = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label className="flex items-center gap-1">
-                Фотография
-                <span className="text-red-500">*</span>
-              </Label>
+              <Label className="flex items-center gap-1"></Label>
               <div className="flex flex-col items-center gap-3">
                 <div className="relative">
                   <Avatar
