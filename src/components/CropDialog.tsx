@@ -142,8 +142,8 @@ const CropDialog = ({
 
           <div
             ref={containerRef}
-            className="relative bg-gray-100 rounded-lg overflow-hidden cursor-move select-none"
-            style={{ aspectRatio: "1/1", width: "100%", height: "400px" }}
+            className="relative bg-gray-100 rounded-lg overflow-hidden cursor-move select-none flex items-center justify-center"
+            style={{ width: "100%", height: "400px" }}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
@@ -152,7 +152,7 @@ const CropDialog = ({
               ref={imageRef}
               src={imageUrl}
               alt="Изображение для обрезки"
-              className="w-full h-full object-cover"
+              className="max-w-full max-h-full object-contain"
               draggable={false}
             />
 
