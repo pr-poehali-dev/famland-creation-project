@@ -130,11 +130,11 @@ const FamilyMemberCard = ({
 
   return (
     <Card
-      className="relative w-40 h-52 cursor-pointer hover:shadow-lg transition-shadow flex-shrink-0"
+      className="relative w-52 h-64 cursor-pointer hover:shadow-lg transition-shadow flex-shrink-0"
       onClick={() => onClick(member)}
     >
-      <CardContent className="p-3 flex flex-col items-center h-full">
-        <Avatar className="w-38 h-38 mb-2 rounded-none">
+      <CardContent className="p-5 flex flex-col items-center h-full">
+        <Avatar className="w-44 h-44 mb-3 rounded-none">
           <AvatarImage
             src={member.photo}
             alt={member.name}
