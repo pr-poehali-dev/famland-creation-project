@@ -50,6 +50,16 @@ const Tree = () => {
         "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face",
     },
     {
+      id: "8",
+      name: "Бабушка Анна",
+      relation: "Бабушка",
+      generation: 0,
+      deceased: true,
+      birthDate: "1925-1998",
+      photo:
+        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face",
+    },
+    {
       id: "3",
       name: "Папа Алексей",
       relation: "Отец",
@@ -177,13 +187,23 @@ const Tree = () => {
                             </AvatarFallback>
                           </Avatar>
                           {member.deceased && (
-                            <div className="absolute top-2 right-2 bg-gray-600 text-white p-1 rounded-full">
-                              <Icon
-                                name="Heart"
-                                size={12}
-                                className="fill-current"
-                              />
-                            </div>
+                            <>
+                              {member.id === "7" ? (
+                                <div className="absolute top-2 right-2 bg-gray-600 text-white p-1 rounded-full">
+                                  <Icon
+                                    name="Heart"
+                                    size={12}
+                                    className="fill-current"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center">
+                                  <div className="bg-white bg-opacity-90 px-2 py-1 rounded-full text-xs text-gray-700 font-medium">
+                                    ✞ Покоится с миром
+                                  </div>
+                                </div>
+                              )}
+                            </>
                           )}
                         </div>
                         <div className="flex-1">
@@ -195,12 +215,19 @@ const Tree = () => {
                             }`}
                           >
                             {member.name}
-                            {member.deceased && (
+                            {member.deceased && member.id === "7" && (
                               <span className="text-xs text-gray-500 ml-2">
                                 ✝
                               </span>
                             )}
                           </h4>
+                          {member.deceased &&
+                            member.birthDate &&
+                            member.id === "8" && (
+                              <p className="text-xs text-gray-500 mb-1 italic">
+                                {member.birthDate}
+                              </p>
+                            )}
                           <p
                             className={`text-sm mb-1 ${
                               member.deceased
@@ -269,13 +296,23 @@ const Tree = () => {
                             </AvatarFallback>
                           </Avatar>
                           {member.deceased && (
-                            <div className="absolute top-2 right-2 bg-gray-600 text-white p-1 rounded-full">
-                              <Icon
-                                name="Heart"
-                                size={12}
-                                className="fill-current"
-                              />
-                            </div>
+                            <>
+                              {member.id === "7" ? (
+                                <div className="absolute top-2 right-2 bg-gray-600 text-white p-1 rounded-full">
+                                  <Icon
+                                    name="Heart"
+                                    size={12}
+                                    className="fill-current"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center">
+                                  <div className="bg-white bg-opacity-90 px-2 py-1 rounded-full text-xs text-gray-700 font-medium">
+                                    ✞ Покоится с миром
+                                  </div>
+                                </div>
+                              )}
+                            </>
                           )}
                         </div>
                         <div className="flex-1">
@@ -287,12 +324,19 @@ const Tree = () => {
                             }`}
                           >
                             {member.name}
-                            {member.deceased && (
+                            {member.deceased && member.id === "7" && (
                               <span className="text-xs text-gray-500 ml-2">
                                 ✝
                               </span>
                             )}
                           </h4>
+                          {member.deceased &&
+                            member.birthDate &&
+                            member.id === "8" && (
+                              <p className="text-xs text-gray-500 mb-1 italic">
+                                {member.birthDate}
+                              </p>
+                            )}
                           <p
                             className={`text-sm mb-1 ${
                               member.deceased
@@ -361,13 +405,23 @@ const Tree = () => {
                             </AvatarFallback>
                           </Avatar>
                           {member.deceased && (
-                            <div className="absolute top-2 right-2 bg-gray-600 text-white p-1 rounded-full">
-                              <Icon
-                                name="Heart"
-                                size={12}
-                                className="fill-current"
-                              />
-                            </div>
+                            <>
+                              {member.id === "7" ? (
+                                <div className="absolute top-2 right-2 bg-gray-600 text-white p-1 rounded-full">
+                                  <Icon
+                                    name="Heart"
+                                    size={12}
+                                    className="fill-current"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center">
+                                  <div className="bg-white bg-opacity-90 px-2 py-1 rounded-full text-xs text-gray-700 font-medium">
+                                    ✞ Покоится с миром
+                                  </div>
+                                </div>
+                              )}
+                            </>
                           )}
                         </div>
                         <div className="flex-1">
@@ -379,12 +433,19 @@ const Tree = () => {
                             }`}
                           >
                             {member.name}
-                            {member.deceased && (
+                            {member.deceased && member.id === "7" && (
                               <span className="text-xs text-gray-500 ml-2">
                                 ✝
                               </span>
                             )}
                           </h4>
+                          {member.deceased &&
+                            member.birthDate &&
+                            member.id === "8" && (
+                              <p className="text-xs text-gray-500 mb-1 italic">
+                                {member.birthDate}
+                              </p>
+                            )}
                           <p
                             className={`text-sm mb-1 ${
                               member.deceased
