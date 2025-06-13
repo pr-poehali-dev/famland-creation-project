@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Icon from "@/components/ui/icon";
 import CropDialog from "@/components/CropDialog";
+import FamilyRelationsSection from "@/components/FamilyRelationsSection";
 
 interface FamilyMember {
   id: string;
@@ -28,6 +29,12 @@ interface FamilyMember {
   children?: string[];
   photo?: string;
   gender?: string;
+}
+
+interface FamilyRelation {
+  id: string;
+  memberId: string;
+  relationType: string;
 }
 
 const EditMember = () => {
@@ -56,6 +63,8 @@ const EditMember = () => {
     photo: "",
     gender: "",
   });
+
+  const [familyRelations, setFamilyRelations] = useState<FamilyRelation[]>([]);
 
   useEffect(() => {
     if (isEditing && memberId) {
@@ -348,6 +357,12 @@ const EditMember = () => {
                 className="focus:outline-none focus:ring-0 border-green-200 focus:border-green-400 min-h-[100px]"
               />
             </div>
+
+            <FamilyRelationsSection
+              relations={familyRelations}
+              onRelationsChange={setFamilyRelations}
+              currentMemberId={formData.id}
+            />
 
             {/* <div className="space-y-2">
               <Label htmlFor="photo-url">URL фото (опционально)</Label>
