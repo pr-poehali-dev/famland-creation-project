@@ -133,28 +133,30 @@ const Tree = () => {
                   {getGenerationMembers(0).map((member) => (
                     <Card
                       key={member.id}
-                      className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      className="w-48 h-64 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                       onClick={() => setSelectedMember(member)}
                     >
-                      <CardContent className="p-4 text-center">
-                        <Avatar className="h-38 w-38 mx-auto mb-3 rounded-lg">
+                      <CardContent className="p-4 text-center h-full flex flex-col justify-between">
+                        <Avatar className="h-20 w-20 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="h-38 text-xl bg-green-100 text-green-700 flex items-center justify-center">
+                          <AvatarFallback className="h-20 w-20 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
                             {member.name
                               .split(" ")
                               .map((n) => n[0])
                               .join("")}
                           </AvatarFallback>
                         </Avatar>
-                        <h4 className="font-medium text-green-800 mb-1">
-                          {member.name}
-                        </h4>
-                        <p className="text-xs text-green-600 mb-1">
-                          Роль: {member.relation}
-                        </p>
-                        <p className="text-xs text-green-600 mb-3">
-                          Поколение: {member.generation + 1}
-                        </p>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-green-800 mb-1 text-sm">
+                            {member.name}
+                          </h4>
+                          <p className="text-xs text-green-600 mb-1">
+                            Роль: {member.relation}
+                          </p>
+                          <p className="text-xs text-green-600 mb-3">
+                            Поколение: {member.generation + 1}
+                          </p>
+                        </div>
                         <Button
                           size="sm"
                           className="w-full bg-green-600 hover:bg-green-700"
@@ -186,28 +188,30 @@ const Tree = () => {
                   {getGenerationMembers(1).map((member) => (
                     <Card
                       key={member.id}
-                      className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      className="w-48 h-64 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                       onClick={() => setSelectedMember(member)}
                     >
-                      <CardContent className="p-4 text-center">
-                        <Avatar className="h-38 w-38 mx-auto mb-3 rounded-lg">
+                      <CardContent className="p-4 text-center h-full flex flex-col justify-between">
+                        <Avatar className="h-20 w-20 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="h-38 text-xl bg-green-100 text-green-700 flex items-center justify-center">
+                          <AvatarFallback className="h-20 w-20 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
                             {member.name
                               .split(" ")
                               .map((n) => n[0])
                               .join("")}
                           </AvatarFallback>
                         </Avatar>
-                        <h4 className="font-medium text-green-800 mb-1">
-                          {member.name}
-                        </h4>
-                        <p className="text-xs text-green-600 mb-1">
-                          Роль: {member.relation}
-                        </p>
-                        <p className="text-xs text-green-600 mb-3">
-                          Поколение: {member.generation + 1}
-                        </p>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-green-800 mb-1 text-sm">
+                            {member.name}
+                          </h4>
+                          <p className="text-xs text-green-600 mb-1">
+                            Роль: {member.relation}
+                          </p>
+                          <p className="text-xs text-green-600 mb-3">
+                            Поколение: {member.generation + 1}
+                          </p>
+                        </div>
                         <Button
                           size="sm"
                           className="w-full bg-green-600 hover:bg-green-700"
@@ -239,28 +243,30 @@ const Tree = () => {
                   {getGenerationMembers(2).map((member) => (
                     <Card
                       key={member.id}
-                      className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      className="w-48 h-64 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                       onClick={() => setSelectedMember(member)}
                     >
-                      <CardContent className="p-4 text-center">
-                        <Avatar className="h-38 w-38 mx-auto mb-3 rounded-lg">
+                      <CardContent className="p-4 text-center h-full flex flex-col justify-between">
+                        <Avatar className="h-20 w-20 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="h-38 text-xl bg-green-100 text-green-700 flex items-center justify-center">
+                          <AvatarFallback className="h-20 w-20 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
                             {member.name
                               .split(" ")
                               .map((n) => n[0])
                               .join("")}
                           </AvatarFallback>
                         </Avatar>
-                        <h4 className="font-medium text-green-800 mb-1">
-                          {member.name}
-                        </h4>
-                        <p className="text-xs text-green-600 mb-1">
-                          Роль: {member.relation}
-                        </p>
-                        <p className="text-xs text-green-600 mb-3">
-                          Поколение: {member.generation + 1}
-                        </p>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-green-800 mb-1 text-sm">
+                            {member.name}
+                          </h4>
+                          <p className="text-xs text-green-600 mb-1">
+                            Роль: {member.relation}
+                          </p>
+                          <p className="text-xs text-green-600 mb-3">
+                            Поколение: {member.generation + 1}
+                          </p>
+                        </div>
                         <Button
                           size="sm"
                           className="w-full bg-green-600 hover:bg-green-700"
