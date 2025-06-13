@@ -17,6 +17,9 @@ import Icon from "@/components/ui/icon";
 interface FamilyMember {
   id: string;
   name: string;
+  lastName?: string;
+  firstName?: string;
+  middleName?: string;
   relation: string;
   generation: number;
   birthDate?: string;
@@ -34,6 +37,9 @@ const EditMember = () => {
   const [formData, setFormData] = useState<FamilyMember>({
     id: "",
     name: "",
+    lastName: "",
+    firstName: "",
+    middleName: "",
     relation: "",
     generation: 0,
     birthDate: "",
@@ -59,7 +65,7 @@ const EditMember = () => {
   }, [isEditing, memberId]);
 
   const handleSave = () => {
-    if (formData.name.trim()) {
+    if (formData.firstName?.trim() || formData.name.trim()) {
       // Здесь будет логика сохранения данных
       console.log("Сохранение:", formData);
       navigate("/tree");
@@ -148,15 +154,56 @@ const EditMember = () => {
               </div>
             </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Фамилия</Label>
+                <Input
+                  id="lastName"
+                  value={formData.lastName || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, lastName: e.target.value })
+                  }
+                  placeholder="Введите фамилию"
+                  className="border-green-200 focus:border-green-400"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="firstName">Имя</Label>
+                <Input
+                  id="firstName"
+                  value={formData.firstName || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, firstName: e.target.value })
+                  }
+                  placeholder="Введите имя"
+                  className="border-green-200 focus:border-green-400"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="middleName">Отчество</Label>
+                <Input
+                  id="middleName"
+                  value={formData.middleName || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, middleName: e.target.value })
+                  }
+                  placeholder="Введите отчество"
+                  className="border-green-200 focus:border-green-400"
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
-              <Label htmlFor="name">Имя</Label>
+              <Label htmlFor="name">Полное имя (устаревшее поле)</Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
-                placeholder="Введите имя"
+                placeholder="Введите полное имя"
                 className="border-green-200 focus:border-green-400"
               />
             </div>
@@ -233,7 +280,7 @@ const EditMember = () => {
               <Button
                 onClick={handleSave}
                 className="bg-green-700 hover:bg-green-800"
-                disabled={!formData.name.trim()}
+                disabled={!formData.firstName?.trim() && !formData.name.trim()}
               >
                 <Icon name="Check" size={16} className="mr-2" />
                 {isEditing ? "Сохранить изменения" : "Добавить члена"}

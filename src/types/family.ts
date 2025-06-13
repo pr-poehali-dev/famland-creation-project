@@ -1,6 +1,9 @@
 export interface FamilyMember {
   id: string;
   name: string;
+  lastName?: string;
+  firstName?: string;
+  middleName?: string;
   fullName?: string;
   relation: string;
   generation: number;
