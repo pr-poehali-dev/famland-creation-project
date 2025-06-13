@@ -22,7 +22,6 @@ interface FamilyMember {
   lastName?: string;
   firstName?: string;
   middleName?: string;
-  relation: string;
   generation: number;
   birthDate?: string;
   description?: string;
@@ -51,7 +50,6 @@ const EditMember = () => {
     lastName: "",
     firstName: "",
     middleName: "",
-    relation: "",
     generation: 0,
     birthDate: "",
     description: "",
@@ -66,7 +64,6 @@ const EditMember = () => {
       const mockMember: FamilyMember = {
         id: memberId,
         name: "Загружается...",
-        relation: "",
         generation: 0,
         birthDate: "",
         description: "",
@@ -98,21 +95,6 @@ const EditMember = () => {
       reader.readAsDataURL(file);
     }
   };
-
-  const relations = [
-    "Дедушка",
-    "Бабушка",
-    "Отец",
-    "Мать",
-    "Сын",
-    "Дочь",
-    "Брат",
-    "Сестра",
-    "Дядя",
-    "Тётя",
-    "Племянник",
-    "Племянница",
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
@@ -237,27 +219,6 @@ const EditMember = () => {
                   className="border-green-200 focus:border-green-400"
                 />
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="relation">Отношение</Label>
-              <Select
-                value={formData.relation}
-                onValueChange={(value) =>
-                  setFormData({ ...formData, relation: value })
-                }
-              >
-                <SelectTrigger className="border-green-200 focus:border-green-400">
-                  <SelectValue placeholder="Выберите отношение" />
-                </SelectTrigger>
-                <SelectContent>
-                  {relations.map((relation) => (
-                    <SelectItem key={relation} value={relation}>
-                      {relation}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </div>
 
             <div className="flex gap-4">
