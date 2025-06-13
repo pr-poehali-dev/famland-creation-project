@@ -60,6 +60,17 @@ const Tree = () => {
         "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face",
     },
     {
+      id: "9",
+      name: "Дядя Владимир",
+      relation: "Дядя",
+      generation: 1,
+      deceased: true,
+      birthDate: "1960-2010",
+      description: "Военный офицер",
+      photo:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    },
+    {
       id: "3",
       name: "Папа Алексей",
       relation: "Отец",
@@ -196,6 +207,12 @@ const Tree = () => {
                                     className="fill-current"
                                   />
                                 </div>
+                              ) : member.id === "9" ? (
+                                <div className="absolute inset-0 rounded-lg border-4 border-double border-amber-600 bg-gradient-to-b from-amber-50 to-amber-100 opacity-80">
+                                  <div className="absolute top-2 left-2 bg-amber-600 text-white px-2 py-1 rounded-md text-xs font-bold shadow-md">
+                                    ★ Вечная память
+                                  </div>
+                                </div>
                               ) : (
                                 <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center">
                                   <div className="bg-white bg-opacity-90 px-2 py-1 rounded-full text-xs text-gray-700 font-medium">
@@ -210,7 +227,9 @@ const Tree = () => {
                           <h4
                             className={`font-medium mb-1 text-base ${
                               member.deceased
-                                ? "text-gray-600"
+                                ? member.id === "9"
+                                  ? "text-amber-800 font-semibold"
+                                  : "text-gray-600"
                                 : "text-green-800"
                             }`}
                           >
@@ -220,18 +239,38 @@ const Tree = () => {
                                 ✝
                               </span>
                             )}
+                            {member.deceased && member.id === "9" && (
+                              <span className="text-xs text-amber-600 ml-2">
+                                ⭐
+                              </span>
+                            )}
                           </h4>
                           {member.deceased &&
                             member.birthDate &&
-                            member.id === "8" && (
-                              <p className="text-xs text-gray-500 mb-1 italic">
+                            (member.id === "8" || member.id === "9") && (
+                              <p
+                                className={`text-xs mb-1 italic ${
+                                  member.id === "9"
+                                    ? "text-amber-700 font-medium"
+                                    : "text-gray-500"
+                                }`}
+                              >
                                 {member.birthDate}
+                              </p>
+                            )}
+                          {member.deceased &&
+                            member.description &&
+                            member.id === "9" && (
+                              <p className="text-xs text-amber-600 mb-1 font-medium">
+                                {member.description}
                               </p>
                             )}
                           <p
                             className={`text-sm mb-1 ${
                               member.deceased
-                                ? "text-gray-500"
+                                ? member.id === "9"
+                                  ? "text-amber-700"
+                                  : "text-gray-500"
                                 : "text-green-600"
                             }`}
                           >
@@ -240,7 +279,9 @@ const Tree = () => {
                           <p
                             className={`text-xs font-medium ${
                               member.deceased
-                                ? "text-gray-400"
+                                ? member.id === "9"
+                                  ? "text-amber-600"
+                                  : "text-gray-400"
                                 : "text-green-500"
                             }`}
                           >
@@ -305,6 +346,12 @@ const Tree = () => {
                                     className="fill-current"
                                   />
                                 </div>
+                              ) : member.id === "9" ? (
+                                <div className="absolute inset-0 rounded-lg border-4 border-double border-amber-600 bg-gradient-to-b from-amber-50 to-amber-100 opacity-80">
+                                  <div className="absolute top-2 left-2 bg-amber-600 text-white px-2 py-1 rounded-md text-xs font-bold shadow-md">
+                                    ★ Вечная память
+                                  </div>
+                                </div>
                               ) : (
                                 <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center">
                                   <div className="bg-white bg-opacity-90 px-2 py-1 rounded-full text-xs text-gray-700 font-medium">
@@ -319,7 +366,9 @@ const Tree = () => {
                           <h4
                             className={`font-medium mb-1 text-base ${
                               member.deceased
-                                ? "text-gray-600"
+                                ? member.id === "9"
+                                  ? "text-amber-800 font-semibold"
+                                  : "text-gray-600"
                                 : "text-green-800"
                             }`}
                           >
@@ -329,18 +378,38 @@ const Tree = () => {
                                 ✝
                               </span>
                             )}
+                            {member.deceased && member.id === "9" && (
+                              <span className="text-xs text-amber-600 ml-2">
+                                ⭐
+                              </span>
+                            )}
                           </h4>
                           {member.deceased &&
                             member.birthDate &&
-                            member.id === "8" && (
-                              <p className="text-xs text-gray-500 mb-1 italic">
+                            (member.id === "8" || member.id === "9") && (
+                              <p
+                                className={`text-xs mb-1 italic ${
+                                  member.id === "9"
+                                    ? "text-amber-700 font-medium"
+                                    : "text-gray-500"
+                                }`}
+                              >
                                 {member.birthDate}
+                              </p>
+                            )}
+                          {member.deceased &&
+                            member.description &&
+                            member.id === "9" && (
+                              <p className="text-xs text-amber-600 mb-1 font-medium">
+                                {member.description}
                               </p>
                             )}
                           <p
                             className={`text-sm mb-1 ${
                               member.deceased
-                                ? "text-gray-500"
+                                ? member.id === "9"
+                                  ? "text-amber-700"
+                                  : "text-gray-500"
                                 : "text-green-600"
                             }`}
                           >
@@ -349,7 +418,9 @@ const Tree = () => {
                           <p
                             className={`text-xs font-medium ${
                               member.deceased
-                                ? "text-gray-400"
+                                ? member.id === "9"
+                                  ? "text-amber-600"
+                                  : "text-gray-400"
                                 : "text-green-500"
                             }`}
                           >
@@ -414,6 +485,12 @@ const Tree = () => {
                                     className="fill-current"
                                   />
                                 </div>
+                              ) : member.id === "9" ? (
+                                <div className="absolute inset-0 rounded-lg border-4 border-double border-amber-600 bg-gradient-to-b from-amber-50 to-amber-100 opacity-80">
+                                  <div className="absolute top-2 left-2 bg-amber-600 text-white px-2 py-1 rounded-md text-xs font-bold shadow-md">
+                                    ★ Вечная память
+                                  </div>
+                                </div>
                               ) : (
                                 <div className="absolute inset-0 bg-black bg-opacity-20 rounded-lg flex items-center justify-center">
                                   <div className="bg-white bg-opacity-90 px-2 py-1 rounded-full text-xs text-gray-700 font-medium">
@@ -428,7 +505,9 @@ const Tree = () => {
                           <h4
                             className={`font-medium mb-1 text-base ${
                               member.deceased
-                                ? "text-gray-600"
+                                ? member.id === "9"
+                                  ? "text-amber-800 font-semibold"
+                                  : "text-gray-600"
                                 : "text-green-800"
                             }`}
                           >
@@ -438,18 +517,38 @@ const Tree = () => {
                                 ✝
                               </span>
                             )}
+                            {member.deceased && member.id === "9" && (
+                              <span className="text-xs text-amber-600 ml-2">
+                                ⭐
+                              </span>
+                            )}
                           </h4>
                           {member.deceased &&
                             member.birthDate &&
-                            member.id === "8" && (
-                              <p className="text-xs text-gray-500 mb-1 italic">
+                            (member.id === "8" || member.id === "9") && (
+                              <p
+                                className={`text-xs mb-1 italic ${
+                                  member.id === "9"
+                                    ? "text-amber-700 font-medium"
+                                    : "text-gray-500"
+                                }`}
+                              >
                                 {member.birthDate}
+                              </p>
+                            )}
+                          {member.deceased &&
+                            member.description &&
+                            member.id === "9" && (
+                              <p className="text-xs text-amber-600 mb-1 font-medium">
+                                {member.description}
                               </p>
                             )}
                           <p
                             className={`text-sm mb-1 ${
                               member.deceased
-                                ? "text-gray-500"
+                                ? member.id === "9"
+                                  ? "text-amber-700"
+                                  : "text-gray-500"
                                 : "text-green-600"
                             }`}
                           >
@@ -458,7 +557,9 @@ const Tree = () => {
                           <p
                             className={`text-xs font-medium ${
                               member.deceased
-                                ? "text-gray-400"
+                                ? member.id === "9"
+                                  ? "text-amber-600"
+                                  : "text-gray-400"
                                 : "text-green-500"
                             }`}
                           >
