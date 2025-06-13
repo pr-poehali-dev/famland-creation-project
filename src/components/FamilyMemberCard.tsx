@@ -100,7 +100,7 @@ const FamilyMemberCard = ({
           <h4
             className={`font-medium mb-1 text-base ${getTextColor("text-green-800")}`}
           >
-            {member.name}
+            {member.fullName || member.name}
             {member.deceased && member.id === "7" && (
               <span className="text-xs text-gray-500 ml-2">✝</span>
             )}
