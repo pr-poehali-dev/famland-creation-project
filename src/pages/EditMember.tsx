@@ -196,19 +196,6 @@ const EditMember = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="name">Полное имя (устаревшее поле)</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                placeholder="Введите полное имя"
-                className="border-green-200 focus:border-green-400"
-              />
-            </div>
-
-            <div className="space-y-2">
               <Label htmlFor="relation">Отношение</Label>
               <Select
                 value={formData.relation}
