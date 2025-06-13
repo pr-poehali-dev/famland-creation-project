@@ -141,7 +141,7 @@ const MemberProfile = () => {
           <div className="lg:col-span-1">
             <Card className="border-green-200">
               <CardContent className="pt-6 text-center">
-                <Avatar className="h-40 w-40 mx-auto mb-4 aspect-square rounded-xl">
+                <Avatar className="h-38 w-38 mx-auto mb-4 aspect-square rounded-xl">
                   <AvatarImage
                     src={member.photo}
                     alt={member.name}
