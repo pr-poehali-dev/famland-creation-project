@@ -70,12 +70,17 @@ const FamilyMemberCombobox = ({
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0" align="start">
+      <PopoverContent
+        className="w-full p-0 max-h-80 overflow-hidden"
+        align="start"
+      >
         <Command>
-          <CommandInput placeholder="Поиск по имени..." />
-          <CommandList>
-            <CommandEmpty>Член семьи не найден.</CommandEmpty>
-            <CommandGroup>
+          <CommandInput placeholder="Поиск по имени..." className="h-10 px-3" />
+          <CommandList className="max-h-60 overflow-y-auto">
+            <CommandEmpty className="py-6 text-center text-sm">
+              Член семьи не найден.
+            </CommandEmpty>
+            <CommandGroup className="p-1">
               {members.map((member) => (
                 <CommandItem
                   key={member.id}
@@ -84,7 +89,7 @@ const FamilyMemberCombobox = ({
                     onValueChange(member.id);
                     setOpen(false);
                   }}
-                  className="px-3 py-3"
+                  className="px-3 py-2 mb-1 last:mb-0 rounded-md cursor-pointer data-[selected]:bg-accent"
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <img
@@ -92,11 +97,11 @@ const FamilyMemberCombobox = ({
                       alt={getMemberDisplayName(member)}
                       className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                     />
-                    <div className="flex flex-col gap-1 min-w-0 flex-1">
-                      <span className="font-medium text-sm leading-tight">
+                    <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                      <span className="font-medium text-sm leading-tight truncate">
                         {getMemberDisplayName(member)}
                       </span>
-                      <span className="text-xs text-muted-foreground leading-tight">
+                      <span className="text-xs text-muted-foreground leading-tight truncate">
                         {member.relation}
                         {member.age && ` • ${member.age} лет`}
                         {member.deceased && " • ушел из жизни"}
