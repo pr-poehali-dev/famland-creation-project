@@ -172,17 +172,6 @@ const MemberProfile = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {member.description && (
-                  <div>
-                    <h3 className="font-semibold text-green-800 mb-2">
-                      О человеке
-                    </h3>
-                    <p className="text-gray-700 leading-relaxed">
-                      {member.description}
-                    </p>
-                  </div>
-                )}
-
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <h4 className="font-medium text-green-700 mb-1">Пол</h4>
@@ -219,6 +208,17 @@ const MemberProfile = () => {
                     <p className="text-gray-600">
                       {member.children.length}{" "}
                       {member.children.length === 1 ? "ребенок" : "детей"}
+                    </p>
+                  </div>
+                )}
+
+                {member.description && (
+                  <div>
+                    <h3 className="font-semibold text-green-800 mb-2">
+                      О человеке
+                    </h3>
+                    <p className="text-gray-700 leading-relaxed">
+                      {member.description}
                     </p>
                   </div>
                 )}
