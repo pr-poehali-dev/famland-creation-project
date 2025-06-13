@@ -49,7 +49,7 @@ const FamilyMemberCombobox = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between border-green-200 focus:border-green-400 hover:bg-green-50"
+          className="w-full justify-between focus:border-green-400 hover:bg-green-50"
         >
           {selectedMember ? (
             <div className="flex items-center gap-2">
@@ -80,7 +80,7 @@ const FamilyMemberCombobox = ({
             <CommandEmpty className="py-6 text-center text-sm">
               Член семьи не найден.
             </CommandEmpty>
-            <CommandGroup className="p-1">
+            <CommandGroup className="p-2 space-y-1">
               {members.map((member) => (
                 <CommandItem
                   key={member.id}
@@ -89,7 +89,7 @@ const FamilyMemberCombobox = ({
                     onValueChange(member.id);
                     setOpen(false);
                   }}
-                  className="px-3 py-2 mb-1 last:mb-0 rounded-md cursor-pointer data-[selected]:bg-accent"
+                  className="px-3 py-3 rounded-md cursor-pointer transition-colors hover:bg-accent focus:bg-accent data-[selected]:bg-accent"
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <img
@@ -97,7 +97,7 @@ const FamilyMemberCombobox = ({
                       alt={getMemberDisplayName(member)}
                       className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                     />
-                    <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                    <div className="flex flex-col gap-1 min-w-0 flex-1">
                       <span className="font-medium text-sm leading-tight truncate">
                         {getMemberDisplayName(member)}
                       </span>
