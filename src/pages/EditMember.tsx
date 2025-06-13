@@ -267,7 +267,7 @@ const EditMember = () => {
               />
             </div>
 
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <Label htmlFor="photo-url">URL фото (опционально)</Label>
               <Input
                 id="photo-url"
@@ -278,7 +278,7 @@ const EditMember = () => {
                 placeholder="https://example.com/photo.jpg"
                 className="border-green-200 focus:border-green-400"
               />
-            </div>
+            </div> */}
 
             <div className="flex gap-3 justify-end pt-4">
               <Button
