@@ -7,6 +7,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -255,13 +266,31 @@ const Profile = () => {
                 <CardTitle className="text-lg">Аккаунт</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button
-                  variant="destructive"
-                  className="w-full justify-start bg-red-50 text-red-700 border-red-200 hover:bg-red-100"
-                >
-                  <Icon name="LogOut" className="mr-2 h-4 w-4" />
-                  Выйти
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="destructive"
+                      className="w-full justify-start bg-red-50 text-red-700 border-red-200 hover:bg-red-100"
+                    >
+                      <Icon name="LogOut" className="mr-2 h-4 w-4" />
+                      Выйти
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Подтверждение выхода</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Вы уверены, что хотите выйти?
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Отмена</AlertDialogCancel>
+                      <AlertDialogAction className="bg-red-600 hover:bg-red-700">
+                        Выйти
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
                 <Button variant="outline" className="w-full justify-start">
                   <Icon name="Key" size={16} className="mr-2" />
                   Сменить пароль
