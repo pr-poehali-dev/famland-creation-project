@@ -12,6 +12,7 @@ export interface FamilyMember {
   description?: string;
   children?: string[];
   photo?: string;
+  gender?: string;
   deceased?: boolean;
 }
 

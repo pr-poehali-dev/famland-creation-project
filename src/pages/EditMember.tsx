@@ -28,6 +28,7 @@ interface FamilyMember {
   description?: string;
   children?: string[];
   photo?: string;
+  gender?: string;
 }
 
 const EditMember = () => {
@@ -55,6 +56,7 @@ const EditMember = () => {
     birthDate: "",
     description: "",
     photo: "",
+    gender: "",
   });
 
   useEffect(() => {
@@ -282,6 +284,25 @@ const EditMember = () => {
                 placeholder="Добавьте заметки о члене семьи..."
                 className="border-green-200 focus:border-green-400 min-h-[100px]"
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="gender">Пол</Label>
+              <Select
+                value={formData.gender || ""}
+                onValueChange={(value) =>
+                  setFormData({ ...formData, gender: value })
+                }
+              >
+                <SelectTrigger className="border-green-200 focus:border-green-400">
+                  <SelectValue placeholder="Выберите пол" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Мужской">Мужской</SelectItem>
+                  <SelectItem value="Женский">Женский</SelectItem>
+                  <SelectItem value="Другой">Другой</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
