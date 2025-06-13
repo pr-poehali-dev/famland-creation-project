@@ -132,37 +132,46 @@ const MemberProfile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-5xl mx-auto px-4 py-8">
         <div className="mb-6"></div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Основная информация */}
-          <div className="md:col-span-2">
+        {/* Верхняя секция с фото и основной информацией */}
+        <div className="grid lg:grid-cols-4 gap-6 mb-8">
+          {/* Фото профиля */}
+          <div className="lg:col-span-1">
             <Card className="border-green-200">
+              <CardContent className="pt-6 text-center">
+                <Avatar className="h-40 w-40 mx-auto mb-4">
+                  <AvatarImage src={member.photo} alt={member.name} />
+                  <AvatarFallback className="bg-green-100 text-green-700 text-3xl">
+                    {member.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+                <h1 className="text-xl font-bold text-green-800 mb-1">
+                  {member.name}
+                </h1>
+                <p className="text-green-600 font-medium">{member.relation}</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Основная информация */}
+          <div className="lg:col-span-2">
+            <Card className="border-green-200 h-full">
               <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-green-800">
-                  <Avatar className="h-12 w-12">
-                    <AvatarImage src={member.photo} alt={member.name} />
-                    <AvatarFallback className="bg-green-100 text-green-700">
-                      {member.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h1 className="text-2xl font-bold">{member.name}</h1>
-                    <p className="text-lg text-green-600 font-normal">
-                      {member.relation}
-                    </p>
-                  </div>
+                <CardTitle className="text-green-800 flex items-center gap-2">
+                  <Icon name="FileText" size={20} />
+                  Информация
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-4">
                 {member.description && (
                   <div>
-                    <h3 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                      <Icon name="FileText" size={16} />О человеке
+                    <h3 className="font-semibold text-green-800 mb-2">
+                      О человеке
                     </h3>
                     <p className="text-gray-700 leading-relaxed">
                       {member.description}
@@ -170,13 +179,10 @@ const MemberProfile = () => {
                   </div>
                 )}
 
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h3 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                      <Icon name="User" size={16} />
-                      Пол
-                    </h3>
-                    <p className="text-gray-700">
+                    <h4 className="font-medium text-green-700 mb-1">Пол</h4>
+                    <p className="text-gray-600">
                       {member.relation === "Бабушка" ||
                       member.relation === "Мать"
                         ? "Женский"
@@ -186,11 +192,10 @@ const MemberProfile = () => {
 
                   {member.birthDate && (
                     <div>
-                      <h3 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                        <Icon name="Calendar" size={16} />
+                      <h4 className="font-medium text-green-700 mb-1">
                         Дата рождения
-                      </h3>
-                      <p className="text-gray-700">
+                      </h4>
+                      <p className="text-gray-600">
                         {new Date(member.birthDate).toLocaleDateString(
                           "ru-RU",
                           {
@@ -206,11 +211,8 @@ const MemberProfile = () => {
 
                 {member.children && member.children.length > 0 && (
                   <div>
-                    <h3 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-                      <Icon name="Heart" size={16} />
-                      Дети
-                    </h3>
-                    <p className="text-gray-700">
+                    <h4 className="font-medium text-green-700 mb-1">Дети</h4>
+                    <p className="text-gray-600">
                       {member.children.length}{" "}
                       {member.children.length === 1 ? "ребенок" : "детей"}
                     </p>
@@ -220,11 +222,14 @@ const MemberProfile = () => {
             </Card>
           </div>
 
-          {/* Боковая панель с действиями */}
-          <div className="space-y-4">
+          {/* Действия */}
+          <div className="lg:col-span-1">
             <Card className="border-green-200">
               <CardHeader>
-                <CardTitle className="text-green-800">Действия</CardTitle>
+                <CardTitle className="text-green-800 flex items-center gap-2">
+                  <Icon name="Settings" size={20} />
+                  Действия
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button
@@ -239,41 +244,21 @@ const MemberProfile = () => {
                   className="w-full border-green-300 text-green-700"
                   onClick={() => navigate("/tree")}
                 >
-                  <Icon name="TreePine" size={16} className="mr-2" />
-                  Показать в древе
+                  <Icon name="TreePine" size={16} className="mr-2" />К древу
                 </Button>
-              </CardContent>
-            </Card>
-
-            {/* Карточка с фото */}
-            <Card className="border-green-200">
-              <CardContent className="pt-6 text-center">
-                <Avatar className="h-32 w-32 mx-auto mb-4">
-                  <AvatarImage src={member.photo} alt={member.name} />
-                  <AvatarFallback className="bg-green-100 text-green-700 text-2xl">
-                    {member.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </AvatarFallback>
-                </Avatar>
-                <h3 className="font-semibold text-green-800">{member.name}</h3>
-                <p className="text-sm text-green-600">{member.relation}</p>
               </CardContent>
             </Card>
           </div>
         </div>
 
         {/* Галерея фотографий */}
-        <div className="mt-8">
+        <div>
           <PhotoGallery
             allowEdit={true}
             onAddPhoto={() => {
-              // Здесь будет логика добавления фото
               console.log("Добавить фото для", member.name);
             }}
             onDeletePhoto={(photoId) => {
-              // Здесь будет логика удаления фото
               console.log("Удалить фото", photoId);
             }}
           />
