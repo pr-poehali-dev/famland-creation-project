@@ -133,16 +133,7 @@ const MemberProfile = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Button
-            variant="outline"
-            className="border-green-300 text-green-700 hover:bg-green-50"
-            onClick={() => navigate("/tree")}
-          >
-            <Icon name="ArrowLeft" size={16} className="mr-2" />
-            Вернуться к древу
-          </Button>
-        </div>
+        <div className="mb-6"></div>
 
         <div className="grid md:grid-cols-3 gap-8">
           {/* Основная информация */}
