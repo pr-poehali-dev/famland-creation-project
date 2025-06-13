@@ -134,7 +134,7 @@ const FamilyMemberCard = ({
       onClick={() => onClick(member)}
     >
       <CardContent className="p-3 flex flex-col items-center h-full">
-        <Avatar className="w-16 h-16 mb-2 rounded-none">
+        <Avatar className="w-38 h-38 mb-2 rounded-none">
           <AvatarImage
             src={member.photo}
             alt={member.name}
