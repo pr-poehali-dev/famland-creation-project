@@ -134,7 +134,7 @@ const Tree = () => {
                     <Card
                       key={member.id}
                       className="w-56 h-72 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
-                      onClick={() => setSelectedMember(member)}
+                      onClick={() => handleViewMember(member)}
                     >
                       <CardContent className="p-5 text-center h-full flex flex-col justify-between">
                         <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
@@ -178,7 +178,7 @@ const Tree = () => {
                     <Card
                       key={member.id}
                       className="w-56 h-72 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
-                      onClick={() => setSelectedMember(member)}
+                      onClick={() => handleViewMember(member)}
                     >
                       <CardContent className="p-5 text-center h-full flex flex-col justify-between">
                         <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
@@ -222,7 +222,7 @@ const Tree = () => {
                     <Card
                       key={member.id}
                       className="w-56 h-72 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
-                      onClick={() => setSelectedMember(member)}
+                      onClick={() => handleViewMember(member)}
                     >
                       <CardContent className="p-5 text-center h-full flex flex-col justify-between">
                         <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
