@@ -66,16 +66,16 @@ const CropDialog = ({
     const img = imageRef.current;
     const container = containerRef.current;
 
-    const containerRect = container.getBoundingClientRect();
-
     // Получаем естественные размеры изображения
     const naturalWidth = img.naturalWidth;
     const naturalHeight = img.naturalHeight;
+    if (naturalWidth === 0 || naturalHeight === 0) return null;
+
     const naturalAspect = naturalWidth / naturalHeight;
 
     // Получаем размеры контейнера
-    const containerWidth = containerRect.width;
-    const containerHeight = containerRect.height;
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
     const containerAspect = containerWidth / containerHeight;
 
     let displayWidth: number;
@@ -110,30 +110,47 @@ const CropDialog = ({
 
   // Инициализация области кропа
   useEffect(() => {
-    if (isOpen && imageRef.current) {
-      const timer = setTimeout(() => {
-        const dims = calculateImageDimensions();
-        if (dims) {
-          setImageDimensions(dims);
+    if (isOpen && imageRef.current?.complete) {
+      const dims = calculateImageDimensions();
+      if (dims) {
+        setImageDimensions(dims);
 
-          // Устанавливаем квадратную область кропа в центре изображения
-          const cropSize =
-            Math.min(dims.displayWidth, dims.displayHeight) * 0.6;
-          const cropX = dims.displayX + (dims.displayWidth - cropSize) / 2;
-          const cropY = dims.displayY + (dims.displayHeight - cropSize) / 2;
+        // Устанавливаем квадратную область кропа в центре изображения
+        const cropSize = Math.min(dims.displayWidth, dims.displayHeight) * 0.6;
+        const cropX = dims.displayX + (dims.displayWidth - cropSize) / 2;
+        const cropY = dims.displayY + (dims.displayHeight - cropSize) / 2;
 
-          setCropArea({
-            x: cropX,
-            y: cropY,
-            width: cropSize,
-            height: cropSize,
-          });
-        }
-      }, 100);
-
-      return () => clearTimeout(timer);
+        setCropArea({
+          x: cropX,
+          y: cropY,
+          width: cropSize,
+          height: cropSize,
+        });
+      }
     }
   }, [isOpen, imageUrl, calculateImageDimensions]);
+
+  // Обработчик загрузки изображения
+  const handleImageLoad = useCallback(() => {
+    const dims = calculateImageDimensions();
+    if (dims) {
+      setImageDimensions(dims);
+
+      // Устанавливаем область кропа только если еще не установлена
+      if (cropArea.width === 150 && cropArea.height === 150) {
+        const cropSize = Math.min(dims.displayWidth, dims.displayHeight) * 0.6;
+        const cropX = dims.displayX + (dims.displayWidth - cropSize) / 2;
+        const cropY = dims.displayY + (dims.displayHeight - cropSize) / 2;
+
+        setCropArea({
+          x: cropX,
+          y: cropY,
+          width: cropSize,
+          height: cropSize,
+        });
+      }
+    }
+  }, [calculateImageDimensions, cropArea.width, cropArea.height]);
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -381,10 +398,7 @@ const CropDialog = ({
               alt="Изображение для обрезки"
               className="max-w-full max-h-full object-contain"
               draggable={false}
-              onLoad={() => {
-                const dims = calculateImageDimensions();
-                if (dims) setImageDimensions(dims);
-              }}
+              onLoad={handleImageLoad}
             />
 
             {/* Затемнение вокруг области кропа */}
