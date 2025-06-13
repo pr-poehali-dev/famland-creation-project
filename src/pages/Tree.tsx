@@ -76,8 +76,7 @@ const Tree = () => {
   ]);
 
   const getGenerationText = (generation: number) => {
-    const ordinals = ["1-е", "2-е", "3-е", "4-е", "5-е"];
-    return `Поколение: ${ordinals[generation] || `${generation + 1}-е`}`;
+    return `Поколение ${generation + 1}`;
   };
 
   const handleViewMember = (member: FamilyMember) => {
