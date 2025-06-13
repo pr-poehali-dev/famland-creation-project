@@ -46,14 +46,36 @@ const CropDialog = ({
 
   // Инициализация области кропа при загрузке изображения
   useEffect(() => {
-    if (isOpen && imageRef.current) {
-      const img = imageRef.current;
-      const containerRect = img.getBoundingClientRect();
-      setCropArea({
-        x: (containerRect.width - 176) / 2,
-        y: (containerRect.height - 176) / 2,
-        size: 176,
-      });
+    if (isOpen && imageRef.current && containerRef.current) {
+      const timer = setTimeout(() => {
+        const imageElement = imageRef.current!;
+        const containerElement = containerRef.current!;
+        const imageRect = imageElement.getBoundingClientRect();
+        const containerRect = containerElement.getBoundingClientRect();
+
+        // Вычисляем позицию изображения внутри контейнера
+        const imageOffsetX = imageRect.left - containerRect.left;
+        const imageOffsetY = imageRect.top - containerRect.top;
+
+        // Размер области кропа (квадрат)
+        const cropSize = Math.min(
+          176,
+          imageRect.width * 0.6,
+          imageRect.height * 0.6,
+        );
+
+        // Центрируем область кропа на изображении
+        const cropX = imageOffsetX + (imageRect.width - cropSize) / 2;
+        const cropY = imageOffsetY + (imageRect.height - cropSize) / 2;
+
+        setCropArea({
+          x: cropX,
+          y: cropY,
+          size: cropSize,
+        });
+      }, 100); // Небольшая задержка для корректного расчета размеров
+
+      return () => clearTimeout(timer);
     }
   }, [isOpen, imageUrl]);
 
@@ -181,15 +203,36 @@ const CropDialog = ({
     const img = new Image();
 
     img.onload = () => {
-      const imageRect = imageRef.current!.getBoundingClientRect();
+      const imageElement = imageRef.current!;
+      const imageRect = imageElement.getBoundingClientRect();
+      const containerRect = containerRef.current!.getBoundingClientRect();
 
-      // Вычисляем масштаб между отображаемым изображением и оригинальным
+      // Вычисляем позицию изображения внутри контейнера
+      const imageOffsetX = imageRect.left - containerRect.left;
+      const imageOffsetY = imageRect.top - containerRect.top;
+
+      // Корректируем координаты кропа относительно изображения
+      const cropRelativeX = cropArea.x - imageOffsetX;
+      const cropRelativeY = cropArea.y - imageOffsetY;
+
+      // Проверяем, что область кропа находится внутри изображения
+      if (
+        cropRelativeX < 0 ||
+        cropRelativeY < 0 ||
+        cropRelativeX + cropArea.size > imageRect.width ||
+        cropRelativeY + cropArea.size > imageRect.height
+      ) {
+        console.warn("Область кропа выходит за границы изображения");
+        return;
+      }
+
+      // Вычисляем масштаб между отображаемым и оригинальным изображением
       const scaleX = img.naturalWidth / imageRect.width;
       const scaleY = img.naturalHeight / imageRect.height;
 
-      // Переводим координаты области кропа в координаты оригинального изображения
-      const cropX = cropArea.x * scaleX;
-      const cropY = cropArea.y * scaleY;
+      // Переводим координаты в координаты оригинального изображения
+      const cropX = cropRelativeX * scaleX;
+      const cropY = cropRelativeY * scaleY;
       const cropWidth = cropArea.size * scaleX;
       const cropHeight = cropArea.size * scaleY;
 
@@ -197,7 +240,12 @@ const CropDialog = ({
       canvas.width = 300;
       canvas.height = 300;
 
-      ctx?.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, 300, 300);
+      // Заливаем канвас белым цветом для прозрачных областей
+      if (ctx) {
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, 300, 300);
+        ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, 300, 300);
+      }
 
       const croppedImageUrl = canvas.toDataURL("image/jpeg", 0.9);
       onCropSelect(croppedImageUrl);
