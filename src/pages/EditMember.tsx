@@ -120,7 +120,7 @@ const EditMember = () => {
               <div className="flex flex-col items-center gap-3">
                 <div className="relative">
                   <Avatar
-                    className="h-38 w-38 cursor-pointer border-2 border-green-200 hover:border-green-400 transition-colors rounded-lg"
+                    className="w-24 h-24 cursor-pointer border-2 border-green-200 hover:border-green-400 transition-colors"
                     onClick={() => fileInputRef.current?.click()}
                   >
                     {formData.photo ? (
