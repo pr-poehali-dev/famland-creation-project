@@ -133,23 +133,46 @@ const Tree = () => {
                     </h3>
                     <div className="flex justify-center gap-8">
                       {getGenerationMembers(0).map((member) => (
-                        <Button
+                        <Card
                           key={member.id}
-                          variant="outline"
-                          className="h-16 w-32 border-green-300 hover:bg-green-50 flex flex-col"
+                          className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                           onClick={() => setSelectedMember(member)}
                         >
-                          <Avatar className="h-12 w-12">
-                            <AvatarImage src={member.photo} alt={member.name} />
-                            <AvatarFallback className="text-xs bg-green-100 text-green-700">
-                              {member.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
-                          <span className="text-xs mt-1">{member.name}</span>
-                        </Button>
+                          <CardContent className="p-4 text-center">
+                            <Avatar className="h-16 w-16 mx-auto mb-3">
+                              <AvatarImage
+                                src={member.photo}
+                                alt={member.name}
+                              />
+                              <AvatarFallback className="text-sm bg-green-100 text-green-700">
+                                {member.name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+                            <h4 className="font-medium text-green-800 mb-1">
+                              {member.name}
+                            </h4>
+                            <p className="text-xs text-green-600 mb-1">
+                              Роль: {member.relation}
+                            </p>
+                            <p className="text-xs text-green-600 mb-3">
+                              Поколение: {member.generation + 1}
+                            </p>
+                            <Button
+                              size="sm"
+                              className="w-full bg-green-600 hover:bg-green-700"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleViewMember(member);
+                              }}
+                            >
+                              <Icon name="User" size={14} className="mr-1" />
+                              Подробнее
+                            </Button>
+                          </CardContent>
+                        </Card>
                       ))}
                     </div>
                   </div>
@@ -166,23 +189,46 @@ const Tree = () => {
                     </h3>
                     <div className="flex justify-center gap-8">
                       {getGenerationMembers(1).map((member) => (
-                        <Button
+                        <Card
                           key={member.id}
-                          variant="outline"
-                          className="h-16 w-32 border-green-300 hover:bg-green-50 flex flex-col"
+                          className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                           onClick={() => setSelectedMember(member)}
                         >
-                          <Avatar className="h-12 w-12">
-                            <AvatarImage src={member.photo} alt={member.name} />
-                            <AvatarFallback className="text-xs bg-green-100 text-green-700">
-                              {member.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
-                          <span className="text-xs mt-1">{member.name}</span>
-                        </Button>
+                          <CardContent className="p-4 text-center">
+                            <Avatar className="h-16 w-16 mx-auto mb-3">
+                              <AvatarImage
+                                src={member.photo}
+                                alt={member.name}
+                              />
+                              <AvatarFallback className="text-sm bg-green-100 text-green-700">
+                                {member.name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+                            <h4 className="font-medium text-green-800 mb-1">
+                              {member.name}
+                            </h4>
+                            <p className="text-xs text-green-600 mb-1">
+                              Роль: {member.relation}
+                            </p>
+                            <p className="text-xs text-green-600 mb-3">
+                              Поколение: {member.generation + 1}
+                            </p>
+                            <Button
+                              size="sm"
+                              className="w-full bg-green-600 hover:bg-green-700"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleViewMember(member);
+                              }}
+                            >
+                              <Icon name="User" size={14} className="mr-1" />
+                              Подробнее
+                            </Button>
+                          </CardContent>
+                        </Card>
                       ))}
                     </div>
                   </div>
@@ -199,23 +245,46 @@ const Tree = () => {
                     </h3>
                     <div className="flex justify-center gap-8">
                       {getGenerationMembers(2).map((member) => (
-                        <Button
+                        <Card
                           key={member.id}
-                          variant="outline"
-                          className="h-16 w-32 border-green-300 hover:bg-green-50 flex flex-col"
+                          className="w-48 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
                           onClick={() => setSelectedMember(member)}
                         >
-                          <Avatar className="h-12 w-12">
-                            <AvatarImage src={member.photo} alt={member.name} />
-                            <AvatarFallback className="text-xs bg-green-100 text-green-700">
-                              {member.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
-                          <span className="text-xs mt-1">{member.name}</span>
-                        </Button>
+                          <CardContent className="p-4 text-center">
+                            <Avatar className="h-16 w-16 mx-auto mb-3">
+                              <AvatarImage
+                                src={member.photo}
+                                alt={member.name}
+                              />
+                              <AvatarFallback className="text-sm bg-green-100 text-green-700">
+                                {member.name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+                            <h4 className="font-medium text-green-800 mb-1">
+                              {member.name}
+                            </h4>
+                            <p className="text-xs text-green-600 mb-1">
+                              Роль: {member.relation}
+                            </p>
+                            <p className="text-xs text-green-600 mb-3">
+                              Поколение: {member.generation + 1}
+                            </p>
+                            <Button
+                              size="sm"
+                              className="w-full bg-green-600 hover:bg-green-700"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleViewMember(member);
+                              }}
+                            >
+                              <Icon name="User" size={14} className="mr-1" />
+                              Подробнее
+                            </Button>
+                          </CardContent>
+                        </Card>
                       ))}
                     </div>
                   </div>
