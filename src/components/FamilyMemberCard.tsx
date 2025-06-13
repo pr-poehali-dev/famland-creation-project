@@ -129,28 +129,27 @@ const FamilyMemberCard = ({
   };
 
   return (
-    <Card 
+    <Card
       className="relative w-40 h-52 cursor-pointer hover:shadow-lg transition-shadow flex-shrink-0"
       onClick={() => onClick(member)}
     >
       <CardContent className="p-3 flex flex-col items-center h-full">
         <Avatar className="w-16 h-16 mb-2">
           <AvatarImage src={member.photo} alt={member.name} />
-            <AvatarFallback
-              className={`h-44 w-44 text-lg ${
-                member.deceased
-                  ? "bg-gray-100 text-gray-500"
-                  : "bg-green-100 text-green-700"
-              } flex items-center justify-center rounded-lg`}
-            >
-              {member.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}
-            </AvatarFallback>
-          </Avatar>
-          {renderDeceasedOverlay()}
-        </div>
+          <AvatarFallback
+            className={`h-44 w-44 text-lg ${
+              member.deceased
+                ? "bg-gray-100 text-gray-500"
+                : "bg-green-100 text-green-700"
+            } flex items-center justify-center rounded-lg`}
+          >
+            {member.name
+              .split(" ")
+              .map((n) => n[0])
+              .join("")}
+          </AvatarFallback>
+        </Avatar>
+        {renderDeceasedOverlay()}
 
         <div className="flex-1">
           <h4
