@@ -120,15 +120,17 @@ const PhotoGallery = ({
   return (
     <>
       <Card className="border-green-200 overflow-hidden">
-        <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50">
+        <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 sm:p-6">
           <CardTitle className="flex items-center justify-between text-green-800">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <Icon name="Camera" size={20} />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 bg-green-100 rounded-lg">
+                <Icon name="Camera" size={18} className="sm:w-5 sm:h-5" />
               </div>
               <div>
-                <h3 className="font-bold">Галерея воспоминаний</h3>
-                <p className="text-sm text-green-600 font-normal">
+                <h3 className="font-bold text-sm sm:text-base">
+                  Галерея воспоминаний
+                </h3>
+                <p className="text-xs sm:text-sm text-green-600 font-normal">
                   {displayPhotos.length} фотографий
                 </p>
               </div>
@@ -136,16 +138,17 @@ const PhotoGallery = ({
             {allowEdit && onAddPhoto && (
               <Button
                 size="sm"
-                className="bg-green-600 hover:bg-green-700 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-green-600 hover:bg-green-700 shadow-lg hover:shadow-xl transition-all duration-300 text-xs sm:text-sm px-2 sm:px-3 h-8 sm:h-9"
                 onClick={() => setUploadDialogOpen(true)}
               >
-                <Icon name="Plus" size={16} className="mr-1" />
-                Добавить
+                <Icon name="Plus" size={14} className="mr-1 sm:w-4 sm:h-4" />
+                <span className="hidden xs:inline">Добавить</span>
+                <span className="xs:hidden">+</span>
               </Button>
             )}
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent className="p-3 sm:p-6">
           {displayPhotos.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-24 h-24 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -170,13 +173,19 @@ const PhotoGallery = ({
           ) : (
             <div className="relative">
               {/* Карусель */}
-              <div className="overflow-hidden rounded-xl" ref={emblaRef}>
+              <div
+                className="overflow-hidden rounded-lg sm:rounded-xl"
+                ref={emblaRef}
+              >
                 <div className="flex">
                   {displayPhotos.map((photo, index) => (
-                    <div key={photo.id} className="flex-[0_0_100%] min-w-0">
-                      <div className="group relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white">
+                    <div
+                      key={photo.id}
+                      className="flex-[0_0_100%] min-w-0 px-1 sm:px-0"
+                    >
+                      <div className="group relative overflow-hidden rounded-lg sm:rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 sm:hover:-translate-y-2 bg-white mx-1 sm:mx-0">
                         <div
-                          className="relative cursor-pointer overflow-hidden aspect-[4/3]"
+                          className="relative cursor-pointer overflow-hidden aspect-[4/3] touch-manipulation"
                           onClick={() => setSelectedPhoto(photo)}
                         >
                           <img
@@ -189,15 +198,19 @@ const PhotoGallery = ({
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                           {/* Информация о фото */}
-                          <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                          <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                             {photo.title && (
-                              <h4 className="text-sm font-semibold mb-1 drop-shadow-lg">
+                              <h4 className="text-xs sm:text-sm font-semibold mb-1 drop-shadow-lg">
                                 {photo.title}
                               </h4>
                             )}
                             {photo.date && (
                               <p className="text-xs opacity-90 flex items-center gap-1 drop-shadow">
-                                <Icon name="Calendar" size={12} />
+                                <Icon
+                                  name="Calendar"
+                                  size={10}
+                                  className="sm:w-3 sm:h-3"
+                                />
                                 {new Date(photo.date).toLocaleDateString(
                                   "ru-RU",
                                   {
@@ -211,11 +224,11 @@ const PhotoGallery = ({
                           </div>
 
                           {/* Иконка увеличения */}
-                          <div className="absolute top-3 right-3 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100">
+                          <div className="absolute top-2 sm:top-3 right-2 sm:right-3 w-8 h-8 sm:w-10 sm:h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100">
                             <Icon
                               name="Expand"
-                              size={16}
-                              className="text-white"
+                              size={14}
+                              className="text-white sm:w-4 sm:h-4"
                             />
                           </div>
                         </div>
@@ -225,13 +238,17 @@ const PhotoGallery = ({
                           <Button
                             size="sm"
                             variant="destructive"
-                            className="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100 p-2 h-8 w-8 rounded-full shadow-lg"
+                            className="absolute top-2 sm:top-3 left-2 sm:left-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100 p-1.5 sm:p-2 h-7 w-7 sm:h-8 sm:w-8 rounded-full shadow-lg touch-manipulation"
                             onClick={(e) => {
                               e.stopPropagation();
                               onDeletePhoto(photo.id);
                             }}
                           >
-                            <Icon name="Trash2" size={12} />
+                            <Icon
+                              name="Trash2"
+                              size={10}
+                              className="sm:w-3 sm:h-3"
+                            />
                           </Button>
                         )}
                       </div>
@@ -246,31 +263,39 @@ const PhotoGallery = ({
                   <Button
                     variant="outline"
                     size="sm"
-                    className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border-white/20 shadow-lg hover:bg-white transition-all duration-300 ${!canScrollPrev ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}`}
+                    className={`absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur-sm border-white/20 shadow-lg hover:bg-white transition-all duration-300 touch-manipulation ${!canScrollPrev ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}`}
                     onClick={scrollPrev}
                     disabled={!canScrollPrev}
                   >
-                    <Icon name="ChevronLeft" size={16} />
+                    <Icon
+                      name="ChevronLeft"
+                      size={14}
+                      className="sm:w-4 sm:h-4"
+                    />
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
-                    className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm border-white/20 shadow-lg hover:bg-white transition-all duration-300 ${!canScrollNext ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}`}
+                    className={`absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/90 backdrop-blur-sm border-white/20 shadow-lg hover:bg-white transition-all duration-300 touch-manipulation ${!canScrollNext ? "opacity-50 cursor-not-allowed" : "hover:scale-110"}`}
                     onClick={scrollNext}
                     disabled={!canScrollNext}
                   >
-                    <Icon name="ChevronRight" size={16} />
+                    <Icon
+                      name="ChevronRight"
+                      size={14}
+                      className="sm:w-4 sm:h-4"
+                    />
                   </Button>
                 </>
               )}
 
               {/* Индикаторы */}
               {displayPhotos.length > 1 && (
-                <div className="flex justify-center gap-2 mt-6">
+                <div className="flex justify-center gap-1.5 sm:gap-2 mt-4 sm:mt-6">
                   {displayPhotos.map((_, index) => (
                     <button
                       key={index}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300 touch-manipulation ${
                         index === selectedSlide
                           ? "bg-green-600 scale-125"
                           : "bg-green-200 hover:bg-green-400"
@@ -290,10 +315,10 @@ const PhotoGallery = ({
         open={!!selectedPhoto}
         onOpenChange={() => setSelectedPhoto(null)}
       >
-        <DialogContent className="max-w-4xl p-0 overflow-hidden">
+        <DialogContent className="max-w-[95vw] sm:max-w-4xl p-0 overflow-hidden m-2 sm:m-4">
           {selectedPhoto && (
             <div className="relative">
-              <div className="aspect-auto max-h-[80vh] overflow-hidden">
+              <div className="aspect-auto max-h-[70vh] sm:max-h-[80vh] overflow-hidden">
                 <img
                   src={selectedPhoto.url}
                   alt={selectedPhoto.title || "Фотография"}
@@ -302,14 +327,18 @@ const PhotoGallery = ({
               </div>
 
               {/* Информационная панель */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-6 text-white">
-                <DialogHeader className="space-y-2">
-                  <DialogTitle className="text-xl font-bold text-white">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/80 to-transparent p-3 sm:p-6 text-white">
+                <DialogHeader className="space-y-1 sm:space-y-2">
+                  <DialogTitle className="text-lg sm:text-xl font-bold text-white">
                     {selectedPhoto?.title || "Фотография"}
                   </DialogTitle>
                   {selectedPhoto.date && (
-                    <p className="text-white/80 flex items-center gap-2">
-                      <Icon name="Calendar" size={16} />
+                    <p className="text-white/80 flex items-center gap-1 sm:gap-2 text-sm">
+                      <Icon
+                        name="Calendar"
+                        size={14}
+                        className="sm:w-4 sm:h-4"
+                      />
                       {new Date(selectedPhoto.date).toLocaleDateString(
                         "ru-RU",
                         {
@@ -327,10 +356,10 @@ const PhotoGallery = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 h-10 w-10"
+                className="absolute top-2 sm:top-4 right-2 sm:right-4 text-white hover:bg-white/20 rounded-full p-2 h-8 w-8 sm:h-10 sm:w-10 touch-manipulation"
                 onClick={() => setSelectedPhoto(null)}
               >
-                <Icon name="X" size={16} />
+                <Icon name="X" size={14} className="sm:w-4 sm:h-4" />
               </Button>
             </div>
           )}
