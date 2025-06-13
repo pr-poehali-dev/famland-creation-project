@@ -49,7 +49,7 @@ const FamilyMemberCombobox = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between focus:outline-none focus:ring-0 border-green-200 focus:border-green-400 hover:border-green-300 hover:bg-green-50/50"
+          className="w-full justify-between focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 border-green-200 focus:border-green-400 hover:border-green-300 hover:bg-green-50/50"
         >
           {selectedMember ? (
             <div className="flex items-center gap-3">
@@ -78,7 +78,10 @@ const FamilyMemberCombobox = ({
       </PopoverTrigger>
       <PopoverContent className="w-[400px] p-0" align="start">
         <Command>
-          <CommandInput placeholder="Найти члена семьи..." />
+          <CommandInput
+            placeholder="Найти члена семьи..."
+            className="focus-visible:ring-0 focus-visible:ring-offset-0"
+          />
           <CommandList>
             <CommandEmpty>Члены семьи не найдены.</CommandEmpty>
             <CommandGroup>
