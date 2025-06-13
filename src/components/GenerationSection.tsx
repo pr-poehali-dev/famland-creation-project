@@ -16,7 +16,7 @@ const GenerationSection = ({
   return (
     <div className="text-center">
       <h3 className="text-sm font-medium text-green-600 mb-4">{title}</h3>
-      <div className="flex justify-center gap-8">
+      <div className="flex flex-wrap justify-center gap-4 max-w-full">
         {members.map((member) => (
           <FamilyMemberCard
             key={member.id}

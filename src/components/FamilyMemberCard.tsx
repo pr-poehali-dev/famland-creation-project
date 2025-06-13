@@ -129,20 +129,13 @@ const FamilyMemberCard = ({
   };
 
   return (
-    <Card
-      className={`w-56 border-green-300 hover:bg-green-50 cursor-pointer transition-colors ${
-        member.deceased ? "opacity-70 bg-gray-50 border-gray-300" : ""
-      }`}
+    <Card 
+      className="relative w-40 h-52 cursor-pointer hover:shadow-lg transition-shadow flex-shrink-0"
       onClick={() => onClick(member)}
     >
-      <CardContent className="p-5 text-center flex flex-col">
-        <div className="relative">
-          <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
-            <AvatarImage
-              src={member.photo}
-              alt={member.name}
-              className={member.deceased ? "grayscale" : ""}
-            />
+      <CardContent className="p-3 flex flex-col items-center h-full">
+        <Avatar className="w-16 h-16 mb-2">
+          <AvatarImage src={member.photo} alt={member.name} />
             <AvatarFallback
               className={`h-44 w-44 text-lg ${
                 member.deceased
