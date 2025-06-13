@@ -76,7 +76,7 @@ const Tree = () => {
   ]);
 
   const getGenerationText = (generation: number) => {
-    return `Поколение ${generation + 1}:`;
+    return `Поколение ${generation + 1}`;
   };
 
   const handleViewMember = (member: FamilyMember) => {
