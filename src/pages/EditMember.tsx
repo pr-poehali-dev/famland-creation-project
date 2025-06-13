@@ -148,9 +148,13 @@ const EditMember = () => {
                       variant="outline"
                       size="sm"
                       className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 border-red-300 text-red-600 hover:bg-red-50"
-                      onClick={() =>
-                        setFormData((prev) => ({ ...prev, photo: "" }))
-                      }
+                      onClick={() => {
+                        setFormData((prev) => ({ ...prev, photo: "" }));
+                        // Сбрасываем значение input'а для возможности повторного выбора того же файла
+                        if (fileInputRef.current) {
+                          fileInputRef.current.value = "";
+                        }
+                      }}
                     >
                       <Icon name="X" size={12} />
                     </Button>
