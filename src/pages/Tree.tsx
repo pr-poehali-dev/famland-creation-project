@@ -150,10 +150,10 @@ const Tree = () => {
                           <h4 className="font-medium text-green-800 mb-1 text-base">
                             {member.name}
                           </h4>
-                          <p className="text-sm text-green-600 mb-1 font-medium">
+                          <p className="text-sm text-green-600 mb-1">
                             Роль: {member.relation}
                           </p>
-                          <p className="text-xs text-gray-500 italic my-0.5">
+                          <p className="text-sm text-green-600 my-0.5">
                             Поколение: {member.generation + 1}
                           </p>
                         </div>
@@ -194,10 +194,10 @@ const Tree = () => {
                           <h4 className="font-medium text-green-800 mb-1 text-base">
                             {member.name}
                           </h4>
-                          <p className="text-sm text-green-600 mb-1 font-medium">
+                          <p className="text-sm text-green-600 mb-1">
                             Роль: {member.relation}
                           </p>
-                          <p className="text-xs text-gray-500 italic mb-3">
+                          <p className="text-sm text-green-600 mb-3">
                             Поколение: {member.generation + 1}
                           </p>
                         </div>
@@ -238,10 +238,10 @@ const Tree = () => {
                           <h4 className="font-medium text-green-800 mb-1 text-base">
                             {member.name}
                           </h4>
-                          <p className="text-sm text-green-600 mb-1 font-medium">
+                          <p className="text-sm text-green-600 mb-1">
                             Роль: {member.relation}
                           </p>
-                          <p className="text-xs text-gray-500 italic mb-3">
+                          <p className="text-sm text-green-600 mb-3">
                             Поколение: {member.generation + 1}
                           </p>
                         </div>
