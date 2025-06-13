@@ -58,46 +58,48 @@ const BreadcrumbNavigation = () => {
   }
 
   return (
-    <div className="px-4 py-3 bg-white/50 backdrop-blur-sm">
-      <Breadcrumb>
-        <BreadcrumbList>
-          {breadcrumbs.map((item, index) => (
-            <div key={item.path} className="contents">
-              <BreadcrumbItem>
-                {index === breadcrumbs.length - 1 ? (
-                  <BreadcrumbPage className="flex items-center gap-2">
-                    {item.icon && (
-                      <Icon
-                        name={item.icon}
-                        size={16}
-                        className="text-green-600"
-                      />
-                    )}
-                    {item.label}
-                  </BreadcrumbPage>
-                ) : (
-                  <BreadcrumbLink asChild>
-                    <Link
-                      to={item.path}
-                      className="flex items-center gap-2 hover:text-green-600"
-                    >
+    <div className="bg-white/50 backdrop-blur-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <Breadcrumb>
+          <BreadcrumbList>
+            {breadcrumbs.map((item, index) => (
+              <div key={item.path} className="contents">
+                <BreadcrumbItem>
+                  {index === breadcrumbs.length - 1 ? (
+                    <BreadcrumbPage className="flex items-center gap-2">
                       {item.icon && (
                         <Icon
                           name={item.icon}
                           size={16}
-                          className="text-green-500"
+                          className="text-green-600"
                         />
                       )}
                       {item.label}
-                    </Link>
-                  </BreadcrumbLink>
-                )}
-              </BreadcrumbItem>
-              {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
-            </div>
-          ))}
-        </BreadcrumbList>
-      </Breadcrumb>
+                    </BreadcrumbPage>
+                  ) : (
+                    <BreadcrumbLink asChild>
+                      <Link
+                        to={item.path}
+                        className="flex items-center gap-2 hover:text-green-600"
+                      >
+                        {item.icon && (
+                          <Icon
+                            name={item.icon}
+                            size={16}
+                            className="text-green-500"
+                          />
+                        )}
+                        {item.label}
+                      </Link>
+                    </BreadcrumbLink>
+                  )}
+                </BreadcrumbItem>
+                {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+              </div>
+            ))}
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
     </div>
   );
 };
