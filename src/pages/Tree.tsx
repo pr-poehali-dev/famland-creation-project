@@ -121,6 +121,17 @@ const Tree = () => {
       photo:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
     },
+    {
+      id: "11",
+      name: "Дедушка Сергей",
+      relation: "Дедушка",
+      generation: 0,
+      deceased: true,
+      birthDate: "1930-2005",
+      description: "Заслуженный инженер",
+      photo:
+        "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop&crop=face",
+    },
   ]);
 
   const getGenerationText = (generation: number) => {
