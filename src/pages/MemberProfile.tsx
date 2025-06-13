@@ -38,6 +38,17 @@ const MemberProfile = () => {
             "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
         },
         {
+          id: "2",
+          name: "Бабушка Мария",
+          relation: "Бабушка",
+          generation: 0,
+          birthDate: "1948-07-22",
+          description:
+            "Учительница начальных классов. Прекрасная хозяйка и заботливая бабушка.",
+          photo:
+            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+        },
+        {
           id: "3",
           name: "Папа Алексей",
           relation: "Отец",
