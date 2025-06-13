@@ -133,32 +133,34 @@ const MemberProfile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-      <div className="max-w-5xl mx-auto px-4 py-8">
-        <div className="mb-6"></div>
+      <div className="max-w-5xl mx-auto px-4 py-4 sm:py-8">
+        <div className="mb-4 sm:mb-6"></div>
 
         {/* Верхняя секция с фото и основной информацией */}
-        <div className="grid lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {/* Фото профиля */}
           <div className="lg:col-span-1">
             <Card className="border-green-200">
-              <CardContent className="pt-6 text-center">
-                <Avatar className="h-38 w-38 mx-auto mb-4 aspect-square rounded-xl">
+              <CardContent className="pt-4 sm:pt-6 text-center">
+                <Avatar className="h-24 w-24 sm:h-32 sm:w-32 lg:h-38 lg:w-38 mx-auto mb-3 sm:mb-4 aspect-square rounded-xl">
                   <AvatarImage
                     src={member.photo}
                     alt={member.name}
                     className="rounded-xl"
                   />
-                  <AvatarFallback className="bg-green-100 text-green-700 text-3xl rounded-xl">
+                  <AvatarFallback className="bg-green-100 text-green-700 text-lg sm:text-2xl lg:text-3xl rounded-xl">
                     {member.name
                       .split(" ")
                       .map((n) => n[0])
                       .join("")}
                   </AvatarFallback>
                 </Avatar>
-                <h1 className="text-xl font-bold text-green-800 mb-1">
+                <h1 className="text-lg sm:text-xl font-bold text-green-800 mb-1">
                   {member.name}
                 </h1>
-                <p className="text-green-600 font-medium">{member.relation}</p>
+                <p className="text-sm sm:text-base text-green-600 font-medium">
+                  {member.relation}
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -166,17 +168,20 @@ const MemberProfile = () => {
           {/* Основная информация */}
           <div className="lg:col-span-2">
             <Card className="border-green-200 h-full">
-              <CardHeader>
-                <CardTitle className="text-green-800 flex items-center gap-2">
-                  <Icon name="FileText" size={20} />
+              <CardHeader className="pb-4">
+                <CardTitle className="text-green-800 flex items-center gap-2 text-lg sm:text-xl">
+                  <Icon name="FileText" size={18} className="sm:hidden" />
+                  <Icon name="FileText" size={20} className="hidden sm:block" />
                   Информация
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <CardContent className="space-y-3 sm:space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <h4 className="font-medium text-green-700 mb-1">Пол</h4>
-                    <p className="text-gray-600">
+                    <h4 className="font-medium text-green-700 mb-1 text-sm sm:text-base">
+                      Пол
+                    </h4>
+                    <p className="text-gray-600 text-sm sm:text-base">
                       {member.relation === "Бабушка" ||
                       member.relation === "Мать"
                         ? "Женский"
@@ -186,10 +191,10 @@ const MemberProfile = () => {
 
                   {member.birthDate && (
                     <div>
-                      <h4 className="font-medium text-green-700 mb-1">
+                      <h4 className="font-medium text-green-700 mb-1 text-sm sm:text-base">
                         Дата рождения
                       </h4>
-                      <p className="text-gray-600">
+                      <p className="text-gray-600 text-sm sm:text-base">
                         {new Date(member.birthDate).toLocaleDateString(
                           "ru-RU",
                           {
@@ -205,8 +210,10 @@ const MemberProfile = () => {
 
                 {member.children && member.children.length > 0 && (
                   <div>
-                    <h4 className="font-medium text-green-700 mb-1">Дети</h4>
-                    <p className="text-gray-600">
+                    <h4 className="font-medium text-green-700 mb-1 text-sm sm:text-base">
+                      Дети
+                    </h4>
+                    <p className="text-gray-600 text-sm sm:text-base">
                       {member.children.length}{" "}
                       {member.children.length === 1 ? "ребенок" : "детей"}
                     </p>
@@ -215,10 +222,10 @@ const MemberProfile = () => {
 
                 {member.description && (
                   <div>
-                    <h3 className="font-semibold text-green-800 mb-2">
+                    <h3 className="font-semibold text-green-800 mb-2 text-base sm:text-lg">
                       О человеке
                     </h3>
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
                       {member.description}
                     </p>
                   </div>
@@ -230,15 +237,16 @@ const MemberProfile = () => {
           {/* Действия */}
           <div className="lg:col-span-1">
             <Card className="border-green-200">
-              <CardHeader>
-                <CardTitle className="text-green-800 flex items-center gap-2">
-                  <Icon name="Settings" size={20} />
+              <CardHeader className="pb-4">
+                <CardTitle className="text-green-800 flex items-center gap-2 text-lg sm:text-xl">
+                  <Icon name="Settings" size={18} className="sm:hidden" />
+                  <Icon name="Settings" size={20} className="hidden sm:block" />
                   Действия
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button
-                  className="w-full bg-green-600 hover:bg-green-700"
+                  className="w-full bg-green-600 hover:bg-green-700 h-10 sm:h-auto"
                   onClick={() => navigate(`/edit-member?id=${member.id}`)}
                 >
                   <Icon name="Edit" size={16} className="mr-2" />
@@ -246,7 +254,7 @@ const MemberProfile = () => {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full border-green-300 text-green-700"
+                  className="w-full border-green-300 text-green-700 h-10 sm:h-auto"
                   onClick={() => navigate("/tree")}
                 >
                   <Icon name="TreePine" size={16} className="mr-2" />К древу

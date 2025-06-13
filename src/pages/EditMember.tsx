@@ -122,21 +122,30 @@ const EditMember = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-      <div className="max-w-2xl mx-auto px-4 py-8">
+      <div className="max-w-2xl mx-auto px-4 py-4 sm:py-8">
         <Card className="border-green-200">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-green-800">
-              <Icon name={isEditing ? "Edit" : "Plus"} size={24} />
+          <CardHeader className="pb-4 sm:pb-6">
+            <CardTitle className="flex items-center gap-2 text-green-800 text-lg sm:text-xl">
+              <Icon
+                name={isEditing ? "Edit" : "Plus"}
+                size={20}
+                className="sm:block hidden"
+              />
+              <Icon
+                name={isEditing ? "Edit" : "Plus"}
+                size={18}
+                className="sm:hidden"
+              />
               {isEditing ? "Редактировать члена семьи" : "Добавить члена семьи"}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-4 sm:space-y-6">
             <div className="space-y-2">
               <Label className="flex items-center gap-1"></Label>
               <div className="flex flex-col items-center gap-3">
                 <div className="relative">
                   <Avatar
-                    className={`w-44 h-44 cursor-pointer border-2 transition-colors rounded-lg ${
+                    className={`w-32 h-32 sm:w-44 sm:h-44 cursor-pointer border-2 transition-colors rounded-lg ${
                       !formData.photo
                         ? "border-red-300 hover:border-red-400"
                         : "border-green-200 hover:border-green-400"
@@ -151,7 +160,12 @@ const EditMember = () => {
                       />
                     ) : (
                       <AvatarFallback className="bg-red-50 text-red-600 rounded-lg">
-                        <Icon name="Camera" size={32} />
+                        <Icon name="Camera" size={24} className="sm:hidden" />
+                        <Icon
+                          name="Camera"
+                          size={32}
+                          className="hidden sm:block"
+                        />
                       </AvatarFallback>
                     )}
                   </Avatar>
@@ -200,7 +214,7 @@ const EditMember = () => {
                     }
                   }}
                 />
-                <p className="text-xs text-muted-foreground text-center">
+                <p className="text-xs text-muted-foreground text-center px-4">
                   Нажмите на аватарку для загрузки фото
                   <br />
                   Поддерживаются форматы: JPG, PNG, WEBP
@@ -211,9 +225,12 @@ const EditMember = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="lastName" className="flex items-center gap-1">
+                <Label
+                  htmlFor="lastName"
+                  className="flex items-center gap-1 text-sm sm:text-base"
+                >
                   Фамилия
                   <span className="text-red-500">*</span>
                 </Label>
@@ -224,20 +241,20 @@ const EditMember = () => {
                     setFormData({ ...formData, lastName: e.target.value })
                   }
                   placeholder="Введите фамилию"
-                  className={`focus:outline-none focus:ring-0 ${
+                  className={`focus:outline-none focus:ring-0 h-12 sm:h-10 ${
                     !formData.lastName?.trim()
                       ? "border-red-300 focus:border-red-400"
                       : "border-green-200 focus:border-green-400"
                   }`}
                   required
                 />
-                {!formData.lastName?.trim() && (
-                  <p className="text-xs text-red-500 invisible"></p>
-                )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="firstName" className="flex items-center gap-1">
+                <Label
+                  htmlFor="firstName"
+                  className="flex items-center gap-1 text-sm sm:text-base"
+                >
                   Имя
                   <span className="text-red-500">*</span>
                 </Label>
@@ -248,20 +265,20 @@ const EditMember = () => {
                     setFormData({ ...formData, firstName: e.target.value })
                   }
                   placeholder="Введите имя"
-                  className={`focus:outline-none focus:ring-0 ${
+                  className={`focus:outline-none focus:ring-0 h-12 sm:h-10 ${
                     !formData.firstName?.trim()
                       ? "border-red-300 focus:border-red-400"
                       : "border-green-200 focus:border-green-400"
                   }`}
                   required
                 />
-                {!formData.firstName?.trim() && (
-                  <p className="text-xs text-red-500 invisible"></p>
-                )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="middleName" className="flex items-center gap-1">
+                <Label
+                  htmlFor="middleName"
+                  className="flex items-center gap-1 text-sm sm:text-base"
+                >
                   Отчество
                   <span className="text-red-500">*</span>
                 </Label>
@@ -272,22 +289,22 @@ const EditMember = () => {
                     setFormData({ ...formData, middleName: e.target.value })
                   }
                   placeholder="Введите отчество"
-                  className={`focus:outline-none focus:ring-0 ${
+                  className={`focus:outline-none focus:ring-0 h-12 sm:h-10 ${
                     !formData.middleName?.trim()
                       ? "border-red-300 focus:border-red-400"
                       : "border-green-200 focus:border-green-400"
                   }`}
                   required
                 />
-                {!formData.middleName?.trim() && (
-                  <p className="text-xs text-red-500 invisible"></p>
-                )}
               </div>
             </div>
 
-            <div className="flex gap-4">
-              <div className="flex-1 space-y-2">
-                <Label htmlFor="birthDate" className="flex items-center gap-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label
+                  htmlFor="birthDate"
+                  className="flex items-center gap-1 text-sm sm:text-base"
+                >
                   Дата рождения
                   <span className="text-red-500">*</span>
                 </Label>
@@ -299,20 +316,20 @@ const EditMember = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, birthDate: e.target.value })
                   }
-                  className={`focus:outline-none focus:ring-0 ${
+                  className={`focus:outline-none focus:ring-0 h-12 sm:h-10 ${
                     !formData.birthDate?.trim()
                       ? "border-red-300 focus:border-red-400"
                       : "border-green-200 focus:border-green-400"
                   }`}
                   required
                 />
-                {!formData.birthDate?.trim() && (
-                  <p className="text-xs text-red-500 invisible"></p>
-                )}
               </div>
 
-              <div className="flex-1 space-y-2">
-                <Label htmlFor="gender" className="flex items-center gap-1">
+              <div className="space-y-2">
+                <Label
+                  htmlFor="gender"
+                  className="flex items-center gap-1 text-sm sm:text-base"
+                >
                   Пол
                   <span className="text-red-500">*</span>
                 </Label>
@@ -324,7 +341,7 @@ const EditMember = () => {
                   required
                 >
                   <SelectTrigger
-                    className={`focus:outline-none focus:ring-0 ${
+                    className={`focus:outline-none focus:ring-0 h-12 sm:h-10 ${
                       !formData.gender?.trim()
                         ? "border-red-300 focus:border-red-400"
                         : "border-green-200 focus:border-green-400"
@@ -337,14 +354,13 @@ const EditMember = () => {
                     <SelectItem value="Женский">Женский</SelectItem>
                   </SelectContent>
                 </Select>
-                {!formData.gender?.trim() && (
-                  <p className="text-xs text-red-500 invisible"></p>
-                )}
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">Описание</Label>
+              <Label htmlFor="description" className="text-sm sm:text-base">
+                Описание
+              </Label>
               <Textarea
                 id="description"
                 value={formData.description}
@@ -352,7 +368,7 @@ const EditMember = () => {
                   setFormData({ ...formData, description: e.target.value })
                 }
                 placeholder="Добавьте заметки о члене семьи..."
-                className="focus:outline-none focus:ring-0 border-green-200 focus:border-green-400 min-h-[100px]"
+                className="focus:outline-none focus:ring-0 border-green-200 focus:border-green-400 min-h-[80px] sm:min-h-[100px]"
               />
             </div>
 
@@ -375,18 +391,18 @@ const EditMember = () => {
               />
             </div> */}
 
-            <div className="flex gap-3 justify-end pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 justify-end pt-4">
               <Button
                 variant="outline"
                 onClick={handleCancel}
-                className="border-green-300 text-green-700 hover:bg-green-50"
+                className="border-green-300 text-green-700 hover:bg-green-50 h-12 sm:h-auto order-2 sm:order-1"
               >
                 <Icon name="ArrowLeft" size={16} className="mr-2" />
                 Назад к древу
               </Button>
               <Button
                 onClick={handleSave}
-                className="bg-green-700 hover:bg-green-800"
+                className="bg-green-700 hover:bg-green-800 h-12 sm:h-auto order-1 sm:order-2"
                 disabled={
                   !formData.photo ||
                   !formData.lastName?.trim() ||
