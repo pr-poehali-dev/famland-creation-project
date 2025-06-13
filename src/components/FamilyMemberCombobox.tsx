@@ -76,10 +76,7 @@ const FamilyMemberCombobox = ({
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent
-        className="w-[--radix-popover-trigger-width] p-0"
-        align="start"
-      >
+      <PopoverContent className="w-[400px] p-0" align="start">
         <Command>
           <CommandInput placeholder="Найти члена семьи..." />
           <CommandList>
