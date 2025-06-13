@@ -14,6 +14,7 @@ interface FamilyMember {
   description?: string;
   children?: string[];
   photo?: string;
+  deceased?: boolean;
 }
 
 const Tree = () => {
@@ -38,6 +39,15 @@ const Tree = () => {
       generation: 0,
       photo:
         "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+    },
+    {
+      id: "7",
+      name: "Дедушка Петр",
+      relation: "Дедушка",
+      generation: 0,
+      deceased: true,
+      photo:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face",
     },
     {
       id: "3",
@@ -138,27 +148,75 @@ const Tree = () => {
                   {getGenerationMembers(0).map((member) => (
                     <Card
                       key={member.id}
-                      className="w-56 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      className={`w-56 border-green-300 hover:bg-green-50 cursor-pointer transition-colors ${
+                        member.deceased
+                          ? "opacity-70 bg-gray-50 border-gray-300"
+                          : ""
+                      }`}
                       onClick={() => handleViewMember(member)}
                     >
                       <CardContent className="p-5 text-center flex flex-col">
-                        <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
-                          <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="h-44 w-44 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
-                            {member.name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        </Avatar>
+                        <div className="relative">
+                          <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
+                            <AvatarImage
+                              src={member.photo}
+                              alt={member.name}
+                              className={member.deceased ? "grayscale" : ""}
+                            />
+                            <AvatarFallback
+                              className={`h-44 w-44 text-lg ${
+                                member.deceased
+                                  ? "bg-gray-100 text-gray-500"
+                                  : "bg-green-100 text-green-700"
+                              } flex items-center justify-center rounded-lg`}
+                            >
+                              {member.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
+                          </Avatar>
+                          {member.deceased && (
+                            <div className="absolute top-2 right-2 bg-gray-600 text-white p-1 rounded-full">
+                              <Icon
+                                name="Heart"
+                                size={12}
+                                className="fill-current"
+                              />
+                            </div>
+                          )}
+                        </div>
                         <div className="flex-1">
-                          <h4 className="font-medium text-green-800 mb-1 text-base">
+                          <h4
+                            className={`font-medium mb-1 text-base ${
+                              member.deceased
+                                ? "text-gray-600"
+                                : "text-green-800"
+                            }`}
+                          >
                             {member.name}
+                            {member.deceased && (
+                              <span className="text-xs text-gray-500 ml-2">
+                                ✝
+                              </span>
+                            )}
                           </h4>
-                          <p className="text-sm text-green-600 mb-1">
+                          <p
+                            className={`text-sm mb-1 ${
+                              member.deceased
+                                ? "text-gray-500"
+                                : "text-green-600"
+                            }`}
+                          >
                             Роль: {member.relation}
                           </p>
-                          <p className="text-xs text-green-500 font-medium">
+                          <p
+                            className={`text-xs font-medium ${
+                              member.deceased
+                                ? "text-gray-400"
+                                : "text-green-500"
+                            }`}
+                          >
                             {getGenerationText(member.generation)}
                           </p>
                         </div>
@@ -182,27 +240,75 @@ const Tree = () => {
                   {getGenerationMembers(1).map((member) => (
                     <Card
                       key={member.id}
-                      className="w-56 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      className={`w-56 border-green-300 hover:bg-green-50 cursor-pointer transition-colors ${
+                        member.deceased
+                          ? "opacity-70 bg-gray-50 border-gray-300"
+                          : ""
+                      }`}
                       onClick={() => handleViewMember(member)}
                     >
                       <CardContent className="p-5 text-center flex flex-col">
-                        <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
-                          <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="h-44 w-44 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
-                            {member.name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        </Avatar>
+                        <div className="relative">
+                          <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
+                            <AvatarImage
+                              src={member.photo}
+                              alt={member.name}
+                              className={member.deceased ? "grayscale" : ""}
+                            />
+                            <AvatarFallback
+                              className={`h-44 w-44 text-lg ${
+                                member.deceased
+                                  ? "bg-gray-100 text-gray-500"
+                                  : "bg-green-100 text-green-700"
+                              } flex items-center justify-center rounded-lg`}
+                            >
+                              {member.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
+                          </Avatar>
+                          {member.deceased && (
+                            <div className="absolute top-2 right-2 bg-gray-600 text-white p-1 rounded-full">
+                              <Icon
+                                name="Heart"
+                                size={12}
+                                className="fill-current"
+                              />
+                            </div>
+                          )}
+                        </div>
                         <div className="flex-1">
-                          <h4 className="font-medium text-green-800 mb-1 text-base">
+                          <h4
+                            className={`font-medium mb-1 text-base ${
+                              member.deceased
+                                ? "text-gray-600"
+                                : "text-green-800"
+                            }`}
+                          >
                             {member.name}
+                            {member.deceased && (
+                              <span className="text-xs text-gray-500 ml-2">
+                                ✝
+                              </span>
+                            )}
                           </h4>
-                          <p className="text-sm text-green-600 mb-1">
+                          <p
+                            className={`text-sm mb-1 ${
+                              member.deceased
+                                ? "text-gray-500"
+                                : "text-green-600"
+                            }`}
+                          >
                             Роль: {member.relation}
                           </p>
-                          <p className="text-xs text-green-500 font-medium">
+                          <p
+                            className={`text-xs font-medium ${
+                              member.deceased
+                                ? "text-gray-400"
+                                : "text-green-500"
+                            }`}
+                          >
                             {getGenerationText(member.generation)}
                           </p>
                         </div>
@@ -226,27 +332,75 @@ const Tree = () => {
                   {getGenerationMembers(2).map((member) => (
                     <Card
                       key={member.id}
-                      className="w-56 border-green-300 hover:bg-green-50 cursor-pointer transition-colors"
+                      className={`w-56 border-green-300 hover:bg-green-50 cursor-pointer transition-colors ${
+                        member.deceased
+                          ? "opacity-70 bg-gray-50 border-gray-300"
+                          : ""
+                      }`}
                       onClick={() => handleViewMember(member)}
                     >
                       <CardContent className="p-5 text-center flex flex-col">
-                        <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
-                          <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="h-44 w-44 text-lg bg-green-100 text-green-700 flex items-center justify-center rounded-lg">
-                            {member.name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </AvatarFallback>
-                        </Avatar>
+                        <div className="relative">
+                          <Avatar className="h-44 w-44 mx-auto mb-3 rounded-lg">
+                            <AvatarImage
+                              src={member.photo}
+                              alt={member.name}
+                              className={member.deceased ? "grayscale" : ""}
+                            />
+                            <AvatarFallback
+                              className={`h-44 w-44 text-lg ${
+                                member.deceased
+                                  ? "bg-gray-100 text-gray-500"
+                                  : "bg-green-100 text-green-700"
+                              } flex items-center justify-center rounded-lg`}
+                            >
+                              {member.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </AvatarFallback>
+                          </Avatar>
+                          {member.deceased && (
+                            <div className="absolute top-2 right-2 bg-gray-600 text-white p-1 rounded-full">
+                              <Icon
+                                name="Heart"
+                                size={12}
+                                className="fill-current"
+                              />
+                            </div>
+                          )}
+                        </div>
                         <div className="flex-1">
-                          <h4 className="font-medium text-green-800 mb-1 text-base">
+                          <h4
+                            className={`font-medium mb-1 text-base ${
+                              member.deceased
+                                ? "text-gray-600"
+                                : "text-green-800"
+                            }`}
+                          >
                             {member.name}
+                            {member.deceased && (
+                              <span className="text-xs text-gray-500 ml-2">
+                                ✝
+                              </span>
+                            )}
                           </h4>
-                          <p className="text-sm text-green-600 mb-1">
+                          <p
+                            className={`text-sm mb-1 ${
+                              member.deceased
+                                ? "text-gray-500"
+                                : "text-green-600"
+                            }`}
+                          >
                             Роль: {member.relation}
                           </p>
-                          <p className="text-xs text-green-500 font-medium">
+                          <p
+                            className={`text-xs font-medium ${
+                              member.deceased
+                                ? "text-gray-400"
+                                : "text-green-500"
+                            }`}
+                          >
                             {getGenerationText(member.generation)}
                           </p>
                         </div>
