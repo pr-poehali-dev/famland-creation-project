@@ -270,7 +270,14 @@ const Profile = () => {
                   <Icon name="Download" size={16} className="mr-2" />
                   Экспорт данных
                 </Button>
-                <Button variant="destructive" className="w-full justify-start">
+                <Button variant="outline" className="w-full justify-start">
+                  <Icon name="TreePine" size={16} className="mr-2" />
+                  Скачать древо
+                </Button>
+                <Button
+                  variant="destructive"
+                  className="w-full justify-start bg-red-50 text-red-700 border-red-200 hover:bg-red-100"
+                >
                   <Icon name="Trash2" size={16} className="mr-2" />
                   Удалить аккаунт
                 </Button>
