@@ -200,9 +200,7 @@ const EditMember = () => {
                   Поддерживаются форматы: JPG, PNG, WEBP
                 </p>
                 {!formData.photo && (
-                  <p className="text-xs text-red-500 text-center">
-                    Фотография обязательна для заполнения
-                  </p>
+                  <p className="text-xs text-red-500 text-center invisible"></p>
                 )}
               </div>
             </div>
@@ -228,9 +226,7 @@ const EditMember = () => {
                   required
                 />
                 {!formData.lastName?.trim() && (
-                  <p className="text-xs text-red-500">
-                    Фамилия обязательна для заполнения
-                  </p>
+                  <p className="text-xs text-red-500 invisible"></p>
                 )}
               </div>
 
@@ -254,9 +250,7 @@ const EditMember = () => {
                   required
                 />
                 {!formData.firstName?.trim() && (
-                  <p className="text-xs text-red-500">
-                    Имя обязательно для заполнения
-                  </p>
+                  <p className="text-xs text-red-500 invisible"></p>
                 )}
               </div>
 
@@ -280,9 +274,7 @@ const EditMember = () => {
                   required
                 />
                 {!formData.middleName?.trim() && (
-                  <p className="text-xs text-red-500">
-                    Отчество обязательно для заполнения
-                  </p>
+                  <p className="text-xs text-red-500 invisible"></p>
                 )}
               </div>
             </div>
@@ -308,9 +300,7 @@ const EditMember = () => {
                   required
                 />
                 {!formData.birthDate?.trim() && (
-                  <p className="text-xs text-red-500">
-                    Дата рождения обязательна для заполнения
-                  </p>
+                  <p className="text-xs text-red-500 invisible"></p>
                 )}
               </div>
 
@@ -341,9 +331,7 @@ const EditMember = () => {
                   </SelectContent>
                 </Select>
                 {!formData.gender?.trim() && (
-                  <p className="text-xs text-red-500">
-                    Пол обязателен для заполнения
-                  </p>
+                  <p className="text-xs text-red-500 invisible"></p>
                 )}
               </div>
             </div>
