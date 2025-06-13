@@ -1,38 +1,32 @@
 export const FEATURES_DATA = [
   {
     icon: "GitBranch",
-    title: "Генеалогическое древо",
-    description:
-      "Создавайте подробные схемы родственных связей с неограниченным количеством поколений",
+    titleKey: "features.tree.title",
+    descriptionKey: "features.tree.description",
   },
   {
     icon: "BookOpen",
-    title: "Семейная история",
-    description:
-      "Записывайте истории, важные события и достижения каждого члена семьи",
+    titleKey: "features.history.title",
+    descriptionKey: "features.history.description",
   },
   {
     icon: "Image",
-    title: "Фотоархив",
-    description:
-      "Загружайте и организуйте семейные фотографии, привязывая их к конкретным людям и событиям",
+    titleKey: "features.archive.title",
+    descriptionKey: "features.archive.description",
   },
   {
     icon: "MapPin",
-    title: "География рода",
-    description:
-      "Отмечайте места рождения, жизни и важных событий на интерактивной карте",
+    titleKey: "features.geography.title",
+    descriptionKey: "features.geography.description",
   },
   {
     icon: "Calendar",
-    title: "Хронология событий",
-    description:
-      "Ведите календарь семейных дат, юбилеев и важных исторических моментов",
+    titleKey: "features.timeline.title",
+    descriptionKey: "features.timeline.description",
   },
   {
     icon: "Users",
-    title: "Совместная работа",
-    description:
-      "Приглашайте родственников для совместного наполнения и редактирования древа",
+    titleKey: "features.collaboration.title",
+    descriptionKey: "features.collaboration.description",
   },
 ];

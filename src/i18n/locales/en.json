@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "tree": "Tree",
+    "login": "Login",
+    "profile": "Profile"
+  },
+  "hero": {
+    "title": "Famland",
+    "subtitle": "Discover your family history, create a visual family tree and preserve heritage for future generations",
+    "cta": "Start creating tree"
+  },
+  "features": {
+    "relationships": {
+      "title": "Family Relations",
+      "description": "Track connections between family members"
+    },
+    "photos": {
+      "title": "Family Photos",
+      "description": "Add photos and memories"
+    },
+    "sharing": {
+      "title": "Share History",
+      "description": "Pass knowledge to future generations"
+    },
+    "sectionTitle": "Platform Features",
+    "sectionSubtitle": "Complete set of tools for creating, maintaining and preserving your family history",
+    "tree": {
+      "title": "Family Tree",
+      "description": "Create detailed family relationship charts with unlimited generations"
+    },
+    "history": {
+      "title": "Family History",
+      "description": "Record stories, important events and achievements of each family member"
+    },
+    "archive": {
+      "title": "Photo Archive",
+      "description": "Upload and organize family photos, linking them to specific people and events"
+    },
+    "geography": {
+      "title": "Family Geography",
+      "description": "Mark places of birth, life and important events on an interactive map"
+    },
+    "timeline": {
+      "title": "Event Timeline",
+      "description": "Keep a calendar of family dates, anniversaries and important historical moments"
+    },
+    "collaboration": {
+      "title": "Collaboration",
+      "description": "Invite relatives to jointly fill and edit the family tree"
+    },
+    "heritage": {
+      "title": "Preserve Family Heritage",
+      "description": "Every family has a unique story. Our platform helps you collect, organize and pass this invaluable information to future generations.",
+      "learnMore": "Learn more"
+    }
+  }
+}

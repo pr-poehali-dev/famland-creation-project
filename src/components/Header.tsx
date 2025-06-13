@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Icon from "@/components/ui/icon";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Header = () => {
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <header className="bg-white shadow-sm border-b border-green-100">
@@ -26,22 +29,23 @@ const Header = () => {
               className="flex items-center gap-2 px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
             >
               <Icon name="GitBranch" size={18} />
-              Древо
+              {t("nav.tree")}
             </Link>
             <Link
               to="/auth"
               className="flex items-center gap-2 px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
             >
               <Icon name="LogIn" size={18} />
-              Войти
+              {t("nav.login")}
             </Link>
             <Link
               to="/profile"
               className="flex items-center gap-2 px-4 py-2 text-green-700 hover:text-green-800 hover:bg-green-50 rounded-lg transition-colors"
             >
               <Icon name="User" size={18} />
-              Профиль
+              {t("nav.profile")}
             </Link>
+            <LanguageSwitcher />
           </nav>
 
           {/* Мобильная кнопка меню */}
@@ -63,7 +67,7 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Icon name="GitBranch" size={18} />
-                Древо
+                {t("nav.tree")}
               </Link>
               <Link
                 to="/auth"
@@ -71,7 +75,7 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Icon name="LogIn" size={18} />
-                Войти
+                {t("nav.login")}
               </Link>
               <Link
                 to="/profile"
@@ -79,8 +83,11 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Icon name="User" size={18} />
-                Профиль
+                {t("nav.profile")}
               </Link>
+              <div className="px-4 py-2">
+                <LanguageSwitcher />
+              </div>
             </nav>
           </div>
         )}
