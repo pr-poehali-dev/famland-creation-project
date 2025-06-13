@@ -138,7 +138,7 @@ const MemberProfile = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Основная информация */}
           <div className="md:col-span-2">
-            <Card className="border-green-200 hidden">
+            <Card className="border-green-200">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-green-800">
                   <Avatar className="h-12 w-12">
@@ -222,7 +222,7 @@ const MemberProfile = () => {
 
           {/* Боковая панель с действиями */}
           <div className="space-y-4">
-            <Card className="border-green-200 hidden">
+            <Card className="border-green-200">
               <CardHeader>
                 <CardTitle className="text-green-800">Действия</CardTitle>
               </CardHeader>
@@ -246,7 +246,7 @@ const MemberProfile = () => {
             </Card>
 
             {/* Карточка с фото */}
-            <Card className="border-green-200 hidden">
+            <Card className="border-green-200">
               <CardContent className="pt-6 text-center">
                 <Avatar className="h-32 w-32 mx-auto mb-4">
                   <AvatarImage src={member.photo} alt={member.name} />
