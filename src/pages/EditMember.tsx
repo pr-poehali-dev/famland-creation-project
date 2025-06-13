@@ -128,29 +128,46 @@ const EditMember = () => {
                       variant="outline"
                       size="sm"
                       className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 border-red-300 text-red-600 hover:bg-red-50"
-                      onClick={() => setFormData({ ...formData, photo: "" })}
+                      onClick={() =>
+                        setFormData((prev) => ({ ...prev, photo: "" }))
+                      }
                     >
                       <Icon name="X" size={12} />
                     </Button>
                   </div>
                 )}
-                <div className="flex gap-2 w-full">
-                  <Input
-                    id="photo"
-                    type="file"
-                    accept="image/*"
-                    onChange={handlePhotoUpload}
-                    className="border-green-200 focus:border-green-400"
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    className="border-green-300 text-green-700 hover:bg-green-50 px-3"
-                  >
-                    <Icon name="Upload" size={16} />
-                  </Button>
-                </div>
+                <Input
+                  id="photo"
+                  type="file"
+                  accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const validTypes = [
+                        "image/jpeg",
+                        "image/png",
+                        "image/webp",
+                      ];
+                      if (!validTypes.includes(file.type)) {
+                        alert("Поддерживаются только форматы JPG, PNG, WEBP");
+                        e.target.value = "";
+                        return;
+                      }
+                      const reader = new FileReader();
+                      reader.onload = (e) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          photo: e.target?.result as string,
+                        }));
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                  className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Поддерживаются форматы: JPG, PNG, WEBP
+                </p>
               </div>
             </div>
 
