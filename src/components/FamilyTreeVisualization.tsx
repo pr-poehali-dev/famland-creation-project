@@ -44,14 +44,14 @@ const FamilyTreeVisualization = () => {
   ];
 
   return (
-    <section className="py-20 px-4 bg-white">
+    <section className="py-12 md:py-20 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           title="Визуализация семейного древа"
           subtitle="Интерактивное представление семейных связей с возможностью добавления деталей"
         />
 
-        <div className="relative">
+        <div className="relative overflow-x-auto md:overflow-visible">
           {/* Дерево фон */}
           <div className="absolute inset-0 flex justify-center items-end opacity-10">
             <Icon name="TreePine" size={400} className="text-green-700" />
@@ -108,21 +108,21 @@ const FamilyTreeVisualization = () => {
           </svg>
 
           {/* Карточки членов семьи */}
-          <div className="relative z-10 min-h-96">
+          <div className="relative z-10 min-h-96 min-w-[600px] md:min-w-0">
             {/* Первое поколение */}
-            <div className="flex justify-center gap-16 mb-16">
+            <div className="flex justify-center gap-8 md:gap-16 mb-12 md:mb-16">
               <PersonCard name="Дедушка Иван" years="1920-2010" />
               <PersonCard name="Бабушка Мария" years="1925-2015" />
             </div>
 
             {/* Второе поколение */}
-            <div className="flex justify-center gap-32 mb-16">
+            <div className="flex justify-center gap-16 md:gap-32 mb-12 md:mb-16">
               <PersonCard name="Папа Сергей" years="род. 1950" />
               <PersonCard name="Мама Елена" years="род. 1955" />
             </div>
 
             {/* Третье поколение */}
-            <div className="flex justify-center gap-16">
+            <div className="flex justify-center gap-8 md:gap-16">
               <PersonCard name="Вы" years="род. 1985" isHighlighted={true} />
               <PersonCard name="Сестра Анна" years="род. 1988" />
             </div>

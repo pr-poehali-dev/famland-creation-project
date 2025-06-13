@@ -29,7 +29,7 @@ const Tree = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-6 md:py-8">
         <Card className="border-green-200">
           <TreeHeader onAddMember={handleAddMember} />
           <CardContent>

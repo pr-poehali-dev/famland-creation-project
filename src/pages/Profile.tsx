@@ -38,8 +38,8 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-4xl mx-auto px-4 py-6 md:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Profile Info */}
           <div className="lg:col-span-2 space-y-6">
             <Card>
@@ -50,7 +50,7 @@ const Profile = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="firstName">Имя</Label>
                     <Input
@@ -85,7 +85,7 @@ const Profile = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="phone">Телефон</Label>
                     <Input
@@ -135,7 +135,7 @@ const Profile = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <div>
                     <Label>Публичный профиль</Label>
                     <p className="text-sm text-gray-600">
@@ -152,7 +152,7 @@ const Profile = () => {
 
                 <Separator />
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <div>
                     <Label>Показывать дату рождения</Label>
                     <p className="text-sm text-gray-600">
@@ -169,7 +169,7 @@ const Profile = () => {
 
                 <Separator />
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <div>
                     <Label>Приглашения от родственников</Label>
                     <p className="text-sm text-gray-600">
@@ -186,7 +186,7 @@ const Profile = () => {
 
                 <Separator />
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                   <div>
                     <Label>Email уведомления</Label>
                     <p className="text-sm text-gray-600">
@@ -209,7 +209,7 @@ const Profile = () => {
             {/* Avatar */}
             <Card>
               <CardContent className="pt-6 text-center">
-                <Avatar className="w-32 h-32 mx-auto mb-4">
+                <Avatar className="w-24 h-24 md:w-32 md:h-32 mx-auto mb-4">
                   <AvatarImage src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" />
                   <AvatarFallback className="text-2xl bg-green-100 text-green-700">
                     {profile.firstName[0]}

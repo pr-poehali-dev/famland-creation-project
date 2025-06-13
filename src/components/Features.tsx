@@ -9,7 +9,7 @@ const Features = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-green-50 to-white">
+    <section className="py-12 md:py-20 px-4 bg-gradient-to-b from-green-50 to-white">
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           title="Возможности платформы"
@@ -27,16 +27,16 @@ const Features = () => {
           ))}
         </div>
 
-        <div className="mt-16 bg-green-700 rounded-3xl p-8 text-center text-white">
+        <div className="mt-12 md:mt-16 bg-green-700 rounded-3xl p-6 md:p-8 text-center text-white">
           <Icon
             name="Heart"
             size={48}
             className="mx-auto mb-4 text-green-200"
           />
-          <h3 className="text-2xl font-bold mb-4">
+          <h3 className="text-xl md:text-2xl font-bold mb-4">
             Сохраните семейное наследие
           </h3>
-          <p className="text-lg text-green-100 mb-6 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-green-100 mb-6 max-w-2xl mx-auto">
             Каждая семья имеет уникальную историю. Наша платформа поможет вам
             собрать, организовать и передать эту бесценную информацию будущим
             поколениям.
