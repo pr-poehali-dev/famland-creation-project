@@ -319,6 +319,7 @@ const EditMember = () => {
           imageUrl={cropDialog.imageUrl}
           onCropSelect={(croppedImage) => {
             setFormData((prev) => ({ ...prev, photo: croppedImage }));
+            setCropDialog({ isOpen: false, imageUrl: "" });
           }}
         />
       </div>
