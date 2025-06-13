@@ -21,6 +21,7 @@ const MemberProfile = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [member, setMember] = useState<FamilyMember | null>(null);
+  const [memberPhotos, setMemberPhotos] = useState<any[]>([]);
 
   useEffect(() => {
     if (id) {
@@ -258,12 +259,15 @@ const MemberProfile = () => {
         {/* Галерея фотографий */}
         <div>
           <PhotoGallery
+            photos={memberPhotos}
             allowEdit={true}
-            onAddPhoto={() => {
-              console.log("Добавить фото для", member.name);
+            onAddPhoto={(photo) => {
+              setMemberPhotos((prev) => [...prev, photo]);
+              console.log("Добавлено фото для", member.name, photo);
             }}
             onDeletePhoto={(photoId) => {
-              console.log("Удалить фото", photoId);
+              setMemberPhotos((prev) => prev.filter((p) => p.id !== photoId));
+              console.log("Удалено фото", photoId);
             }}
           />
         </div>

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import Icon from "@/components/ui/icon";
 import useEmblaCarousel from "embla-carousel-react";
+import PhotoUploadDialog from "@/components/PhotoUploadDialog";
 
 interface Photo {
   id: string;
@@ -19,7 +20,7 @@ interface Photo {
 
 interface PhotoGalleryProps {
   photos?: Photo[];
-  onAddPhoto?: () => void;
+  onAddPhoto?: (photo: Photo) => void;
   onDeletePhoto?: (photoId: string) => void;
   allowEdit?: boolean;
 }
@@ -31,6 +32,7 @@ const PhotoGallery = ({
   allowEdit = false,
 }: PhotoGalleryProps) => {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "start",
@@ -135,7 +137,7 @@ const PhotoGallery = ({
               <Button
                 size="sm"
                 className="bg-green-600 hover:bg-green-700 shadow-lg hover:shadow-xl transition-all duration-300"
-                onClick={onAddPhoto}
+                onClick={() => setUploadDialogOpen(true)}
               >
                 <Icon name="Plus" size={16} className="mr-1" />
                 Добавить
@@ -158,7 +160,7 @@ const PhotoGallery = ({
               {allowEdit && onAddPhoto && (
                 <Button
                   className="bg-green-600 hover:bg-green-700 shadow-lg hover:shadow-xl transition-all duration-300"
-                  onClick={onAddPhoto}
+                  onClick={() => setUploadDialogOpen(true)}
                 >
                   <Icon name="Upload" size={16} className="mr-2" />
                   Загрузить фото
@@ -334,6 +336,16 @@ const PhotoGallery = ({
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Диалог загрузки фото */}
+      <PhotoUploadDialog
+        open={uploadDialogOpen}
+        onOpenChange={setUploadDialogOpen}
+        onAddPhoto={(photo) => {
+          onAddPhoto?.(photo);
+          setUploadDialogOpen(false);
+        }}
+      />
     </>
   );
 };
