@@ -110,7 +110,19 @@ const Tree = () => {
           <div className="lg:col-span-3">
             <Card className="border-green-200">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-800"></CardTitle>
+                <CardTitle className="flex items-center justify-between text-green-800">
+                  <span className="flex items-center gap-2">
+                    <Icon name="TreePine" size={24} />
+                    Генеалогическое древо
+                  </span>
+                  <button
+                    className="flex items-center gap-2 px-3 py-2 text-sm bg-green-100 hover:bg-green-200 text-green-700 rounded-lg transition-colors"
+                    title="Добавить члена семьи"
+                  >
+                    <Icon name="UserPlus" size={16} />
+                    <span className="hidden sm:inline">Добавить члена</span>
+                  </button>
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-8">
