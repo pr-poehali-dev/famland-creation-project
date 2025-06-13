@@ -139,7 +139,7 @@ const Tree = () => {
                       <CardContent className="p-4 text-center">
                         <Avatar className="h-38 w-38 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="text-sm bg-green-100 text-green-700">
+                          <AvatarFallback className="text-xl bg-green-100 text-green-700">
                             {member.name
                               .split(" ")
                               .map((n) => n[0])
@@ -192,7 +192,7 @@ const Tree = () => {
                       <CardContent className="p-4 text-center">
                         <Avatar className="h-38 w-38 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="text-sm bg-green-100 text-green-700">
+                          <AvatarFallback className="text-xl bg-green-100 text-green-700">
                             {member.name
                               .split(" ")
                               .map((n) => n[0])
@@ -245,7 +245,7 @@ const Tree = () => {
                       <CardContent className="p-4 text-center">
                         <Avatar className="h-38 w-38 mx-auto mb-3 rounded-lg">
                           <AvatarImage src={member.photo} alt={member.name} />
-                          <AvatarFallback className="text-sm bg-green-100 text-green-700">
+                          <AvatarFallback className="text-xl bg-green-100 text-green-700">
                             {member.name
                               .split(" ")
                               .map((n) => n[0])
